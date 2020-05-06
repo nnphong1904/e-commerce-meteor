@@ -1,4 +1,10 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+#react-targget,
+html,
 body {
-  padding: 10px;
-  font-family: sans-serif;
+	height: 100%;
 }

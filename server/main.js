@@ -10,9 +10,6 @@ Meteor.startup(() => {
       return result;
     },
     addProduct,
-    // addProduct(product){
-    //   ProductCollection.insert(product);
-    // },
     fetchProduct
   })
 });
