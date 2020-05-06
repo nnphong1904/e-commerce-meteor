@@ -1,8 +1,9 @@
 import React from 'react';
-import { Info } from './Info.jsx';
-import Navbar from './Navbar';
+import { Info } from './components/Info.jsx';
+import Navbar from './components/Navbar';
 export const App = () => (
-  <div>
+   <div>
     <Navbar/>
+
   </div>
 );

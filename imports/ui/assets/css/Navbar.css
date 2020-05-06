@@ -8,6 +8,7 @@
 .navbar {
 	margin-top: 22px;
 	font-family: Montserrat, sans-serif;
+	z-index: 0;
 }
 
 .upper-part > .auth {

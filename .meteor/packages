@@ -22,3 +22,8 @@ react-meteor-data       # React higher-order component for reactively tracking M
 aldeed:collection2
 meteortoys:allthings
 nathantreid:static-assets
+kadira:flow-router
+ostrio:flow-router-extra
+accounts-base
+accounts-password
+session

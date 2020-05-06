@@ -1,8 +1,10 @@
 import React from 'react';
-import './assets/css/Navbar.css';
-import Logo from './assets/image/logo.svg';
+import '../assets/css/Navbar.css';
+import Logo from '../assets/image/logo.svg';
 const Navbar = (props)=>{
- console.log(Logo);
+  const loginBtnClick = ()=>{
+    FlowRouter.go('/login')
+  }
   const content = (
     <div className="navbar">
       <div className="upper-part">
@@ -13,7 +15,7 @@ const Navbar = (props)=>{
         <img src={Logo} className="Logo"/>
         <div className="auth">
           <div className="register-btn">Register</div>
-          <div className="login-btn"><div>Log In</div></div>
+          <div onClick={loginBtnClick} className="login-btn"><div>Log In</div></div>
         </div>
       </div>
       <div className="lower-part">Lower part</div>
