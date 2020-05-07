@@ -10,7 +10,7 @@ const LoginForm = (props)=>{
       setState(e.target.value);
   }
 
-  const goHomePage = (e)=>{
+  const exitLoginForm = (e)=>{
     if (e.target.id === `overlay`) props.setDisplayLoginForm(false);
   }
 
@@ -32,7 +32,7 @@ const LoginForm = (props)=>{
   }
 
   const content = (
-    <div onClick={e=>goHomePage(e)}  className="overlay">
+    <div onClick={e=>exitLoginForm(e)}  className="overlay">
      <div id="overlay" className="container">
         <form onSubmit={(e)=>onSubmit(e)} className="form">
           <div>Log In</div>

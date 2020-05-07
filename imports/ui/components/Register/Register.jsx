@@ -14,7 +14,7 @@ const RegisterForm = (props)=>{
       setState(e.target.value);
   }
 
-  const goHomePage = (e)=>{
+  const exitRegisterForm = (e)=>{
     if (e.target.id === `overlay`) props.setDisplayRegisterForm(false);
   }
 
@@ -55,7 +55,7 @@ const RegisterForm = (props)=>{
   }
 
   const content = (
-    <div onClick={e=>goHomePage(e)}  id="overlay"  className="overlay">
+    <div onClick={e=>exitRegisterForm(e)}  id="overlay"  className="overlay">
      <div className="login-container">
         <form onSubmit={(e)=>onSubmit(e)} className="form register-form">
           <div>Register</div>
