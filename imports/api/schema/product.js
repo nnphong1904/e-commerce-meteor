@@ -9,23 +9,13 @@ const ProductSchema = new SimpleSchema({
           required:[true, 'no price']
         },
   rating: Number,
-  retail: {
-          type: Number, 
-          required: [true, 'no retail']
-        },
+  
   availableSize: {
           type: Array,
           required: [false]
         },
-  'availableSize.$':String,
-  color:{
-          type: Array,
-  },
-  'color.$': String
-  // sellerId: {
-  //         type: String,
-  //         required: [false]
-  //       }
+  'availableSize.$':Object,
+ 
 })
 
 export default ProductSchema;

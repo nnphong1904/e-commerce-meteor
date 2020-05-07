@@ -14,16 +14,3 @@ FlowRouter.route('/products',{
     mount(({component})=><App component={component}/>,{component: <div>abcd</div>});
   }
 })
-// FlowRouter.route('/login',{
-//   name:'login',
-//   action(){
-//     mount(()=><Login />,{});
-//   }
-// })
-
-// FlowRouter.route('/register',{
-//   name:'login',
-//   action(){
-//     mount(()=><RegisterForm />,{});
-//   }
-// })
