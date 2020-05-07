@@ -1,9 +1,11 @@
-import React, {useState, createRef} from 'react';
+import React, {useState, useContext} from 'react';
 import {Meteor} from 'meteor/meteor';
 import '../assets/css/Login.css';
-const LoginForm = (props)=>{
+
+const LoginForm = (props)=>{ 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('');
   const onChangeHandler = (e, setState)=>{
       setState(e.target.value);
   }
@@ -16,7 +18,14 @@ const LoginForm = (props)=>{
     e.preventDefault();
     console.log({email,password});
     Meteor.loginWithPassword(email,password,(err)=>{
-      console.log(err);
+     if (err){
+       setEmail(err);
+       return;
+     }
+     else {
+       console.log(Meteor.user());
+       FlowRouter.go('/');
+     }
     });
     setEmail('');
     setPassword('')
