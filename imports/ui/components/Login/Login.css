@@ -53,6 +53,21 @@
 	margin: 0 14.4% 0 14.4%;
 	outline-color: #b7b7b7;
 }
+.form > label > input::-webkit-input-placeholder {
+	padding-left: 10px;
+}
+.form > label > input::-moz-placeholder {
+	padding-left: 10px;
+}
+.form > label > input:-ms-input-placeholder {
+	padding-left: 10px;
+}
+.form > label > input::-ms-input-placeholder {
+	padding-left: 10px;
+}
+.form > label > input::placeholder {
+	padding-left: 10px;
+}
 
 .form > button {
 	width: 395px;
