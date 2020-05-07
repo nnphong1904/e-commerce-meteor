@@ -12,9 +12,17 @@ const ProductSchema = new SimpleSchema({
   
   availableSize: {
           type: Array,
-          required: [false]
+          required: [true,'what size?']
         },
-  'availableSize.$':Object,
+  'availableSize.$':{
+    type:Object
+  },
+  'availableSize.$.size':{
+    type: String
+  },
+  'availableSize.$.noItems':{
+    type: String
+  }
  
 })
 
