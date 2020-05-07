@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import '../assets/css/Navbar.css';
 import {Meteor} from 'meteor/meteor';
 import Logo from '../assets/image/logo.svg';
+import Cart from '../assets/image/cart.svg';
 import { withTracker } from 'meteor/react-meteor-data';
 
 const Navbar = (props)=>{
@@ -39,7 +40,7 @@ const Navbar = (props)=>{
                 <div>Log Out</div>
               </div>
             }
-     
+        <img src={Cart} className="Logo"/>     
         </div>
       </div>
       <div className="lower-part">Lower part</div>

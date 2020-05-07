@@ -1,4 +1,4 @@
-.login-overlay {
+.overlay {
 	position: fixed;
 	top: 0;
 	bottom: 0;
@@ -6,12 +6,12 @@
 	width: 100%;
 	background-color: rgba(0, 0, 0, 0.4);
 }
-.login-container {
+.container {
 	height: 100%;
 	position: relative;
 	font-family: Montserrat, sans-serif;
 }
-.login-form {
+.form {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -21,7 +21,7 @@
 	box-shadow: 0 14px 30px 0 rgba(0, 0, 0, 0.14);
 	background-color: #ffffff;
 }
-.login-form > div {
+.form > div {
 	width: 105px;
 	height: 42px;
 	font-size: 33px;
@@ -34,7 +34,7 @@
 	margin: 7.9% 40.5% 6.2% 40.5%;
 }
 
-.login-form > label > div {
+.form > label > div {
 	margin: 4.2% 0 8px 14.4%;
 	width: 45px;
 	height: 18px;
@@ -46,7 +46,7 @@
 	letter-spacing: normal;
 	color: #202124;
 }
-.login-form > label > input {
+.form > label > input {
 	width: 395px;
 	height: 46px;
 	border: solid 1px #b7b7b7;
@@ -55,7 +55,7 @@
 	outline-color: #b7b7b7;
 }
 
-.login-form > button {
+.form > button {
 	width: 395px;
 	height: 49px;
 	background-color: #ffa15f;
@@ -67,7 +67,7 @@
 	margin: 8% 14.4% 23.8%;
 }
 
-.login-form > .password-extension {
+.form > .password-extension {
 	margin: 0;
 	width: 395px;
 	height: 22px;
@@ -81,39 +81,20 @@
 	margin-left: 14.4%;
 	margin-top: 8%;
 }
-.login-form
+.form
 	> .password-extension
 	> .remember-password
 	> input {
 	position: relative;
 	opacity: 0;
 }
-.login-form
+.form
 	> .password-extension
 	> .remember-password:hover {
 	cursor: pointer;
 }
-.login-form
-	> .password-extension
-	> .remember-password
-	> .check-remember-custom {
-	width: 20px;
-	height: 20px;
-	background-color: coral;
-}
 
-.login-form
-	> .password-extension
-	> label::before {
-	content: '';
-	display: inline-block;
-	vertical-align: middle;
-	width: 20px;
-	height: 20px;
-	background: coral;
-}
-
-.login-form > .password-extension > div {
+.form > .password-extension > div {
 	font-size: 14px;
 	font-weight: 600;
 	font-stretch: normal;
@@ -124,6 +105,51 @@
 	display: inline;
 	margin-left: 51px;
 }
-.login-form > .password-extension > div:hover {
+.form > .password-extension > div:hover {
 	cursor: pointer;
+}
+.check-mark {
+	display: inline-block;
+	height: 22px;
+	width: 22px;
+	background-color: #ffa15f;
+	margin-right: 6px;
+	position: relative;
+	top: 5px;
+}
+
+.check-mark::after {
+	content: '';
+	position: absolute;
+	display: none;
+}
+
+.remember-password
+	input:checked
+	~ .check-mark::after {
+	display: block;
+}
+
+.remember-password .check-mark::after {
+	left: 7px;
+	top: 3px;
+	width: 5px;
+	height: 10px;
+	border: solid white;
+	border-width: 0 3px 3px 0;
+	transform: rotate(45deg);
+}
+
+.form .err-msg {
+	margin: 0;
+	height: 22px;
+	font-size: 14px;
+	font-weight: 500;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.83;
+	letter-spacing: normal;
+	text-align: center;
+	color: #f63f45;
+	width: 100%;
 }

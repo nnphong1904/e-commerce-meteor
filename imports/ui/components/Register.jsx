@@ -1,10 +1,12 @@
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
 import {Meteor} from 'meteor/meteor';
 import '../assets/css/Login.css';
+import '../assets/css/Register.css';
 
-const LoginForm = (props)=>{ 
+const RegisterForm = (props)=>{ 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
+  const [name, setName] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const onChangeHandler = (e, setState)=>{
       setState(e.target.value);
@@ -16,27 +18,38 @@ const LoginForm = (props)=>{
 
   const onSubmit = (e)=>{
     e.preventDefault();
-    console.log({email,password});
-    Meteor.loginWithPassword(email,password,(err)=>{
-     if (err){
-       setErrorMsg('Your e-mail/password is invalid');
-       return;
-     }
-     else {
-       console.log(Meteor.user());
-       FlowRouter.go('/');
-     }
-    });
+    console.log({email,password,name});
+    // Meteor.loginWithPassword(email,password,(err)=>{
+    //  if (err){
+    //    setErrorMsg('Your e-mail/password is invalid');
+    //    return;
+    //  }
+    //  else {
+    //    console.log(Meteor.user());
+    //    FlowRouter.go('/');
+    //  }
+    // });
     setEmail('');
     setPassword('')
+    setName('');
   }
 
   const content = (
     <div onClick={e=>goHomePage(e)}  className="overlay">
-     <div id="overlay" className="container">
-        <form onSubmit={(e)=>onSubmit(e)} className="form">
-          <div>Log In</div>
+     <div id="overlay" className="login-container">
+        <form onSubmit={(e)=>onSubmit(e)} className="form register-form">
+          <div>Register</div>
           {errorMsg && <div className="err-msg">{errorMsg}</div>}
+          <label className="label-name">
+            <div>Name</div>
+            <input 
+            value={name}
+            onChange={(e)=>onChangeHandler(e,setName)}
+            className="name" 
+            type="text" 
+            name="name" 
+            placeholder="Enter your name..."/>
+          </label>
           <label className="label-email" >
             <div>Email</div>
             <input 
@@ -57,15 +70,9 @@ const LoginForm = (props)=>{
             name="password" 
             placeholder="Enter your password..."/>
           </label>
-          <div className="password-extension">
-            <label className="remember-password">
-              <input className="check-boxed" type="checkbox"/>
-              <span className="check-mark"></span>
-              <span>Remember Password</span>  
-            </label>
-            <div>Forgot your password?</div>
-          </div>
-          <button className="submit-login-form">Log In</button>
+          <div className="policy">By creating an account your agree to the <i>Terms of service</i> and <i>Privacy Policy</i></div>
+          <button className="submit-register-form">Register</button>
+          <div className="have-account">Do you have account? <i>Log in</i></div>
         </form>
      </div>
     </div>
@@ -73,4 +80,4 @@ const LoginForm = (props)=>{
   return content;
 }
 
-export default LoginForm;
+export default RegisterForm;
