@@ -9,7 +9,7 @@ const RegisterForm = (props)=>{
   const [name, setName] = useState('');
   const [errorName, setErrorName] = useState('');
   const [errorEmail, setErrorEmail] = useState('');
-  const [ErrorPassword, setErrorPassword] = useState('');
+  const [errorPassword, setErrorPassword] = useState('');
   const onChangeHandler = (e, setState)=>{
       setState(e.target.value);
   }
@@ -93,11 +93,11 @@ const RegisterForm = (props)=>{
             type="password" 
             name="password" 
             placeholder="Enter your password..."/>
-            <div className="err-msg">{ErrorPassword}</div>
+            <div className="err-msg">{errorPassword}</div>
           </label>
-          <div className="policy">By creating an account your agree to the <i>Terms of service</i> and <i>Privacy Policy</i></div>
+          <div className="policy">By creating an account your agree to the <a>Terms of service</a> and <a>Privacy Policy</a></div>
           <button className="submit-register-form">Register</button>
-          <div className="have-account">Do you have account? <i onClick={goLoginForm}>Log in</i></div>
+          <div className="have-account">Do you have account? <a onClick={goLoginForm}>Log in</a></div>
         </form>
      </div>
     </div>

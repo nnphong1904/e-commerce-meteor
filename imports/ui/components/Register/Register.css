@@ -15,7 +15,7 @@
 	color: #202124;
 }
 
-.form.register-form .policy i {
+.form.register-form .policy a {
 	color: #ff7413;
 	font-style: normal;
 	font-weight: bold;
@@ -25,7 +25,10 @@
 .form.register-form button {
 	margin-bottom: 0;
 }
-.form.register-form .have-account i {
+.form.register-form button:hover {
+	background-color: #ff7412;
+}
+.form.register-form .have-account a {
 	color: #ff7413;
 	font-style: normal;
 	font-weight: bold;

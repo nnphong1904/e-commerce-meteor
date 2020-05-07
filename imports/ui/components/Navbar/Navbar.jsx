@@ -35,12 +35,12 @@ const Navbar = (props)=>{
         <div className="auth">
             { props.currentUser===null &&
               <>
-                <div onClick={registerBtnClick} className="register-btn">Register</div>
-                  <div 
+                <button onClick={registerBtnClick} className="register-btn">Register</button>
+                  <button 
                   onClick={loginBtnClick}
                   className="login-btn">
                   <div>Log In</div>
-                </div>
+                </button>
               </>
             }
             { props.currentUser !== null &&

@@ -65,6 +65,9 @@
 	font-size: 14px;
 	margin: 8% 14.4% 23.8%;
 }
+.form > button:hover {
+	background: #fb710d;
+}
 
 .form > .password-extension {
 	margin: 0;
