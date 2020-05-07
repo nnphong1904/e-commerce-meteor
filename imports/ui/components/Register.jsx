@@ -16,12 +16,12 @@ const RegisterForm = (props)=>{
   }
 
   const goHomePage = (e)=>{
-    if (e.target.id === `overlay`) FlowRouter.go('/');
-    console.log(e.target.id);
+    if (e.target.id === `overlay`) props.setDisplayRegisterForm(false);
   }
 
   const goLoginForm = ()=>{
-    FlowRouter.go('/login');
+    props.setDisplayLoginForm(true);
+    props.setDisplayRegisterForm(false)
   }
   const onSubmit = (e)=>{
     e.preventDefault();
@@ -68,8 +68,8 @@ const RegisterForm = (props)=>{
             name="name" 
             placeholder="Enter your name..."/>
             <div className="err-msg">{errorName}</div>
-          </label>a
-        
+          </label>
+                  
           <label className="label email" >
             <div>Email</div>
             <input 

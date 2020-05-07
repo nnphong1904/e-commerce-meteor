@@ -1,24 +1,25 @@
 import React from 'react';
 import {mount} from 'react-mounter';
 import Info from '../components/Info';
-import LoginForm from '../components/Login';
+import Login from '../components/Login';
 import RegisterForm from '../components/Register';
+import {App} from '../App';
 FlowRouter.route('/',{
   name:'home',
   action(){
-    mount(()=><div></div>,{});
+    mount(()=><App/>,{});
   }
 })
-FlowRouter.route('/login',{
-  name:'login',
-  action(){
-    mount(()=><LoginForm />,{});
-  }
-})
+// FlowRouter.route('/login',{
+//   name:'login',
+//   action(){
+//     mount(()=><Login />,{});
+//   }
+// })
 
-FlowRouter.route('/register',{
-  name:'login',
-  action(){
-    mount(()=><RegisterForm />,{});
-  }
-})
+// FlowRouter.route('/register',{
+//   name:'login',
+//   action(){
+//     mount(()=><RegisterForm />,{});
+//   }
+// })

@@ -3,11 +3,15 @@ import '../assets/css/Navbar.css';
 import {Meteor} from 'meteor/meteor';
 import Logo from '../assets/image/logo.svg';
 import Cart from '../assets/image/cart.svg';
+import Arrow from '../assets/image/arrow.svg';
 import { withTracker } from 'meteor/react-meteor-data';
+import LoginForm from './Login';
+import {App} from '../App'
+import { mount } from 'react-mounter/dist';
 
 const Navbar = (props)=>{
   const loginBtnClick = ()=>{
-    FlowRouter.go('/login');
+    props.setDisplayLoginForm(true);
   }
   
   const logoutBtnClick = ()=>{
@@ -17,7 +21,7 @@ const Navbar = (props)=>{
   }
 
   const registerBtnClick = ()=>{
-    FlowRouter.go("/register");
+    props.setDisplayRegisterForm(true);
   }
   
   const content = (
@@ -47,7 +51,47 @@ const Navbar = (props)=>{
         <img src={Cart} className="Logo"/>     
         </div>
       </div>
-      <div className="lower-part">Lower part</div>
+      {/* Lower-part of navbar */}
+      <div className="lower-part">
+            <ul className="gender-age-filter">
+               <li>
+                <div>Men</div>
+                <img src={Arrow} className="Arrow"/> 
+              </li> 
+               <li>
+                <span>Ladies</span>
+                <img src={Arrow} className="Arrow"/>
+                <div id="forLadies" className="item-selector">
+              </div> 
+               </li> 
+               <li>
+                <span>Boys</span>
+                <img src={Arrow} className="Arrow"/>
+                <div id="forBoys" className="item-selector">
+                 
+              </div> 
+               </li> 
+               <li>
+                <span>Girls</span>
+                <img src={Arrow} className="Arrow"/>
+                <div id="forGirls" className="item-selector">
+                 
+              </div> 
+               </li>
+            </ul>
+            <div id="forMen" className="item-selector">
+                  <ul className="list-item-title">
+                    <li>Tops</li>
+                    <li>Bottoms</li>
+                    <li>Dresses</li>
+                    <li>Jackets</li>
+                    <li>Shoes</li>
+                    <li>Accessories</li>
+                    <li>Sale</li>
+                  </ul>
+            </div>
+      </div>
+      
     </div>
   );
   return content;

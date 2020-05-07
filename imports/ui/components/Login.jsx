@@ -11,7 +11,7 @@ const LoginForm = (props)=>{
   }
 
   const goHomePage = (e)=>{
-    if (e.target.id === `overlay`) FlowRouter.go('/');
+    if (e.target.id === `overlay`) props.setDisplayLoginForm(false);
   }
 
   const onSubmit = (e)=>{
@@ -24,7 +24,7 @@ const LoginForm = (props)=>{
      }
      else {
        console.log(Meteor.user());
-       FlowRouter.go('/');
+       props.setDisplayLoginForm(false);
      }
     });
     setEmail('');
