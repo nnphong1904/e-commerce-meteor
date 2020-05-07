@@ -52,8 +52,10 @@
 	margin: 0.5% 0 0 13%;
 	display: flex;
 	justify-content: space-between;
+	z-index: -1;
 }
 .filter-container .filter-card {
+	z-index: -1;
 	width: 24%;
 	background-image: url('static/imports/ui/assets/image/filter_card_background.jpg');
 	background-position: 0px -50px;

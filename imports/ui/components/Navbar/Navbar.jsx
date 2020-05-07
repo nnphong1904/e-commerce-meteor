@@ -12,7 +12,10 @@ const Navbar = (props)=>{
   const [userProfile, setUserProfile] =useState({});
   useEffect(() => {
     Meteor.call('getCurrentUser', {}, (err,result)=>{
-      setUserProfile({...result.data.profile});
+      if (result.data!==null) 
+      {
+        setUserProfile({...result.data.profile});
+      }
     })
   }, [])
   const loginBtnClick = ()=>{
