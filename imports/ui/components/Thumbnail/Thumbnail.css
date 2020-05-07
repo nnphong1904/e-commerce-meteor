@@ -1,0 +1,46 @@
+.thumbnail-container {
+	margin: 2.8% 0 0 13%;
+	width: 72vw;
+	height: 48vh;
+	background: url('static/imports/ui/assets/image/thumbnail_background.jpg')
+		no-repeat;
+	background-size: cover;
+	background-position: 0px -150px;
+	position: relative;
+}
+
+.thumbnail-container .thumbnail-title {
+	width: 545px;
+	height: 45px;
+	font-family: Domine;
+	font-size: 48px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 0.94;
+	letter-spacing: normal;
+	text-align: right;
+	color: white;
+	position: absolute;
+	top: 30px;
+	right: 40px;
+}
+
+.thumbnail-container button {
+	width: 180px;
+	height: 49px;
+	background-color: #ffa15f;
+	font-family: Montserrat;
+	font-size: 16px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.5;
+	letter-spacing: normal;
+	text-align: center;
+	color: white;
+	border: none;
+	position: absolute;
+	bottom: 30px;
+	right: 40px;
+}
