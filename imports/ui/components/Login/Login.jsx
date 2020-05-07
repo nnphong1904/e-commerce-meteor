@@ -63,7 +63,7 @@ const LoginForm = (props)=>{
               <span className="check-mark"></span>
               <span>Remember Password</span>  
             </label>
-            <div>Forgot your password?</div>
+            <a>Forgot your password?</a>
           </div>
           <button className="submit-login-form">Log In</button>
         </form>

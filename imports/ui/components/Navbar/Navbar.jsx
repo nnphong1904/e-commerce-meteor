@@ -5,9 +5,8 @@ import Logo from '../../assets/image/logo.svg';
 import Cart from '../../assets/image/cart.svg';
 import Arrow from '../../assets/image/arrow.svg';
 import { withTracker } from 'meteor/react-meteor-data';
-import LoginForm from '../Login';
-import {App} from '../../App'
-import { mount } from 'react-mounter/dist';
+import Avatar from 'react-avatar';
+
 
 const Navbar = (props)=>{
   const loginBtnClick = ()=>{
@@ -43,12 +42,14 @@ const Navbar = (props)=>{
                 </button>
               </>
             }
-            { props.currentUser !== null &&
-              <div onClick={logoutBtnClick} className="login-btn">
-                <div>Log Out</div>
-              </div>
+            {
+              props.currentUser !== null &&
+              <span id="avt"><Avatar name="Foo Bar" size={25} round={true}/></span>
             }
-        <img src={Cart} className="Logo"/>     
+            { props.currentUser !== null &&
+              <button onClick={logoutBtnClick} className="logout-btn">Log Out</button>
+            }
+        <img src={Cart} className="Cart"/>     
         </div>
       </div>
       {/* Lower-part of navbar */}

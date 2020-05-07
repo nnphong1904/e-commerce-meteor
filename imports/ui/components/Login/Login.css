@@ -52,6 +52,7 @@
 	background-color: #f6f6f6;
 	margin: 0 14.4% 0 14.4%;
 	outline-color: #b7b7b7;
+	padding-left: 10px;
 }
 .form > label > input::-webkit-input-placeholder {
 	padding-left: 10px;
@@ -111,7 +112,7 @@
 	cursor: pointer;
 }
 
-.form > .password-extension > div {
+.form > .password-extension > a {
 	font-size: 14px;
 	font-weight: 600;
 	font-stretch: normal;
