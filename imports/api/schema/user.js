@@ -12,11 +12,6 @@ const UserSchema = new SimpleSchema({
   name: {
     type: String,
     required: [true, 'what is your name?']  
-   },
-  role: {
-    type: String,
-    required: [true, 'Are you seller or customer?'],
-
    }
 });
 

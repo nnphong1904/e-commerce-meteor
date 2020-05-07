@@ -1,11 +1,17 @@
-import React from 'react';
-import { Hello } from './Hello.jsx';
-import { Info } from './Info.jsx';
+import React, { useState } from 'react';
+import { Info } from './components/Info.jsx';
+import Navbar from './components/Navbar/Navbar.jsx';
+import LoginForm from './components/Login/Login.jsx';
+import RegisterForm from './components/Register/Register.jsx';
 
-export const App = () => (
+export const App = () => {
+  const [displayLoginForm, setDisplayLoginForm] = useState(false);
+  const [displayRegisterForm, setDisplayRegisterForm] = useState(false);
+  const content = (
   <div>
-    <h1>Welcome to Meteor Project!</h1>
-    <Hello/>
-    <Info/>
-  </div>
-);
+    <Navbar setDisplayLoginForm={setDisplayLoginForm} setDisplayRegisterForm={setDisplayRegisterForm} />
+    {displayLoginForm && <LoginForm  setDisplayLoginForm={setDisplayLoginForm}/>}
+    {displayRegisterForm && <RegisterForm setDisplayRegisterForm={setDisplayRegisterForm} setDisplayLoginForm={setDisplayLoginForm}/>}
+  </div>);
+  return content;
+}

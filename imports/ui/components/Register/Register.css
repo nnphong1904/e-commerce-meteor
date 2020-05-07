@@ -1,0 +1,60 @@
+.form.register-form {
+	height: 703px;
+}
+.form.register-form .policy {
+	margin: 5.8% 0 0 24.5%;
+	width: 284px;
+	height: 44px;
+	font-size: 14px;
+	font-weight: normal;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.57;
+	letter-spacing: normal;
+	text-align: center;
+	color: #202124;
+}
+
+.form.register-form .policy a {
+	color: #ff7413;
+	font-style: normal;
+	font-weight: bold;
+	border-bottom: 1px solid #ff7413;
+	padding-bottom: 2px;
+}
+.form.register-form button {
+	margin-bottom: 0;
+}
+.form.register-form button:hover {
+	background-color: #ff7412;
+}
+.form.register-form .have-account a {
+	color: #ff7413;
+	font-style: normal;
+	font-weight: bold;
+	border-bottom: 1px solid #ff7413;
+	padding-bottom: 2px;
+}
+.form.register-form .have-account {
+	margin: 0;
+	height: 49px;
+	position: absolute;
+	border-top: 1px solid rgba(0, 0, 0, 0.08);
+	bottom: 0;
+	font-size: 15px;
+	font-weight: 500;
+	font-stretch: normal;
+	font-style: normal;
+	width: 100%;
+	line-height: 1.57;
+	letter-spacing: normal;
+	color: #4d4d4d;
+	padding-top: 5%;
+}
+
+.form.register-form .label div {
+	width: 300px;
+	margin-left: 14.4%;
+	text-align: left;
+	margin-top: 0;
+}
