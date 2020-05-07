@@ -1,7 +1,7 @@
-import UserCollection from '../user';
+import { Accounts } from 'meteor/accounts-base';
 export const addUser = (newUser)=>{
   try{
-    UserCollection.insert(addUser);
+    Accounts.createUser(newUser);
     return {success: true, msg: 'add success'};
   }
   catch(err){

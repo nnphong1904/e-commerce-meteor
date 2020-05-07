@@ -7,13 +7,17 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 const Navbar = (props)=>{
   const loginBtnClick = ()=>{
-    FlowRouter.go('/login')
+    FlowRouter.go('/login');
   }
   
   const logoutBtnClick = ()=>{
     Meteor.logout((err)=>{
       console.log(err);
     })
+  }
+
+  const registerBtnClick = ()=>{
+    FlowRouter.go("/register");
   }
   
   const content = (
@@ -27,7 +31,7 @@ const Navbar = (props)=>{
         <div className="auth">
             { props.currentUser===null &&
               <>
-                <div className="register-btn">Register</div>
+                <div onClick={registerBtnClick} className="register-btn">Register</div>
                   <div 
                   onClick={loginBtnClick}
                   className="login-btn">
@@ -50,6 +54,7 @@ const Navbar = (props)=>{
 }
 
 export default withTracker(()=>{
+  
   return {
     currentUser: Meteor.user()
   }

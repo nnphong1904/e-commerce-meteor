@@ -1,6 +1,6 @@
 import React from 'react';
 import {mount} from 'react-mounter';
-import App from '../App';
+import Info from '../components/Info';
 import LoginForm from '../components/Login';
 import RegisterForm from '../components/Register';
 FlowRouter.route('/',{

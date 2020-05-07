@@ -49,3 +49,10 @@
 	color: #4d4d4d;
 	padding-top: 5%;
 }
+
+.form.register-form .label div {
+	width: 300px;
+	margin-left: 14.4%;
+	text-align: left;
+	margin-top: 0;
+}
