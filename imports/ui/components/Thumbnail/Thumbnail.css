@@ -4,9 +4,10 @@
 	height: 48vh;
 	background: url('static/imports/ui/assets/image/thumbnail_background.jpg')
 		no-repeat;
-	background-size: cover;
-	background-position: 0px -150px;
+	background-size: fixed;
+	background-position: -150px -150px;
 	position: relative;
+	z-index: -1;
 }
 
 .thumbnail-container .thumbnail-title {
