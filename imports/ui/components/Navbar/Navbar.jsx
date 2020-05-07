@@ -80,7 +80,7 @@ const Navbar = (props)=>{
               </div> 
                </li>
             </ul>
-            <div id="forMen" className="item-selector">
+            <div className="item-selector">
                   <ul className="list-item-title">
                     <li>Tops</li>
                     <li>Bottoms</li>

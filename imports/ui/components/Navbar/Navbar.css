@@ -183,7 +183,10 @@
 	padding: 0 15px 0 15px;
 	position: absolute;
 	left: 50%;
-	top: 129px;
+	top: 110px;
+}
+.navbar .lower-part .item-selector:hover {
+	transform: scaleY(1) translateX(-50%);
 }
 .navbar .item-selector .list-item-title {
 	display: flex;
