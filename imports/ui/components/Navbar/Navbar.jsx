@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import '../assets/css/Navbar.css';
+import './Navbar.css';
 import {Meteor} from 'meteor/meteor';
-import Logo from '../assets/image/logo.svg';
-import Cart from '../assets/image/cart.svg';
-import Arrow from '../assets/image/arrow.svg';
+import Logo from '../../assets/image/logo.svg';
+import Cart from '../../assets/image/cart.svg';
+import Arrow from '../../assets/image/arrow.svg';
 import { withTracker } from 'meteor/react-meteor-data';
-import LoginForm from './Login';
-import {App} from '../App'
+import LoginForm from '../Login';
+import {App} from '../../App'
 import { mount } from 'react-mounter/dist';
 
 const Navbar = (props)=>{

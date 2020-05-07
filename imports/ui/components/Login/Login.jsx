@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import {Meteor} from 'meteor/meteor';
-import '../assets/css/Login.css';
+import './Login.css';
 
 const LoginForm = (props)=>{ 
   const [email, setEmail] = useState('');

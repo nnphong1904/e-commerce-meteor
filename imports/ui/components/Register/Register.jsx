@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import {Meteor} from 'meteor/meteor';
-import UserCollection from '../../api/user';
-import '../assets/css/Login.css';
-import '../assets/css/Register.css';
+import '../Login/Login.css';
+import './Register.css';
 
 const RegisterForm = (props)=>{ 
   const [email, setEmail] = useState('');
@@ -25,6 +24,9 @@ const RegisterForm = (props)=>{
   }
   const onSubmit = (e)=>{
     e.preventDefault();
+    if (errorName===''){
+      setErrorName('Please fill in your name');
+    }
     if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
       setErrorEmail('Your email is invalid');
     }
@@ -69,7 +71,7 @@ const RegisterForm = (props)=>{
             placeholder="Enter your name..."/>
             <div className="err-msg">{errorName}</div>
           </label>
-                  
+
           <label className="label email" >
             <div>Email</div>
             <input 

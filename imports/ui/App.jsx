@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Info } from './components/Info.jsx';
-import Navbar from './components/Navbar';
-import LoginForm from './components/Login.jsx';
-import RegisterForm from './components/Register.jsx';
+import Navbar from './components/Navbar/Navbar.jsx';
+import LoginForm from './components/Login/Login.jsx';
+import RegisterForm from './components/Register/Register.jsx';
 
 export const App = () => {
   const [displayLoginForm, setDisplayLoginForm] = useState(false);
