@@ -1,7 +1,7 @@
 import React from 'react';
 import background from '../../assets/image/thumbnail_background.jpg';
-import './Thumbnail.css';
-const Thumbnail = ()=>{
+import './Homepage.css';
+const Homepage = ()=>{
   const content = (
    <>
       <div className="thumbnail-container">
@@ -31,4 +31,4 @@ const Thumbnail = ()=>{
   return content;
 }
 
-export default Thumbnail;
+export default Homepage;

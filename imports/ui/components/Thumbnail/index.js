@@ -1,2 +1,2 @@
-import Thumbnail from './Thumbnail';
-export default Thumbnail;
+import Homepage from './Homepage';
+export default Homepage;
