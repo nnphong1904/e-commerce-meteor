@@ -9,7 +9,7 @@ const UserSchema = new SimpleSchema({
     type: String,
     required: [true, 'what is your password?']  
    },
-  name: {
+  profile: {
     type: String,
     required: [true, 'what is your name?']  
    }

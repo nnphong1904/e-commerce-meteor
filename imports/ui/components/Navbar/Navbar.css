@@ -167,6 +167,7 @@
 	margin-right: 19px;
 }
 .navbar .lower-part .item-selector {
+	z-index: 1;
 	transform: scaleY(0) translateX(-50%);
 	transition: all 0.3s;
 	height: 55px;

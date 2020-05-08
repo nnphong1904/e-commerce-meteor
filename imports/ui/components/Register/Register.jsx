@@ -24,21 +24,21 @@ const RegisterForm = (props)=>{
   }
   const onSubmit = (e)=>{
     e.preventDefault();
-    if (errorName===''){
-      setErrorName('Please fill in your name');
-    }
+    // if (errorName===''){
+    //   setErrorName('Please fill in your name');
+    // }
     if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
       setErrorEmail('Your email is invalid');
     }
     if (password.length <6){
       setErrorPassword('Your password must be more than 6 characters');
     }
-    const newUser = {name,email,password, role:0};
+    const newUser = {email,password, profile: {name,role:0}};
     try{
       Meteor.call('addUser',newUser,(err,result)=>{
        if (!err){
          Meteor.loginWithPassword(email, password,(err)=>{
-            FlowRouter.go('/');
+          props.setDisplayRegisterForm(false)
          })
        }
        else {

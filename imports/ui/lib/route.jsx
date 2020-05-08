@@ -1,25 +1,17 @@
 import React from 'react';
 import {mount} from 'react-mounter';
-import Info from '../components/Info';
-import Login from '../components/Login';
-import RegisterForm from '../components/Register/Register';
 import {App} from '../App';
+import Thumbnail from '../components/Thumbnail/Homepage.jsx';
 FlowRouter.route('/',{
   name:'home',
   action(){
-    mount(()=><App/>,{});
+    mount(({component})=><App component={component}/>,{component: <Thumbnail/>});
   }
 })
-// FlowRouter.route('/login',{
-//   name:'login',
-//   action(){
-//     mount(()=><Login />,{});
-//   }
-// })
+FlowRouter.route('/products',{
+  name:'products',
+  action(){
+    mount(({component})=><App component={component}/>,{component: <div>Developing</div>});
+  }
+})
 
-// FlowRouter.route('/register',{
-//   name:'login',
-//   action(){
-//     mount(()=><RegisterForm />,{});
-//   }
-// })

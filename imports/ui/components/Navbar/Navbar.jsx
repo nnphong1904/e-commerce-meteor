@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './Navbar.css';
 import {Meteor} from 'meteor/meteor';
 import Logo from '../../assets/image/logo.svg';
@@ -9,6 +9,15 @@ import Avatar from 'react-avatar';
 
 
 const Navbar = (props)=>{
+  const [userProfile, setUserProfile] =useState({});
+  useEffect(() => {
+    Meteor.call('getCurrentUser', {}, (err,result)=>{
+      if (result.data!==null) 
+      {
+        setUserProfile({...result.data.profile});
+      }
+    })
+  }, [])
   const loginBtnClick = ()=>{
     props.setDisplayLoginForm(true);
   }
@@ -44,7 +53,7 @@ const Navbar = (props)=>{
             }
             {
               props.currentUser !== null &&
-              <span id="avt"><Avatar name="Foo Bar" size={25} round={true}/></span>
+              <span id="avt"><Avatar name={userProfile.name} size={25} round={true}/></span>
             }
             { props.currentUser !== null &&
               <button onClick={logoutBtnClick} className="logout-btn">Log Out</button>
@@ -98,9 +107,8 @@ const Navbar = (props)=>{
   return content;
 }
 
-export default withTracker(()=>{
-  
+export default React.memo(withTracker(()=>{
   return {
-    currentUser: Meteor.user()
+    currentUser: Meteor.user(),
   }
-})(Navbar);
+})(Navbar));

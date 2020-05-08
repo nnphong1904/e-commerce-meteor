@@ -10,7 +10,7 @@ export const Info = () => {
   const [color, setColors] = useState([]);
   // const [content, setContent] = useState('');
  // const [content, setContent] = useState('');
-  
+
   const [products, setProducts] = useState([]);
   useEffect(() => {
      Meteor.call('fetchProduct', {}, (err,result)=>{
@@ -18,6 +18,7 @@ export const Info = () => {
         setProducts([...result.data]);
       });
   },[]);
+  console.log(products);
   const submitHandle = (e)=>{
     const newProduct ={
       name,
