@@ -9,11 +9,11 @@ export const App = ({component}) => {
   const [displayLoginForm, setDisplayLoginForm] = useState(false);
   const [displayRegisterForm, setDisplayRegisterForm] = useState(false);
   const content = (
-  <div>
+  <>
     <Navbar setDisplayLoginForm={setDisplayLoginForm} setDisplayRegisterForm={setDisplayRegisterForm} />
     {displayLoginForm && <LoginForm  setDisplayLoginForm={setDisplayLoginForm}/>}
     {displayRegisterForm && <RegisterForm setDisplayRegisterForm={setDisplayRegisterForm} setDisplayLoginForm={setDisplayLoginForm}/>}
     {component}
-  </div>);
+  </>);
   return content;
 }
