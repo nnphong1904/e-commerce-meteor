@@ -18,11 +18,16 @@ const ProductPage = ()=>{
   },[])
 
   const content = (
-    <div className="product-page-container">
-      {products.length>0 && 
-        products.map(product => <ProductCard key={product.decId} product={product} />)
-      }
-    </div>
+
+      <>
+        <div className="filter-value">Ladies/Dresses</div>
+         <div className="product-page-container">
+            {products.length>0 &&
+              products.map(product => <ProductCard key={product.decId} product={product} />)
+            }
+         </div>
+
+      </> 
   );
 
   return content;

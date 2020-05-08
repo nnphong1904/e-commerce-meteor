@@ -3,7 +3,7 @@
 	width: 61%;
 	justify-content: space-around;
 	flex-wrap: wrap;
-	margin: 150px 0 0 31%;
+	margin: 10px 0 0 31%;
 	font-family: Montserrat, sans-serif;
 }
 .product-card-container {
@@ -38,5 +38,20 @@
 	font-style: normal;
 	line-height: 1.83;
 	letter-spacing: normal;
+	color: #4d4d4d;
+}
+
+.filter-value {
+	text-align: center;
+	margin-top: 3%;
+	width: 100%;
+	height: 22px;
+	font-size: 14px;
+	font-weight: normal;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.57;
+	letter-spacing: normal;
+	text-align: center;
 	color: #4d4d4d;
 }
