@@ -1,7 +1,9 @@
 import React from 'react';
 import {mount} from 'react-mounter';
 import {App} from '../App';
-import Homepage from '../components/Thumbnail/Homepage.jsx';
+import Homepage from '../components/Homepage/Homepage.jsx';
+import ProductPage from '../components/ProductPage/ProductPage.jsx';
+
 FlowRouter.route('/',{
   name:'home',
   action(){
@@ -11,7 +13,7 @@ FlowRouter.route('/',{
 FlowRouter.route('/products',{
   name:'products',
   action(){
-    mount(({component})=><App component={component}/>,{component: <div>Developing</div>});
+    mount(({component})=><App component={component}/>,{component: <ProductPage/>});
   }
 })
 
