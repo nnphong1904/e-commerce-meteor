@@ -11,7 +11,7 @@ FlowRouter.route('/',{
 FlowRouter.route('/products',{
   name:'products',
   action(){
-    mount(({component})=><App component={component}/>,{component: <div>abcd</div>});
+    mount(({component})=><App component={component}/>,{component: <div>Developing</div>});
   }
 })
 
