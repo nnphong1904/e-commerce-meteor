@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import {addProduct, fetchProduct} from '../imports/api/method/product'
+import {addProduct, fetchProduct, fetchProductBySize} from '../imports/api/method/product'
 import {addUser, getCurrentUser} from '../imports/api/method/user';
 import  UsersCollection  from '../imports/api/user';
 import  ProductCollection from '../imports/api/product';
@@ -13,7 +13,8 @@ Meteor.startup(() => {
     addProduct,
     fetchProduct,
     addUser,
-    getCurrentUser
+    getCurrentUser,
+    fetchProductBySize
   })
 });
  

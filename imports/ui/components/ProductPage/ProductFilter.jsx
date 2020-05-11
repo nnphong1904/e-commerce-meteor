@@ -1,7 +1,7 @@
 import React, { createRef } from 'react';
 import Arrow from '../../assets/image/arrow.svg'
 
-const ProductFilter = ()=>{
+const ProductFilter = ({filterBySize})=>{
 
   const filterSizeRef = createRef();
 
@@ -47,7 +47,7 @@ const ProductFilter = ()=>{
             <img src={Arrow}/>
           </a>
           <div ref={filterSizeRef} className="selector-container">
-              <button className="box-selector-holder">S</button>
+              <button onClick={()=>filterBySize('2XL')} className="box-selector-holder">S</button>
               <button className="box-selector-holder">M</button>
               <button className="box-selector-holder">L</button>
           </div>
