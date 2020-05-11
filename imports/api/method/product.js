@@ -10,6 +10,7 @@ export const addProduct = (product)=>{
 }
 
 export const fetchProduct = async (condition)=>{
+  console.log(condition);
   try{
     const result = await ProductCollection.find(condition).fetch();
     return {success: true, data: result};

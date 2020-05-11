@@ -1,21 +1,25 @@
-import React, { createRef } from 'react';
+import React, { createRef, useState } from 'react';
 import Arrow from '../../assets/image/arrow.svg'
 
-const ProductFilter = ({fetchNoFilterProduct ,filterBySize})=>{
+const ProductFilter = ({fetchProduct ,filterBySize})=>{
 
   const filterSizeRef = createRef();
-
+  const [priceValue, setPriceValue]=useState('39');
   const toggleFilterList = (ref)=>{
     ref.current.style.display=ref.current.style.display===''?'block':'';
-
   }
-
+  const onChangeHandler = (e, setState)=>{
+    setState(e.target.value);
+  }
+  const filterHandler = (condition)=>{
+    fetchProduct(condition);
+  }
   const content = (
     <div className="product-filter-container">
       <div className="filter-title">Category</div>
       <ul className="category-content-container">
         <li key={0} className="category-detail">
-          <button onClick={fetchNoFilterProduct}><span>All</span> Dresses</button>
+          <button onClick={({})=>fetchProduct({})}><span>All</span> Dresses</button>
         </li>
         <li key={1} className="category-detail">
           <button>Rompers/Jumpsuits</button>
@@ -69,6 +73,19 @@ const ProductFilter = ({fetchNoFilterProduct ,filterBySize})=>{
             <div className="title">Price</div>
             <img src={Arrow}/>
           </a>
+          <input  
+            type="range" 
+            title={priceValue}
+            onMouseUp={()=>filterHandler({price:parseInt(priceValue)})} 
+            onChange={(e)=>{onChangeHandler(e, setPriceValue)}} 
+            min="69" max="300" 
+            className="price-slider" 
+            value={priceValue}/>
+          <div className="price-text-holder">
+            <div className="min-price">$39</div>
+            <div>{priceValue}</div>
+            <div className="max-price">$300</div>
+          </div>
         </li>
         <li className="filter-detail">
           <a className="filter-holder">
