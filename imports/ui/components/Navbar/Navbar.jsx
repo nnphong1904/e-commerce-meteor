@@ -19,7 +19,7 @@ const Navbar = (props)=>{
         setUserProfile({...result.data.profile});
       }
     })
-  }, [])
+  }, [props.currentUser]);
   const loginBtnClick = ()=>{
     props.setDisplayLoginForm(true);
   }
