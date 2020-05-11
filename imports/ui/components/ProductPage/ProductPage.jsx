@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
+import ProductFilter from './ProductFilter';
 import './ProductPage.css';
 const ProductPage = ()=>{
   const [products, setProducts] = useState([]);
@@ -21,11 +22,12 @@ const ProductPage = ()=>{
 
       <>
         <div className="filter-value">Ladies/Dresses</div>
-         <div className="product-page-container">
+        <div className="product-page-container">
+          <ProductFilter/>
             {products.length>0 &&
               products.map(product => <ProductCard key={product.decId} product={product} />)
             }
-         </div>
+        </div>
 
       </> 
   );

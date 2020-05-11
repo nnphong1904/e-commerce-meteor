@@ -18,9 +18,8 @@
 	width: 100%;
 }
 
-.product-card-container .product-title {
+.product-card-container .product-name {
 	width: 100%;
-	height: 40px;
 	font-size: 14px;
 	font-weight: 500;
 	font-stretch: normal;
@@ -28,6 +27,7 @@
 	line-height: 1.43;
 	letter-spacing: normal;
 	color: #202124;
+	margin: 5px 0 5px 0;
 }
 .product-card-container .product-price {
 	width: 100%;
@@ -54,4 +54,103 @@
 	letter-spacing: normal;
 	text-align: center;
 	color: #4d4d4d;
+}
+
+.product-filter-container {
+	position: absolute;
+	left: 13%;
+	top: 30%;
+	width: 200px;
+}
+
+.product-filter-container
+	.category-content-container
+	.category-detail {
+	list-style-type: none;
+	margin-bottom: 18px;
+}
+
+.product-filter-container .filter-title {
+	width: 77px;
+	height: 24px;
+	font-size: 20px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.5;
+	letter-spacing: normal;
+	color: #202124;
+	margin-bottom: 29px;
+}
+.product-filter-container
+	.category-content-container
+	.category-detail
+	button {
+	background: none;
+	border: none;
+	font-size: 14px;
+	font-weight: normal;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.57;
+	letter-spacing: normal;
+	color: #202124;
+	transition: all 0.3s;
+}
+
+.product-filter-container
+	.category-content-container
+	.category-detail
+	button:hover {
+	color: #ff6900;
+}
+
+.product-filter-container
+	.category-content-container
+	.category-detail
+	button:focus {
+	color: #ff6900;
+	outline: none;
+	border: none;
+}
+
+.product-filter-container
+	.category-content-container
+	.category-detail
+	button
+	span {
+	border-bottom: 1px solid #979797;
+	padding-bottom: 10px;
+}
+
+.product-filter-container
+	.category-content-container
+	.category-detail:last-child {
+	padding-bottom: 62px;
+}
+.product-filter-container
+	.category-content-container {
+	margin-bottom: 80px;
+	border-bottom: solid 1px #979797;
+}
+
+.product-filter-container
+	.filter-content-container
+	.filter-detail {
+	list-style-type: none;
+	font-family: Montserrat;
+	font-size: 14px;
+	font-weight: normal;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.57;
+	letter-spacing: -0.1px;
+	color: #4d4d4d;
+}
+.product-filter-container
+	.filter-content-container
+	.filter-detail
+	.filter-holder {
+	display: flex;
+	justify-content: space-between;
 }
