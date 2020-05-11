@@ -6,7 +6,26 @@ const ProductFilter = ({fetchProduct ,filterBySize})=>{
   const filterSizeRef = createRef();
   const filterPriceRef = createRef();
   const priceTextHolderRef = createRef();
+
+  const arrowIconRefSize = createRef();
+  const arrowIconRefPrice = createRef();
+
+
   const [priceValue, setPriceValue]=useState('39');
+
+  const rotateArrowIcon = (ref)=>{
+    console.log(ref.current.style.transform);
+     if (ref.current.style.transform === '' )
+      {
+        ref.current.style.transform='rotate(180deg)';
+      }
+     else if (ref.current.style.transform==='rotate(180deg)'){
+        ref.current.style.transform = 'rotate(360deg)';
+        ref.current.style.transform='';
+     }
+
+  }
+
   const toggleFilter = (ref)=>{
     ref.current.style.display=ref.current.style.display===''?'block':'';
   }
@@ -51,9 +70,14 @@ const ProductFilter = ({fetchProduct ,filterBySize})=>{
       <div className="filter-title">Filter</div>
       <ul className="filter-content-container">
         <li className="filter-detail">
-          <a onClick={()=>{toggleFilter(filterSizeRef)}} className="filter-holder">
+          <a 
+          onClick={
+            ()=>{
+              toggleFilter(filterSizeRef);
+              rotateArrowIcon(arrowIconRefSize);
+              }} className="filter-holder">
             <div className="title">Size</div>
-            <img src={Arrow}/>
+            <img ref={arrowIconRefSize} className="Arrow" src={Arrow}/>
           </a>
           <div ref={filterSizeRef} className="selector-container">
               <button onClick={(e)=>filterBySize(e)} className="box-selector-holder">S</button>
@@ -78,10 +102,11 @@ const ProductFilter = ({fetchProduct ,filterBySize})=>{
               ()=>{
                 toggleFilter(filterPriceRef);
                 toggleTextPriceFilter();
+                rotateArrowIcon(arrowIconRefPrice);
                 }} 
                 className="filter-holder">
             <div className="title">Price</div>
-            <img src={Arrow}/>
+            <img ref={arrowIconRefPrice} className="Arrow" src={Arrow}/>
           </a>
           <input  
             type="range" 

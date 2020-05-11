@@ -187,6 +187,16 @@
 	font-weight: 800;
 }
 
+.product-filter-container
+	.filter-content-container
+	.filter-detail
+	.selector-container
+	.box-selector-holder:focus {
+	background: #ffa15f;
+	color: white;
+	font-weight: 800;
+}
+
 .product-card-container:hover {
 	transform: scale(1.1);
 }
@@ -240,4 +250,8 @@
 	.price-text-holder {
 	display: none;
 	justify-content: space-between;
+}
+
+.Arrow {
+	transition: all 0.3s;
 }
