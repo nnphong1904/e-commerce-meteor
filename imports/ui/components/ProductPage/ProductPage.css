@@ -200,7 +200,9 @@
 	appearance: none;
 	margin: 18px 0;
 	width: 100%;
+	display: none;
 }
+
 .product-filter-container
 	.filter-content-container
 	.filter-detail
@@ -236,6 +238,6 @@
 	.filter-content-container
 	.filter-detail
 	.price-text-holder {
-	display: flex;
+	display: none;
 	justify-content: space-between;
 }

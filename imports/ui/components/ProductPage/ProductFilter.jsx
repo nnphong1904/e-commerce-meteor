@@ -4,9 +4,14 @@ import Arrow from '../../assets/image/arrow.svg'
 const ProductFilter = ({fetchProduct ,filterBySize})=>{
 
   const filterSizeRef = createRef();
+  const filterPriceRef = createRef();
+  const priceTextHolderRef = createRef();
   const [priceValue, setPriceValue]=useState('39');
-  const toggleFilterList = (ref)=>{
+  const toggleFilter = (ref)=>{
     ref.current.style.display=ref.current.style.display===''?'block':'';
+  }
+  const toggleTextPriceFilter = ()=>{
+    priceTextHolderRef.current.style.display = priceTextHolderRef.current.style.display==='' ? 'flex' : '';
   }
   const onChangeHandler = (e, setState)=>{
     setState(e.target.value);
@@ -46,7 +51,7 @@ const ProductFilter = ({fetchProduct ,filterBySize})=>{
       <div className="filter-title">Filter</div>
       <ul className="filter-content-container">
         <li className="filter-detail">
-          <a onClick={()=>{toggleFilterList(filterSizeRef)}} className="filter-holder">
+          <a onClick={()=>{toggleFilter(filterSizeRef)}} className="filter-holder">
             <div className="title">Size</div>
             <img src={Arrow}/>
           </a>
@@ -69,19 +74,26 @@ const ProductFilter = ({fetchProduct ,filterBySize})=>{
           </a>
         </li>
         <li className="filter-detail">
-          <a className="filter-holder">
+          <a onClick={
+              ()=>{
+                toggleFilter(filterPriceRef);
+                toggleTextPriceFilter();
+                }} 
+                className="filter-holder">
             <div className="title">Price</div>
             <img src={Arrow}/>
           </a>
           <input  
             type="range" 
-            title={priceValue}
+            ref={filterPriceRef}
             onMouseUp={()=>filterHandler({price:parseInt(priceValue)})} 
             onChange={(e)=>{onChangeHandler(e, setPriceValue)}} 
-            min="69" max="300" 
+            min="39" max="300" 
             className="price-slider" 
-            value={priceValue}/>
-          <div className="price-text-holder">
+            value={priceValue}
+            step={1}
+            />
+          <div ref={priceTextHolderRef} className="price-text-holder">
             <div className="min-price">$39</div>
             <div>{priceValue}</div>
             <div className="max-price">$300</div>
