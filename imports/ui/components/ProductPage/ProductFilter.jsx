@@ -1,7 +1,7 @@
 import React, { createRef } from 'react';
 import Arrow from '../../assets/image/arrow.svg'
 
-const ProductFilter = ({filterBySize})=>{
+const ProductFilter = ({fetchNoFilterProduct ,filterBySize})=>{
 
   const filterSizeRef = createRef();
 
@@ -15,7 +15,7 @@ const ProductFilter = ({filterBySize})=>{
       <div className="filter-title">Category</div>
       <ul className="category-content-container">
         <li key={0} className="category-detail">
-          <button><span>All</span> Dresses</button>
+          <button onClick={fetchNoFilterProduct}><span>All</span> Dresses</button>
         </li>
         <li key={1} className="category-detail">
           <button>Rompers/Jumpsuits</button>
@@ -47,9 +47,9 @@ const ProductFilter = ({filterBySize})=>{
             <img src={Arrow}/>
           </a>
           <div ref={filterSizeRef} className="selector-container">
-              <button onClick={()=>filterBySize('2XL')} className="box-selector-holder">S</button>
-              <button className="box-selector-holder">M</button>
-              <button className="box-selector-holder">L</button>
+              <button onClick={(e)=>filterBySize(e)} className="box-selector-holder">S</button>
+              <button onClick={(e)=>filterBySize(e)} className="box-selector-holder">M</button>
+              <button onClick={(e)=>filterBySize(e)}  className="box-selector-holder">L</button>
           </div>
         </li>
         <li className="filter-detail">

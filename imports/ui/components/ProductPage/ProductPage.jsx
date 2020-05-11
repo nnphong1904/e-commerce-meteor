@@ -5,7 +5,7 @@ import './ProductPage.css';
 const ProductPage = ()=>{
   const [products, setProducts] = useState([]);
   console.log('rendering');
-  const fetchProduct = async ()=>{
+  const fetchNoFilterProduct = async ()=>{
     await Meteor.call('fetchProduct',{},(err,result)=>{
       if (!err) setProducts([...result.data]);
       else {
@@ -15,11 +15,12 @@ const ProductPage = ()=>{
   }
 
   useEffect(()=>{
-    fetchProduct();
+    fetchNoFilterProduct();
   },[])
 
-  const filterBySize = (size)=>{
-    Meteor.call('fetchProductBySize', {}, (err,result)=>{
+  const filterBySize = (e)=>{
+    const size = e.target.innerText;
+    Meteor.call('fetchProductBySize', size, (err,result)=>{
       setProducts([...result.data]);
     })
   };
@@ -30,7 +31,7 @@ const ProductPage = ()=>{
       <>
         <div className="filter-value">Ladies/Dresses</div>
         <div className="product-page-container">
-          <ProductFilter filterBySize={filterBySize}/>
+          <ProductFilter fetchNoFilterProduct={fetchNoFilterProduct} filterBySize={filterBySize}/>
             {products.length>0 &&
               products.map(product => <ProductCard key={product.decId} product={product} />)
             }

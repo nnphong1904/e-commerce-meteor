@@ -21,7 +21,7 @@ export const fetchProduct = async (condition)=>{
 
 export const fetchProductBySize = async (size)=>{
   try{
-    const result = await ProductCollection.find({'sizeList.size':'2XL'}).fetch();
+    const result = await ProductCollection.find({'sizeList.size':size}).fetch();
     console.log(result.data);
     return {success: true, data: result};
   }
