@@ -138,6 +138,7 @@
 .product-filter-container
 	.filter-content-container
 	.filter-detail {
+	position: relative;
 	list-style-type: none;
 	font-family: Montserrat;
 	font-size: 14px;
@@ -254,4 +255,9 @@
 
 .Arrow {
 	transition: all 0.3s;
+}
+
+#price-filter-2 {
+	position: absolute;
+	top: 25%;
 }

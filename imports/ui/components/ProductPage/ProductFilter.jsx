@@ -4,14 +4,16 @@ import Arrow from '../../assets/image/arrow.svg'
 const ProductFilter = ({fetchProduct ,filterBySize})=>{
 
   const filterSizeRef = createRef();
-  const filterPriceRef = createRef();
+  const filterPriceRef1 = createRef();
+  const filterPriceRef2 = createRef();
   const priceTextHolderRef = createRef();
 
   const arrowIconRefSize = createRef();
   const arrowIconRefPrice = createRef();
 
 
-  const [priceValue, setPriceValue]=useState('39');
+  const [priceValue1, setPriceValue1] = useState('39');
+  const [priceValue2, setPriceValue2] = useState('300');
 
   const rotateArrowIcon = (ref)=>{
     console.log(ref.current.style.transform);
@@ -35,8 +37,17 @@ const ProductFilter = ({fetchProduct ,filterBySize})=>{
   const onChangeHandler = (e, setState)=>{
     setState(e.target.value);
   }
-  const filterHandler = (condition)=>{
-    fetchProduct(condition);
+  const filterByPriceHandler = (price1, price2)=>{
+    let minPrice, maxPrice;
+    if (price1 <= price2){
+      minPrice = price1;
+      maxPrice = price2;
+    }
+    else {
+      minPrice = price2;
+      maxPrice = price1;
+    }
+    fetchProduct({$and:[{price:{$lte:maxPrice}},{price:{$gte:minPrice}}]});
   }
   const content = (
     <div className="product-filter-container">
@@ -100,7 +111,8 @@ const ProductFilter = ({fetchProduct ,filterBySize})=>{
         <li className="filter-detail">
           <a onClick={
               ()=>{
-                toggleFilter(filterPriceRef);
+                toggleFilter(filterPriceRef1);
+                toggleFilter(filterPriceRef2);
                 toggleTextPriceFilter();
                 rotateArrowIcon(arrowIconRefPrice);
                 }} 
@@ -109,18 +121,29 @@ const ProductFilter = ({fetchProduct ,filterBySize})=>{
             <img ref={arrowIconRefPrice} className="Arrow" src={Arrow}/>
           </a>
           <input  
+            id="price-filter-1"
             type="range" 
-            ref={filterPriceRef}
-            onMouseUp={()=>filterHandler({price:parseInt(priceValue)})} 
-            onChange={(e)=>{onChangeHandler(e, setPriceValue)}} 
+            ref={filterPriceRef1}
+            onMouseUp={()=>filterByPriceHandler(parseInt(priceValue1), parseInt(priceValue2))} 
+            onChange={(e)=>{onChangeHandler(e, setPriceValue1)}} 
             min="39" max="300" 
             className="price-slider" 
-            value={priceValue}
+            value={priceValue1}
             step={1}
             />
+            <input  
+            id="price-filter-2"
+            type="range" 
+            ref={filterPriceRef2}
+            onMouseUp={()=>filterByPriceHandler(parseInt(priceValue1), parseInt(priceValue2))} 
+            onChange={(e)=>{onChangeHandler(e, setPriceValue2)}} 
+            min="39" max="300" 
+            className="price-slider" 
+            value={priceValue2}
+           />
           <div ref={priceTextHolderRef} className="price-text-holder">
             <div className="min-price">$39</div>
-            <div>{priceValue}</div>
+            <div>{`price1: ${priceValue1} price2:${priceValue2}`}</div>
             <div className="max-price">$300</div>
           </div>
         </li>

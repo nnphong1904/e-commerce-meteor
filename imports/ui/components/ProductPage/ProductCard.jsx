@@ -4,7 +4,6 @@ const ProductCard = ({product})=>{
   const goProductInfo = (product)=>{
     FlowRouter.go(`/products/${product.name}`);
   }
-  //git setup
   const content = (
     <div onClick={()=>goProductInfo(product)} className="product-card-container">
       <img className="product-avt" src={product.avt}/>
