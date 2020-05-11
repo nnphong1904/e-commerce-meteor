@@ -8,6 +8,12 @@ const ProductFilter = ({fetchProduct ,filterBySize})=>{
   const filterPriceRef2 = createRef();
   const priceTextHolderRef = createRef();
 
+  const branchNameRef1 = createRef();
+  const branchNameRef2 = createRef();
+  const branchNameRef3 = createRef();
+  const branchNameRef4 = createRef();
+  const branchNameRef5 = createRef();
+
   const arrowIconRefSize = createRef();
   const arrowIconRefPrice = createRef();
 
@@ -15,8 +21,15 @@ const ProductFilter = ({fetchProduct ,filterBySize})=>{
   const [priceValue1, setPriceValue1] = useState('39');
   const [priceValue2, setPriceValue2] = useState('300');
 
+  const changeBranchNameColor = (ref)=>{
+    if (ref.current.style.color !== 'rgb(255, 161, 95)'){
+      ref.current.style.color = '#ffa15f'
+      return;
+    }
+    ref.current.style.color = '#4d4d4d';
+  }
   const rotateArrowIcon = (ref)=>{
-    console.log(ref.current.style.transform);
+      console.log(ref);
      if (ref.current.style.transform === '' )
       {
         ref.current.style.transform='rotate(180deg)';
@@ -37,6 +50,10 @@ const ProductFilter = ({fetchProduct ,filterBySize})=>{
   const onChangeHandler = (e, setState)=>{
     setState(e.target.value);
   }
+  const filterByCategory = (e)=>{
+    const category = e.target.innerText.toLowerCase();
+    fetchProduct({category:category});
+  }
   const filterByPriceHandler = (price1, price2)=>{
     let minPrice, maxPrice;
     if (price1 <= price2){
@@ -53,31 +70,32 @@ const ProductFilter = ({fetchProduct ,filterBySize})=>{
     <div className="product-filter-container">
       <div className="filter-title">Category</div>
       <ul className="category-content-container">
-        <li key={0} className="category-detail">
+        <li className="category-detail">
           <button onClick={({})=>fetchProduct({})}><span>All</span> Dresses</button>
         </li>
         <li key={1} className="category-detail">
-          <button>Rompers/Jumpsuits</button>
+          <button onClick={(e)=>filterByCategory(e)}>Rompers/Jumpsuits</button>
         </li>
         <li key={2} className="category-detail">
-          <button>Casual Dresses</button>
+          <button onClick={(e)=>filterByCategory(e)}>Casual Dresses</button>
         </li>
         <li key={3} className="category-detail">
           <button>Going out dresses</button>
         </li>
         <li key={4} className="category-detail">
-          <button>Party/Ocassion dresses</button>
+          <button onClick={(e)=>filterByCategory(e)}>Party/Ocassion dresses</button>
         </li>
           <li key={5} className="category-detail">
-          <button>Mini dresses</button>
+          <button onClick={(e)=>filterByCategory(e)}>Mini dresses</button>
         </li>
         <li key={6} className="category-detail">
-          <button>Maxi/Mini dresses</button>
+          <button onClick={(e)=>filterByCategory(e)}>Maxi/Mini dresses</button>
         </li>
         <li key={8} className="category-detail">
-          <button>Sets</button>
+          <button onClick={(e)=>filterByCategory(e)}>Sets</button>
         </li>
       </ul>
+      {/* ================================= */}
       <div className="filter-title">Filter</div>
       <ul className="filter-content-container">
         <li className="filter-detail">
@@ -107,6 +125,35 @@ const ProductFilter = ({fetchProduct ,filterBySize})=>{
             <div className="title">Brand</div>
             <img src={Arrow}/>           
           </a>
+          <div className="branch-list-container">
+            <label  className="branch-holder">
+              <span ref={branchNameRef1} className="branch-name">Zara</span>
+              <input  onClick={(e)=>{
+                      changeBranchNameColor(branchNameRef1)
+                    }} className="check-boxed" type="checkbox"/>
+              <span className="check-mark"></span>  
+            </label>
+            <label className="branch-holder">
+              <span ref={branchNameRef2} className="branch-name">H&M</span>
+              <input className="check-boxed" type="checkbox"/>
+              <span className="check-mark"></span>  
+            </label>
+            <label className="branch-holder">
+              <span ref={branchNameRef3} className="branch-name">Pull&Bear</span>
+              <input className="check-boxed" type="checkbox"/>
+              <span className="check-mark"></span>  
+            </label>
+            <label className="branch-holder">
+              <span ref={branchNameRef4} className="branch-name">Dior</span>
+              <input className="check-boxed" type="checkbox"/>
+              <span className="check-mark"></span>  
+            </label>
+            <label className="branch-holder">
+              <span ref={branchNameRef5} className="branch-name">Chanel</span>
+              <input className="check-boxed" type="checkbox"/>
+              <span className="check-mark"></span>  
+            </label>
+          </div>
         </li>
         <li className="filter-detail">
           <a onClick={
@@ -143,7 +190,6 @@ const ProductFilter = ({fetchProduct ,filterBySize})=>{
            />
           <div ref={priceTextHolderRef} className="price-text-holder">
             <div className="min-price">$39</div>
-            <div>{`price1: ${priceValue1} price2:${priceValue2}`}</div>
             <div className="max-price">$300</div>
           </div>
         </li>
