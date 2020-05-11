@@ -146,6 +146,9 @@
 	line-height: 1.57;
 	letter-spacing: -0.1px;
 	color: #4d4d4d;
+	border-bottom: solid 1px;
+	padding-bottom: 15px;
+	margin-bottom: 10px;
 }
 .product-filter-container
 	.filter-content-container
@@ -153,4 +156,31 @@
 	.filter-holder {
 	display: flex;
 	justify-content: space-between;
+}
+.product-filter-container
+	.filter-content-container
+	.filter-detail
+	.selector-container {
+	display: flex;
+	display: none;
+}
+.product-filter-container
+	.filter-content-container
+	.filter-detail
+	.selector-container
+	.box-selector-holder {
+	width: 40px;
+	height: 40px;
+	border: solid 1px #808080;
+	margin-right: 10px;
+	background: none;
+}
+.product-filter-container
+	.filter-content-container
+	.filter-detail
+	.selector-container
+	.box-selector-holder:hover {
+	background: #ffa15f;
+	color: white;
+	font-weight: 800;
 }

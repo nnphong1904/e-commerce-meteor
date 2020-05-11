@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import Arrow from '../../assets/image/arrow.svg'
 
 const ProductFilter = ()=>{
 
+  const filterSizeRef = createRef();
+
+  const toggleFilterList = (ref)=>{
+    ref.current.style.display=ref.current.style.display===''?'block':'';
+
+  }
 
   const content = (
     <div className="product-filter-container">
@@ -36,34 +42,39 @@ const ProductFilter = ()=>{
       <div className="filter-title">Filter</div>
       <ul className="filter-content-container">
         <li className="filter-detail">
-          <div className="filter-holder">
+          <a onClick={()=>{toggleFilterList(filterSizeRef)}} className="filter-holder">
             <div className="title">Size</div>
             <img src={Arrow}/>
+          </a>
+          <div ref={filterSizeRef} className="selector-container">
+              <button className="box-selector-holder">S</button>
+              <button className="box-selector-holder">M</button>
+              <button className="box-selector-holder">L</button>
           </div>
         </li>
         <li className="filter-detail">
-          <div className="filter-holder">
+          <a className="filter-holder">
             <div className="title">Color</div>
             <img src={Arrow}/>
-          </div>
+          </a>
         </li>
         <li className="filter-detail">
-          <div className="filter-holder">
+          <a className="filter-holder">
             <div className="title">Brand</div>
-            <img src={Arrow}/>
-          </div>
+            <img src={Arrow}/>           
+          </a>
         </li>
         <li className="filter-detail">
-          <div className="filter-holder">
+          <a className="filter-holder">
             <div className="title">Price</div>
             <img src={Arrow}/>
-          </div>
+          </a>
         </li>
         <li className="filter-detail">
-          <div className="filter-holder">
+          <a className="filter-holder">
             <div className="title">Available</div>
             <img src={Arrow}/>
-          </div>
+          </a>
         </li>
       </ul>
     </div>
