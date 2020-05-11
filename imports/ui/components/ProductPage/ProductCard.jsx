@@ -1,8 +1,12 @@
 import React from 'react';
 import './ProductPage.css';
 const ProductCard = ({product})=>{
+  const goProductInfo = (product)=>{
+    FlowRouter.go(`/products/${product.name}`);
+  }
+
   const content = (
-    <div className="product-card-container">
+    <div onClick={()=>goProductInfo(product)} className="product-card-container">
       <img className="product-avt" src={product.avt}/>
       <div className="product-name">{product.name}</div>
       <div className="product-price">{`$${product.price}`}</div>

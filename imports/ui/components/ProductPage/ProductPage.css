@@ -12,6 +12,7 @@
 	flex-grow: 1;
 	margin-right: 1.2%;
 	margin-top: 10px;
+	transition: all 0.3s;
 }
 .product-card-container .product-avt {
 	height: 72%;
@@ -183,4 +184,8 @@
 	background: #ffa15f;
 	color: white;
 	font-weight: 800;
+}
+
+.product-card-container:hover {
+	transform: scale(1.1);
 }

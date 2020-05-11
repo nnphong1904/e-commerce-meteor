@@ -14,6 +14,7 @@ const ProductPage = ()=>{
     })
   }
 
+  
   useEffect(()=>{
     fetchProduct();
   },[])

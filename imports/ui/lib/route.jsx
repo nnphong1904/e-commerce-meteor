@@ -17,3 +17,9 @@ FlowRouter.route('/products',{
   }
 })
 
+FlowRouter.route('/products/:productName',{
+  name:'products info',
+  action(params, queryParam){
+    console.log(params);
+  }
+})
