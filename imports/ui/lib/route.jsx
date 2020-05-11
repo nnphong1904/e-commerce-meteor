@@ -3,6 +3,7 @@ import {mount} from 'react-mounter';
 import {App} from '../App';
 import Homepage from '../components/Homepage/Homepage.jsx';
 import ProductPage from '../components/ProductPage/ProductPage.jsx';
+import ProductInfo from '../components/ProductInfo/ProductInfo.jsx';
 
 FlowRouter.route('/',{
   name:'home',
@@ -20,6 +21,6 @@ FlowRouter.route('/products',{
 FlowRouter.route('/products/:productName',{
   name:'products info',
   action(params, queryParam){
-    console.log(params);
+    console.log(params, queryParam);
   }
 })
