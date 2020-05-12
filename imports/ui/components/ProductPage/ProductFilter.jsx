@@ -1,14 +1,6 @@
 import React, { createRef, useState } from 'react';
 import Arrow from '../../assets/image/arrow.svg'
 
-const MAP_COLOR = new Map([
-  ['wild-watermelon','wild watermelon'],
-  ['sunglow','sunglow'],
-  ['neon-blue','neon blue'],
-  ['atomic-tangerine','atomic tangerine'],
-  ['payne-grey',`payne's grey`],
-  ['white-smoke','white-smoke']
-]);
 
 const ProductFilter = ({fetchProduct})=>{
 
@@ -17,6 +9,8 @@ const ProductFilter = ({fetchProduct})=>{
   const filterPriceRef2 = createRef();
   const priceTextHolderRef = createRef();
   const filterBranchRef = createRef();
+  const filterColorRef = createRef();
+  const filterAvailableRef = createRef();
 
   const branchNameRef1 = createRef();
   const branchNameRef2 = createRef();
@@ -27,12 +21,17 @@ const ProductFilter = ({fetchProduct})=>{
   const arrowIconRefSize = createRef();
   const arrowIconRefPrice = createRef();
   const arrowIconRefBranch = createRef();
-
+  const arrowIconRefColor = createRef();
+  const arrowIconRefAvailable = createRef();
 
   const [priceValue1, setPriceValue1] = useState('39');
   const [priceValue2, setPriceValue2] = useState('300');
+
   const [listFilterBranch, setListFilterBranch] = useState([]);
   const [listFilterColor, setListFilterColor] = useState([]);
+  const [filterAvailableItem, setFilterAvailableItem] = useState({'in stored':false, 'out stock':false});
+
+  const [filterCondition, setFilterCondition] = useState({})
 
   const changeBranchNameColor = (ref)=>{
     if (ref.current.style.color !== 'rgb(255, 161, 95)'){
@@ -65,8 +64,34 @@ const ProductFilter = ({fetchProduct})=>{
   }
 
   // filter logic implementation
+  const filterByAvailableItem = (e)=>{
+    const filterCondition = e.target.value;
+    Meteor.call('getNoItemOfProduct', filterCondition, (err,result)=>{
+      console.log(result);
+    })
+  }
   const filterByColor = (e)=>{
-    console.log(console.log(MAP_COLOR[e.target.id]));
+    
+    const selectedColor = e.target.value;
+    let currentColorFilterList = [...listFilterColor];
+
+    if (e.target.checked){
+      currentColorFilterList.push(selectedColor);
+    }
+    else {
+      const indexOfSelectedColor = currentColorFilterList.indexOf(selectedColor);
+      console.log(indexOfSelectedColor);
+      currentColorFilterList = [
+        ...currentColorFilterList.slice(0, indexOfSelectedColor),...currentColorFilterList.slice(indexOfSelectedColor+1)
+      ];
+    }
+    if (currentColorFilterList.length === 0){
+      fetchProduct({});
+    }
+    else {
+      fetchProduct({color: {$in: currentColorFilterList}});
+    }
+    setListFilterColor([...currentColorFilterList]);
   }
   
   const filterBySize = (e)=>{
@@ -91,7 +116,7 @@ const ProductFilter = ({fetchProduct})=>{
       fetchProduct({});
     }
     else {
-      fetchProduct({branch: {$in: currentBranchFilterList}})
+      fetchProduct({branch: {$in: currentBranchFilterList}});
     };
     setListFilterBranch([...currentBranchFilterList]);
   }
@@ -166,67 +191,106 @@ const ProductFilter = ({fetchProduct})=>{
         </li>
         {/* ================filter by color===================== */}
         <li className="filter-detail">
-          <a className="filter-holder">
+          <a  
+              onClick={
+                ()=>{
+                  filterColorRef.current.style.display= filterColorRef.current.style.display==='' ? 'flex' : '';
+                  rotateArrowIcon(arrowIconRefColor)
+                }
+              }
+              className="filter-holder">
             <div className="title">Color</div>
-            <img src={Arrow}/>
+            <img ref={arrowIconRefColor} className="Arrow" src={Arrow}/>
           </a>
-          <ul className="color-picker-container">
-            <li 
-                className="color-picker-details"
-                onClick={
-                      (e)=>{
-                        console.log(e.target.id);
+          <div ref={filterColorRef} className="color-picker-container">
+            <label className="color-picker-details">
+              <input  
+                      onClick={
+                        (e)=>{
+                          filterByColor(e);
+                        }
                       }
-                    } >
-            <input  
-                    className="check-boxed"
-                    type="checkbox"
-                    value="wild watermelon"
-                    />
-              <span
-                 id="wild-watermelon" className="check-mark"></span>                 
-            </li>
-            <li className="color-picker-details">
-            <input   
-                    className="check-boxed"
-                    type="checkbox"
-                    value="sunglow"
-                    />
-              <span id="sunglow" className="check-mark"></span>                 
-            </li>
-            <li className="color-picker-details">
-            <input   
-                    className="check-boxed"
-                    type="checkbox"
-                    value="neon blue"
-                    />
-              <span id="neon-blue" className="check-mark"></span>             
-            </li>
-            <li className="color-picker-details">
-            <input   
-                    className="check-boxed"
-                    type="checkbox"
-                    value="atomic tangerine"
-                    />
-              <span id="atomic-tangerine" className="check-mark"></span>                 
-            </li>
-            <li className="color-picker-details">
-            <input 
-                    className="check-boxed"
-                    type="checkbox"
-                    value="payne's grey"
-                    />
-              <span id="payne-grey" className="check-mark"></span>                  
-            </li>
-            <li className="color-picker-details">
-            <input 
-                    className="check-boxed"
-                    type="checkbox"
-                    value="white-smoke"
-                    />
-              <span id="white-smoke" className="check-mark"></span>                  
-            </li>
-          </ul>
+                      className="check-boxed"
+                      type="checkbox"
+                      value="wild watermelon"
+                      />
+                <span id="wild-watermelon" className="check-mark"></span> 
+            </label>                
+            
+         
+            <label className="color-picker-details">
+              <input   
+                      onClick={
+                        (e)=>{
+                          filterByColor(e);
+                        }
+                      }
+                      className="check-boxed"
+                      type="checkbox"
+                      value="sunglow"
+                      />
+                <span id="sunglow" className="check-mark"></span>                 
+            </label>
+                     
+            <label className="color-picker-details">
+              <input   
+                      onClick={
+                              (e)=>{
+                                filterByColor(e);
+                              }
+                      }
+                      className="check-boxed"
+                      type="checkbox"
+                      value="neon blue"
+                      />
+                <span id="neon-blue" className="check-mark"></span>
+            </label>             
+         
+             <label className="color-picker-details">
+                <input   
+                      onClick={
+                        (e)=>{
+                          filterByColor(e);
+                        }
+                      }
+                      className="check-boxed"
+                      type="checkbox"
+                      value="atomic tangerine"
+                      />
+                <span id="atomic-tangerine" className="check-mark"></span>
+             </label>                 
+         
+          
+           <label className="color-picker-details">
+              <input 
+                      onClick={
+                        (e)=>{
+                          filterByColor(e);
+                        }
+                      }
+                      className="check-boxed"
+                      type="checkbox"
+                      value="payne's grey"
+                      />
+                <span id="payne-grey" className="check-mark"></span>  
+           </label>                
+          
+            
+            <label className="color-picker-details">
+              <input 
+                      onClick={
+                        (e)=>{
+                          filterByColor(e);
+                        }
+                      }
+                      className="check-boxed"
+                      type="checkbox"
+                      value="white-smoke"
+                      />
+                <span id="white-smoke" className="check-mark"></span>   
+            </label>               
+  
+          </div>
         </li>
         {/* ================filter by branch==================== */}
         <li className="filter-detail">
@@ -333,15 +397,51 @@ const ProductFilter = ({fetchProduct})=>{
             value={priceValue2}
            />
           <div ref={priceTextHolderRef} className="price-text-holder">
-            <div className="min-price">{priceValue1 > priceValue2 ? priceValue1 : priceValue2}</div>
-            <div className="max-price">{priceValue1 <= priceValue2 ? priceValue1 : priceValue2}</div>
+            <div className="min-price">{parseInt(priceValue1) < parseInt(priceValue2) ? priceValue1 : priceValue2}</div>
+            <div className="max-price">{parseInt(priceValue1) >= parseInt(priceValue2) ? priceValue1 : priceValue2}</div>
           </div>
         </li>
+        {/* filter by available item */}
         <li className="filter-detail">
-          <a className="filter-holder">
+          <a 
+            onClick={
+              ()=>{
+                toggleFilter(filterAvailableRef);
+                rotateArrowIcon(arrowIconRefAvailable);
+              }
+            }
+            className="filter-holder">
             <div className="title">Available</div>
-            <img src={Arrow}/>
+            <img ref={arrowIconRefAvailable} className="Arrow" src={Arrow}/>
           </a>
+          <div ref={filterAvailableRef} className="available-filter-container">
+            <label className="available-holder">
+                <span className="available-title">In stored</span>
+                <input
+                      onClick={(e)=>{
+                        filterByAvailableItem(e);
+                      }} 
+                      className="check-boxed"
+                      type="checkbox"
+                      value="in stored"
+                      />
+                <span className="check-mark"></span>
+                  
+            </label>
+            <label className="available-holder">
+                <span className="available-title">Out of stock</span>
+                <input
+                      onClick={(e)=>{
+                        filterByAvailableItem(e);
+                      }} 
+                      className="check-boxed"
+                      type="checkbox"
+                      value="out of stock"
+                      />
+                <span className="check-mark"></span>
+                  
+            </label>
+          </div>
         </li>
       </ul>
     </div>

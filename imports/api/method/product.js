@@ -10,7 +10,6 @@ export const addProduct = (product)=>{
 }
 
 export const fetchProduct = async (condition)=>{
-  console.log(condition);
   try{
     const result = await ProductCollection.find(condition).fetch();
     return {success: true, data: result};
@@ -29,4 +28,33 @@ export const fetchProductBySize = async (size)=>{
   catch(err){
     return {success: false, msg:'can not found'};
   }
+}
+
+export const getNoItemOfProduct =  async (filterCondition) => {
+  console.log(filterCondition);
+  const matchingConditionFilter = filterCondition === 'in stored' ? {$ne:0} : 0;   
+  console.log(matchingConditionFilter);
+    const pipe = [{
+          $project: {
+            name:1, 
+            price:1, 
+            rating:1, 
+            avt:1, 
+            decId:1, 
+            sizes:1, 
+            branch:1, 
+            color: 1,
+            numberOfItem: {$sum:'$sizes.noItems'}
+          }
+        },
+        {
+          $match:{
+            numberOfItem: matchingConditionFilter
+          }
+        }
+    ]
+    const result =  await ProductCollection.rawCollection().aggregate(pipe).toArray();
+    return {success: true, data: [...result]};
+     
+
 }

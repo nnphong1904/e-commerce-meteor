@@ -6,12 +6,23 @@ const ProductPage = ()=>{
   const [products, setProducts] = useState([]);
   console.log('rendering');
   const fetchProduct = async (condition)=>{
-    await Meteor.call('fetchProduct',condition,(err,result)=>{
-      if (!err) setProducts([...result.data]);
-      else {
-        console.log(err);
-      }
-    })
+    if (condition==={})
+    {
+      await Meteor.call('fetchProduct',{},(err,result)=>{
+        if (!err) setProducts([...result.data]);
+        else {
+          console.log(err);
+        }
+      })
+    }
+    else {
+      await Meteor.call('fetchProduct',condition,(err,result)=>{
+        if (!err) setProducts([...result.data]);
+        else {
+          console.log(err);
+        }
+      })
+    }
   }
 
   useEffect(()=>{
