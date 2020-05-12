@@ -377,3 +377,49 @@
 .branch-list-container {
 	display: none;
 }
+.color-picker-container {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.color-picker-container .color-picker-details {
+	list-style-type: none;
+}
+.color-picker-container
+	.color-picker-details:hover {
+	transform: scale(1.1);
+}
+.color-picker-container
+	.color-picker-details
+	.check-boxed {
+	opacity: 0;
+}
+.color-picker-container
+	.color-picker-details
+	.check-mark {
+	height: 26px;
+	width: 26px;
+	border-radius: 26px;
+}
+
+#wild-watermelon {
+	background: #ff5f6d;
+}
+#sunglow {
+	background: rgba(255, 213, 67, 0.4);
+}
+#neon-blue {
+	background: rgba(95, 109, 255, 0.4);
+}
+
+#atomic-tangerine {
+	background: rgba(255, 161, 95, 0.4);
+}
+
+#payne-grey {
+	background: rgba(61, 61, 63, 0.4);
+}
+
+#white-smoke {
+	background: whitesmoke;
+}

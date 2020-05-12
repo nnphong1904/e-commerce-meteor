@@ -1,6 +1,15 @@
 import React, { createRef, useState } from 'react';
 import Arrow from '../../assets/image/arrow.svg'
 
+const MAP_COLOR = new Map([
+  ['wild-watermelon','wild watermelon'],
+  ['sunglow','sunglow'],
+  ['neon-blue','neon blue'],
+  ['atomic-tangerine','atomic tangerine'],
+  ['payne-grey',`payne's grey`],
+  ['white-smoke','white-smoke']
+]);
+
 const ProductFilter = ({fetchProduct})=>{
 
   const filterSizeRef = createRef();
@@ -23,6 +32,7 @@ const ProductFilter = ({fetchProduct})=>{
   const [priceValue1, setPriceValue1] = useState('39');
   const [priceValue2, setPriceValue2] = useState('300');
   const [listFilterBranch, setListFilterBranch] = useState([]);
+  const [listFilterColor, setListFilterColor] = useState([]);
 
   const changeBranchNameColor = (ref)=>{
     if (ref.current.style.color !== 'rgb(255, 161, 95)'){
@@ -55,6 +65,10 @@ const ProductFilter = ({fetchProduct})=>{
   }
 
   // filter logic implementation
+  const filterByColor = (e)=>{
+    console.log(console.log(MAP_COLOR[e.target.id]));
+  }
+  
   const filterBySize = (e)=>{
     const size = e.target.innerText;
     fetchProduct({'sizes.size':size});
@@ -157,36 +171,60 @@ const ProductFilter = ({fetchProduct})=>{
             <img src={Arrow}/>
           </a>
           <ul className="color-picker-container">
-            <li className="color-picker-details">
-              <input 
-                  type="checkbox" 
-                  className="color-check-box"
-                  value="wild watermelon" />                 
+            <li 
+                className="color-picker-details"
+                onClick={
+                      (e)=>{
+                        console.log(e.target.id);
+                      }
+                    } >
+            <input  
+                    className="check-boxed"
+                    type="checkbox"
+                    value="wild watermelon"
+                    />
+              <span
+                 id="wild-watermelon" className="check-mark"></span>                 
             </li>
             <li className="color-picker-details">
-              <input 
-                  type="checkbox" 
-                  className="color-check-box" />                 
+            <input   
+                    className="check-boxed"
+                    type="checkbox"
+                    value="sunglow"
+                    />
+              <span id="sunglow" className="check-mark"></span>                 
             </li>
             <li className="color-picker-details">
-              <input 
-                  type="checkbox" 
-                  className="color-check-box" />                 
+            <input   
+                    className="check-boxed"
+                    type="checkbox"
+                    value="neon blue"
+                    />
+              <span id="neon-blue" className="check-mark"></span>             
             </li>
             <li className="color-picker-details">
-              <input 
-                  type="checkbox" 
-                  className="color-check-box" />                 
+            <input   
+                    className="check-boxed"
+                    type="checkbox"
+                    value="atomic tangerine"
+                    />
+              <span id="atomic-tangerine" className="check-mark"></span>                 
             </li>
             <li className="color-picker-details">
-              <input 
-                  type="checkbox" 
-                  className="color-check-box" />                 
+            <input 
+                    className="check-boxed"
+                    type="checkbox"
+                    value="payne's grey"
+                    />
+              <span id="payne-grey" className="check-mark"></span>                  
             </li>
             <li className="color-picker-details">
-              <input 
-                  type="checkbox" 
-                  className="color-check-box" />                 
+            <input 
+                    className="check-boxed"
+                    type="checkbox"
+                    value="white-smoke"
+                    />
+              <span id="white-smoke" className="check-mark"></span>                  
             </li>
           </ul>
         </li>
