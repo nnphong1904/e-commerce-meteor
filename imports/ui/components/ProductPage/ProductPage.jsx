@@ -17,13 +17,6 @@ const ProductPage = ()=>{
   useEffect(()=>{
     fetchProduct({});
   },[])
-
-  const filterBySize = (e)=>{
-    const size = e.target.innerText;
-    Meteor.call('fetchProductBySize', size, (err,result)=>{
-      setProducts([...result.data]);
-    })
-  };
   
 
   const content = (
@@ -31,7 +24,7 @@ const ProductPage = ()=>{
       <>
         <div className="filter-value">Ladies/Dresses</div>
         <div className="product-page-container">
-          <ProductFilter fetchProduct={fetchProduct} filterBySize={filterBySize}/>
+          <ProductFilter fetchProduct={fetchProduct}/>
             {products.length>0 &&
               products.map(product => <ProductCard key={product.decId} product={product} />)
             }

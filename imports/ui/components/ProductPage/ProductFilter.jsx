@@ -1,12 +1,13 @@
 import React, { createRef, useState } from 'react';
 import Arrow from '../../assets/image/arrow.svg'
 
-const ProductFilter = ({fetchProduct ,filterBySize})=>{
+const ProductFilter = ({fetchProduct})=>{
 
   const filterSizeRef = createRef();
   const filterPriceRef1 = createRef();
   const filterPriceRef2 = createRef();
   const priceTextHolderRef = createRef();
+  const filterBranchRef = createRef();
 
   const branchNameRef1 = createRef();
   const branchNameRef2 = createRef();
@@ -16,10 +17,12 @@ const ProductFilter = ({fetchProduct ,filterBySize})=>{
 
   const arrowIconRefSize = createRef();
   const arrowIconRefPrice = createRef();
+  const arrowIconRefBranch = createRef();
 
 
   const [priceValue1, setPriceValue1] = useState('39');
   const [priceValue2, setPriceValue2] = useState('300');
+  const [listFilterBranch, setListFilterBranch] = useState([]);
 
   const changeBranchNameColor = (ref)=>{
     if (ref.current.style.color !== 'rgb(255, 161, 95)'){
@@ -50,10 +53,40 @@ const ProductFilter = ({fetchProduct ,filterBySize})=>{
   const onChangeHandler = (e, setState)=>{
     setState(e.target.value);
   }
+
+  // filter logic implementation
+  const filterBySize = (e)=>{
+    const size = e.target.innerText;
+    fetchProduct({'sizes.size':size});
+  }
+
+  const filterByBranch = (e, ref)=>{
+    const selectedBranch = ref.current.innerText.toLowerCase();
+    let currentBranchFilterList = [...listFilterBranch];
+    
+    if (e.target.checked){
+      currentBranchFilterList.push(selectedBranch);
+    }
+    else{
+      const indexOfSelectedBranch = currentBranchFilterList.indexOf(selectedBranch);
+      currentBranchFilterList = [
+        ...currentBranchFilterList.slice(0, indexOfSelectedBranch),...currentBranchFilterList.slice(indexOfSelectedBranch+1)
+        ];
+    }
+    if (currentBranchFilterList.length === 0) {
+      fetchProduct({});
+    }
+    else {
+      fetchProduct({branch: {$in: currentBranchFilterList}})
+    };
+    setListFilterBranch([...currentBranchFilterList]);
+  }
+
   const filterByCategory = (e)=>{
     const category = e.target.innerText.toLowerCase();
     fetchProduct({category:category});
   }
+
   const filterByPriceHandler = (price1, price2)=>{
     let minPrice, maxPrice;
     if (price1 <= price2){
@@ -68,6 +101,7 @@ const ProductFilter = ({fetchProduct ,filterBySize})=>{
   }
   const content = (
     <div className="product-filter-container">
+    {/* ========= filter by category ================ */}
       <div className="filter-title">Category</div>
       <ul className="category-content-container">
         <li className="category-detail">
@@ -95,16 +129,18 @@ const ProductFilter = ({fetchProduct ,filterBySize})=>{
           <button onClick={(e)=>filterByCategory(e)}>Sets</button>
         </li>
       </ul>
-      {/* ================================= */}
+      {/* ========filter by size, branch, price...============= */}
+      {/* ===============filter by size======================== */}
       <div className="filter-title">Filter</div>
       <ul className="filter-content-container">
         <li className="filter-detail">
           <a 
-          onClick={
-            ()=>{
-              toggleFilter(filterSizeRef);
-              rotateArrowIcon(arrowIconRefSize);
-              }} className="filter-holder">
+              onClick={
+                ()=>{
+                  toggleFilter(filterSizeRef);
+                  rotateArrowIcon(arrowIconRefSize);
+                  }} 
+              className="filter-holder">
             <div className="title">Size</div>
             <img ref={arrowIconRefSize} className="Arrow" src={Arrow}/>
           </a>
@@ -114,47 +150,117 @@ const ProductFilter = ({fetchProduct ,filterBySize})=>{
               <button onClick={(e)=>filterBySize(e)}  className="box-selector-holder">L</button>
           </div>
         </li>
+        {/* ================filter by color===================== */}
         <li className="filter-detail">
           <a className="filter-holder">
             <div className="title">Color</div>
             <img src={Arrow}/>
           </a>
+          <ul className="color-picker-container">
+            <li className="color-picker-details">
+              <input 
+                  type="checkbox" 
+                  className="color-check-box"
+                  value="wild watermelon" />                 
+            </li>
+            <li className="color-picker-details">
+              <input 
+                  type="checkbox" 
+                  className="color-check-box" />                 
+            </li>
+            <li className="color-picker-details">
+              <input 
+                  type="checkbox" 
+                  className="color-check-box" />                 
+            </li>
+            <li className="color-picker-details">
+              <input 
+                  type="checkbox" 
+                  className="color-check-box" />                 
+            </li>
+            <li className="color-picker-details">
+              <input 
+                  type="checkbox" 
+                  className="color-check-box" />                 
+            </li>
+            <li className="color-picker-details">
+              <input 
+                  type="checkbox" 
+                  className="color-check-box" />                 
+            </li>
+          </ul>
         </li>
+        {/* ================filter by branch==================== */}
         <li className="filter-detail">
-          <a className="filter-holder">
-            <div className="title">Brand</div>
-            <img src={Arrow}/>           
+          <a 
+              onClick={
+                ()=>{
+                  toggleFilter(filterBranchRef);
+                  rotateArrowIcon(arrowIconRefBranch);
+                }
+              }
+              className="filter-holder">
+            <div className="title">Branch</div>
+            <img ref={arrowIconRefBranch} className="Arrow" src={Arrow}/>           
           </a>
-          <div className="branch-list-container">
+          <div ref={filterBranchRef} className="branch-list-container">
             <label  className="branch-holder">
               <span ref={branchNameRef1} className="branch-name">Zara</span>
               <input  onClick={(e)=>{
-                      changeBranchNameColor(branchNameRef1)
-                    }} className="check-boxed" type="checkbox"/>
+                      changeBranchNameColor(branchNameRef1);
+                      filterByBranch(e, branchNameRef1);
+                    }} 
+                    className="check-boxed"
+                    type="checkbox"/>
               <span className="check-mark"></span>  
             </label>
             <label className="branch-holder">
               <span ref={branchNameRef2} className="branch-name">H&M</span>
-              <input className="check-boxed" type="checkbox"/>
+              <input 
+                    onClick={(e)=>{
+                            changeBranchNameColor(branchNameRef2);
+                            filterByBranch(e, branchNameRef2);
+                          }}
+                    className="check-boxed" 
+                    type="checkbox"/>
               <span className="check-mark"></span>  
             </label>
             <label className="branch-holder">
               <span ref={branchNameRef3} className="branch-name">Pull&Bear</span>
-              <input className="check-boxed" type="checkbox"/>
+              <input 
+                    onClick={(e)=>{
+                      changeBranchNameColor(branchNameRef3);
+                      filterByBranch(e, branchNameRef3);
+                    }}
+                    className="check-boxed" 
+                    type="checkbox"/>
               <span className="check-mark"></span>  
             </label>
             <label className="branch-holder">
               <span ref={branchNameRef4} className="branch-name">Dior</span>
-              <input className="check-boxed" type="checkbox"/>
+              <input
+                    onClick={(e)=>{
+                      changeBranchNameColor(branchNameRef4);
+                      filterByBranch(e, branchNameRef4);
+                    }} 
+                    className="check-boxed"
+                    type="checkbox"/>
               <span className="check-mark"></span>  
             </label>
             <label className="branch-holder">
               <span ref={branchNameRef5} className="branch-name">Chanel</span>
-              <input className="check-boxed" type="checkbox"/>
+              <input
+                  onClick={(e)=>{
+                      changeBranchNameColor(branchNameRef5);
+                      filterByBranch(e, branchNameRef5);
+                    }} 
+                  className="check-boxed"
+                  type="checkbox"/>
               <span className="check-mark"></span>  
             </label>
           </div>
         </li>
+        {/* =================filter by price====================== */}
         <li className="filter-detail">
           <a onClick={
               ()=>{
@@ -189,8 +295,8 @@ const ProductFilter = ({fetchProduct ,filterBySize})=>{
             value={priceValue2}
            />
           <div ref={priceTextHolderRef} className="price-text-holder">
-            <div className="min-price">$39</div>
-            <div className="max-price">$300</div>
+            <div className="min-price">{priceValue1 > priceValue2 ? priceValue1 : priceValue2}</div>
+            <div className="max-price">{priceValue1 <= priceValue2 ? priceValue1 : priceValue2}</div>
           </div>
         </li>
         <li className="filter-detail">
