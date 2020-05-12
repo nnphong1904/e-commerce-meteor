@@ -31,7 +31,22 @@ const ProductFilter = ({fetchProduct})=>{
   const [listFilterColor, setListFilterColor] = useState([]);
   const [filterAvailableItem, setFilterAvailableItem] = useState({'in stored':false, 'out stock':false});
 
-  const [filterCondition, setFilterCondition] = useState({})
+  const [filterCondition, setFilterCondition] = useState({
+    category:'',
+    price: {
+      doPriceFilter: false,
+      priceValue1:39,
+      priceValue2:300
+    },
+    color: [],
+    size:'',
+    branch:[],
+    outStockOrInStored:{
+      doFilterByNumberOfItem: false,
+      outOffStock: false,
+      inStored: false
+    }
+  })
 
   const changeBranchNameColor = (ref)=>{
     if (ref.current.style.color !== 'rgb(255, 161, 95)'){
@@ -41,7 +56,6 @@ const ProductFilter = ({fetchProduct})=>{
     ref.current.style.color = '#4d4d4d';
   }
   const rotateArrowIcon = (ref)=>{
-      console.log(ref);
      if (ref.current.style.transform === '' )
       {
         ref.current.style.transform='rotate(180deg)';
@@ -59,84 +73,93 @@ const ProductFilter = ({fetchProduct})=>{
   const toggleTextPriceFilter = ()=>{
     priceTextHolderRef.current.style.display = priceTextHolderRef.current.style.display==='' ? 'flex' : '';
   }
-  const onChangeHandler = (e, setState)=>{
-    setState(e.target.value);
+  const onChangeHandlerForPriceValue1 = (e)=>{
+    const newPrice = {...filterCondition.price, priceValue1: e.target.value};
+    setFilterCondition({...filterCondition, price:{...newPrice}});
+  }
+  const onChangeHandlerForPriceValue2 = (e)=>{
+    const newPrice = {...filterCondition.price, priceValue2: e.target.value};
+    setFilterCondition({...filterCondition, price:{...newPrice}});
   }
 
-  // filter logic implementation
+  //========== filter logic implementation================
+
   const filterByAvailableItem = (e)=>{
-    const filterCondition = e.target.value;
-    Meteor.call('getNoItemOfProduct', filterCondition, (err,result)=>{
-      console.log(result);
-    })
+    const filterByNumberOfItemCondition = e.target.value;
+    let currentFilterCondition = {...filterCondition};
+    if (filterByNumberOfItemCondition === 'in stored'){
+      currentFilterCondition.outStockOrInStored.inStored = !currentFilterCondition.outStockOrInStored.inStored;
+    }
+    if (filterByNumberOfItemCondition === 'out of stock'){
+      currentFilterCondition.outStockOrInStored.outOffStock = !currentFilterCondition.outStockOrInStored.outOffStock;
+    }
+    currentFilterCondition.outStockOrInStored.doFilterByNumberOfItem = true;
+    fetchProduct(currentFilterCondition);
   }
   const filterByColor = (e)=>{
     
     const selectedColor = e.target.value;
-    let currentColorFilterList = [...listFilterColor];
-
-    if (e.target.checked){
-      currentColorFilterList.push(selectedColor);
+    let currentFilterCondition = {...filterCondition};
+    let currentColorFilterCondition = [...currentFilterCondition.color];
+    const indexOfSelectedColor = currentFilterCondition.color.indexOf(selectedColor);
+    if (indexOfSelectedColor===-1){
+      currentColorFilterCondition.push(selectedColor);
     }
-    else {
-      const indexOfSelectedColor = currentColorFilterList.indexOf(selectedColor);
-      console.log(indexOfSelectedColor);
-      currentColorFilterList = [
-        ...currentColorFilterList.slice(0, indexOfSelectedColor),...currentColorFilterList.slice(indexOfSelectedColor+1)
-      ];
+    else{
+      currentColorFilterCondition = [...currentColorFilterCondition.slice(0,indexOfSelectedColor), ...currentColorFilterCondition.slice(indexOfSelectedColor+1)];
     }
-    if (currentColorFilterList.length === 0){
-      fetchProduct({});
-    }
-    else {
-      fetchProduct({color: {$in: currentColorFilterList}});
-    }
-    setListFilterColor([...currentColorFilterList]);
+    currentFilterCondition = {...currentFilterCondition, color: [...currentColorFilterCondition]};
+    fetchProduct(currentFilterCondition);
+    setFilterCondition(currentFilterCondition);
   }
   
   const filterBySize = (e)=>{
     const size = e.target.innerText;
-    fetchProduct({'sizes.size':size});
-  }
+    let currentFilterCondition = {...filterCondition};
+    if (currentFilterCondition.size !== size)
+    {
+      currentFilterCondition = {...currentFilterCondition, size};
+    }
+    else if (currentFilterCondition.size === size){
+      currentFilterCondition = {...currentFilterCondition, size:''};
+    }
+    fetchProduct(currentFilterCondition);
+    setFilterCondition({...filterCondition, size:size})
+  }//need to check again
 
   const filterByBranch = (e, ref)=>{
+   
     const selectedBranch = ref.current.innerText.toLowerCase();
-    let currentBranchFilterList = [...listFilterBranch];
-    
-    if (e.target.checked){
-      currentBranchFilterList.push(selectedBranch);
-    }
-    else{
-      const indexOfSelectedBranch = currentBranchFilterList.indexOf(selectedBranch);
-      currentBranchFilterList = [
-        ...currentBranchFilterList.slice(0, indexOfSelectedBranch),...currentBranchFilterList.slice(indexOfSelectedBranch+1)
-        ];
-    }
-    if (currentBranchFilterList.length === 0) {
-      fetchProduct({});
+    let currentFilterCondition = {...filterCondition};
+    let currentBranchFilterCondition = [...filterCondition.branch];
+    const indexOfSelectedBranch = currentBranchFilterCondition.indexOf(selectedBranch);
+    if (indexOfSelectedBranch === -1 ){
+      currentBranchFilterCondition.push(selectedBranch);
     }
     else {
-      fetchProduct({branch: {$in: currentBranchFilterList}});
-    };
-    setListFilterBranch([...currentBranchFilterList]);
+      currentBranchFilterCondition = [...currentBranchFilterCondition.slice(0, indexOfSelectedBranch), ...currentBranchFilterCondition.slice(indexOfSelectedBranch+1)];
+    }
+    currentFilterCondition = {...currentFilterCondition, branch: [...currentBranchFilterCondition]};
+    fetchProduct(currentFilterCondition);
+    setFilterCondition(currentFilterCondition);
   }
 
   const filterByCategory = (e)=>{
-    const category = e.target.innerText.toLowerCase();
-    fetchProduct({category:category});
-  }
+    const selectedCategory = e.target.innerText.toLowerCase();
+    let currentFilterCondition = {...filterCondition};
+    if (currentFilterCondition.category !== selectedCategory){
+      currentFilterCondition = {...currentFilterCondition, category: selectedCategory};
+    }
+    fetchProduct(currentFilterCondition);
+    setFilterCondition({...currentFilterCondition});
+  } //need to check again
 
-  const filterByPriceHandler = (price1, price2)=>{
-    let minPrice, maxPrice;
-    if (price1 <= price2){
-      minPrice = price1;
-      maxPrice = price2;
-    }
-    else {
-      minPrice = price2;
-      maxPrice = price1;
-    }
-    fetchProduct({$and:[{price:{$lte:maxPrice}},{price:{$gte:minPrice}}]});
+  const filterByPrice = ()=>{
+    let currentFilterCondition ={...filterCondition};
+    let newPriceObj = {...currentFilterCondition.price, doPriceFilter:true};
+    currentFilterCondition = {...currentFilterCondition, price:{...newPriceObj}}
+    fetchProduct(currentFilterCondition);
+
   }
   const content = (
     <div className="product-filter-container">
@@ -153,7 +176,7 @@ const ProductFilter = ({fetchProduct})=>{
           <button onClick={(e)=>filterByCategory(e)}>Casual Dresses</button>
         </li>
         <li key={3} className="category-detail">
-          <button>Going out dresses</button>
+          <button onClick={(e)=>filterByCategory(e)}>Going out dresses</button>
         </li>
         <li key={4} className="category-detail">
           <button onClick={(e)=>filterByCategory(e)}>Party/Ocassion dresses</button>
@@ -379,26 +402,30 @@ const ProductFilter = ({fetchProduct})=>{
             id="price-filter-1"
             type="range" 
             ref={filterPriceRef1}
-            onMouseUp={()=>filterByPriceHandler(parseInt(priceValue1), parseInt(priceValue2))} 
-            onChange={(e)=>{onChangeHandler(e, setPriceValue1)}} 
+            onMouseUp={()=>filterByPrice(parseInt(priceValue1), parseInt(priceValue2))} 
+            onChange={(e)=>{onChangeHandlerForPriceValue1(e)}} 
             min="39" max="300" 
             className="price-slider" 
-            value={priceValue1}
+            value={filterCondition.price.priceValue1}
             step={1}
             />
             <input  
             id="price-filter-2"
             type="range" 
             ref={filterPriceRef2}
-            onMouseUp={()=>filterByPriceHandler(parseInt(priceValue1), parseInt(priceValue2))} 
-            onChange={(e)=>{onChangeHandler(e, setPriceValue2)}} 
+            onMouseUp={()=>filterByPrice(parseInt(priceValue1), parseInt(priceValue2))} 
+            onChange={(e)=>{onChangeHandlerForPriceValue2(e)}} 
             min="39" max="300" 
             className="price-slider" 
-            value={priceValue2}
+            value={filterCondition.price.priceValue2}
            />
           <div ref={priceTextHolderRef} className="price-text-holder">
-            <div className="min-price">{parseInt(priceValue1) < parseInt(priceValue2) ? priceValue1 : priceValue2}</div>
-            <div className="max-price">{parseInt(priceValue1) >= parseInt(priceValue2) ? priceValue1 : priceValue2}</div>
+            <div className="min-price">{
+              parseInt(filterCondition.price.priceValue1) < parseInt(filterCondition.price.priceValue2) ? filterCondition.price.priceValue1 : filterCondition.price.priceValue2}
+            </div>
+            <div className="max-price">{
+              parseInt(filterCondition.price.priceValue1) >= parseInt(filterCondition.price.priceValue2) ? filterCondition.price.priceValue1 : filterCondition.price.priceValue2}
+            </div>
           </div>
         </li>
         {/* filter by available item */}
