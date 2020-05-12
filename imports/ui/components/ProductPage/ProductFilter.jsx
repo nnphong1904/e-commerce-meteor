@@ -114,6 +114,7 @@ const ProductFilter = ({fetchProduct})=>{
   }
   
   const filterBySize = (e)=>{
+    console.log(e.target);
     const size = e.target.innerText;
     let currentFilterCondition = {...filterCondition};
     if (currentFilterCondition.size !== size)
@@ -122,9 +123,10 @@ const ProductFilter = ({fetchProduct})=>{
     }
     else if (currentFilterCondition.size === size){
       currentFilterCondition = {...currentFilterCondition, size:''};
+      
     }
     fetchProduct(currentFilterCondition);
-    setFilterCondition({...filterCondition, size:size})
+    setFilterCondition({...currentFilterCondition})
   }//need to check again
 
   const filterByBranch = (e, ref)=>{
@@ -145,6 +147,8 @@ const ProductFilter = ({fetchProduct})=>{
   }
 
   const filterByCategory = (e)=>{
+   // e.target.style.color='#ff6900';
+   console.log(e.target.key);
     const selectedCategory = e.target.innerText.toLowerCase();
     let currentFilterCondition = {...filterCondition};
     if (currentFilterCondition.category !== selectedCategory){
@@ -167,28 +171,53 @@ const ProductFilter = ({fetchProduct})=>{
       <div className="filter-title">Category</div>
       <ul className="category-content-container">
         <li className="category-detail">
-          <button onClick={({})=>fetchProduct({})}><span>All</span> Dresses</button>
+          <a onClick={({})=>fetchProduct({})}><span>All</span> Dresses</a>
         </li>
         <li key={1} className="category-detail">
-          <button onClick={(e)=>filterByCategory(e)}>Rompers/Jumpsuits</button>
+          <label>
+            <input 
+              name="rompers/jumpsuits"
+              onClick={(e)=>filterByCategory(e)} 
+              className="category-selector" 
+              type="radio"/>
+            <span>Rompers/Jumpsuits</span>
+          </label>
         </li>
         <li key={2} className="category-detail">
-          <button onClick={(e)=>filterByCategory(e)}>Casual Dresses</button>
+          <label>
+            <input onClick={(e)=>filterByCategory(e)} className="category-selector" type="radio"/>
+            <span>Rompers/Jumpsuits</span>
+          </label>
         </li>
         <li key={3} className="category-detail">
-          <button onClick={(e)=>filterByCategory(e)}>Going out dresses</button>
+         <label>
+            <input onClick={(e)=>filterByCategory(e)} className="category-selector" type="radio"/>
+            <span>Rompers/Jumpsuits</span>
+          </label>
         </li>
         <li key={4} className="category-detail">
-          <button onClick={(e)=>filterByCategory(e)}>Party/Ocassion dresses</button>
+          <label>
+            <input onClick={(e)=>filterByCategory(e)} className="category-selector" type="radio"/>
+            <span>Rompers/Jumpsuits</span>
+          </label>
         </li>
-          <li key={5} className="category-detail">
-          <button onClick={(e)=>filterByCategory(e)}>Mini dresses</button>
+        <li key={5} className="category-detail">
+         <label>
+            <input onClick={(e)=>filterByCategory(e)} className="category-selector" type="radio"/>
+            <span>Rompers/Jumpsuits</span>
+          </label>
         </li>
         <li key={6} className="category-detail">
-          <button onClick={(e)=>filterByCategory(e)}>Maxi/Mini dresses</button>
+          <label>
+            <input onClick={(e)=>filterByCategory(e)} className="category-selector" type="radio"/>
+            <span>Rompers/Jumpsuits</span>
+          </label>
         </li>
         <li key={8} className="category-detail">
-          <button onClick={(e)=>filterByCategory(e)}>Sets</button>
+          <label>
+            <input onClick={(e)=>filterByCategory(e)} className="category-selector" type="radio"/>
+            <span>Rompers/Jumpsuits</span>
+          </label>
         </li>
       </ul>
       {/* ========filter by size, branch, price...============= */}
@@ -198,7 +227,7 @@ const ProductFilter = ({fetchProduct})=>{
         <li className="filter-detail">
           <a 
               onClick={
-                ()=>{
+                (e)=>{
                   toggleFilter(filterSizeRef);
                   rotateArrowIcon(arrowIconRefSize);
                   }} 

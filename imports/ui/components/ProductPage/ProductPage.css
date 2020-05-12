@@ -90,6 +90,13 @@
 	width: 200px;
 }
 
+.category-selector {
+	display: none;
+}
+.category-selector:checked + span {
+	color: #ff6900;
+}
+
 .product-filter-container
 	.category-content-container
 	.category-detail {
