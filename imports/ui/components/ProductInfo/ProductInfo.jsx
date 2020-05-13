@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './ProductInfo.css';
 import { withTracker } from 'meteor/react-meteor-data';
 import classnames from 'classnames';
+import StarRating from './StarRating.jsx';
+
 
 const SIZE_LIST = ['S', 'M', 'L'];
 const COLOR_LIST = [  
@@ -18,46 +20,64 @@ const MONTH = [
                 'Jul', 'Aug', 'Sep', 
                 'Oct', 'Nov', 'Dec'
               ];
-const calNumberOfItem = (sizeList)=>{
-  return  sizeList.reduce((numberItem, size)=>numberItem + parseInt(size.noItems), 0);
-}
-const getNumberOfItemEachSize = (size, product)=>{
-  let sizeAndNumberOfItem;
-  if (product !== undefined)
-  {
-    sizeAndNumberOfItem = product.sizes;
-   // console.log(sizeAndNumberOfItem[0].size);
-    const result = sizeAndNumberOfItem.filter(sizeObj => sizeObj.size === size);
-    return result.length > 0 ? result[0].noItems : 0;
-  }
-}
+
+
 
 
 const ProductInfo = ({product, currentUser})=>{
 //  console.log(product);
-
+  
   const [productQuantity, setProductQuantity] = useState(0);
   const [listProductSameBrand, setListProductSameBrand] = useState([]);
 
   const [reviewTitle, setReviewTitle] = useState('');
   const [reviewContent, setReviewContent] = useState('');
+  const [ratingPoint, setRatingPoint] = useState(0);
   const [listReviews, setListReviews] = useState([
     {
       reviewTitle:'Test Review',
       reviewContent:`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
       author: 'Phong Nguyen',
-      createAt: '30 Jul'
+      createAt: '30 Jul',
+      rating: 4
     }
   ])
   const [didUserWriteReview, setDidUserWriteReview] = useState(false);
+  const [recommendProductList, setRecommendProductList] = useState([]);
+
 
   useEffect(() => {
     Meteor.call('fetchProduct', {branch: [product.branch]}, (err, docs)=>{
       setListProductSameBrand([...docs.data.slice(0,4)]);
-    })
-  }, [product])
+    });
 
-  const submitComment = ()=>{
+    Meteor.call('fetchProduct', {category: product.category}, (err, docs)=>{
+      setRecommendProductList([...docs.data.slice(0,8)]);
+      console.log(docs.data.slice(0,8));
+    })
+    
+  }, [product])
+  
+  const calNumberOfItem = (sizeList)=>{
+    return  sizeList.reduce((numberItem, size)=>numberItem + parseInt(size.noItems), 0);
+  }
+
+  const getNumberOfItemEachSize = (size, product)=>{
+    let sizeAndNumberOfItem;
+    if (product !== undefined)
+    {
+      sizeAndNumberOfItem = product.sizes;
+     // console.log(sizeAndNumberOfItem[0].size);
+      const result = sizeAndNumberOfItem.filter(sizeObj => sizeObj.size === size);
+      return result.length > 0 ? result[0].noItems : 0;
+    }
+  }
+
+  const updateRatingPoint = (ratingPoint)=>{
+      setRatingPoint(ratingPoint);
+  }
+
+  const submitReview = ()=>{
     const author = currentUser.profile.name;
     const day = new Date();
     const date = day.getDate();
@@ -67,7 +87,8 @@ const ProductInfo = ({product, currentUser})=>{
       reviewTitle,
       reviewContent,
       author,
-      createAt
+      createAt,
+      rating: ratingPoint
     };
     setListReviews([...listReviews, {...review}]);
     setDidUserWriteReview(true);
@@ -105,6 +126,7 @@ const ProductInfo = ({product, currentUser})=>{
   const content = (
     <div className="product-info-container">
       <div className="product-info-details">
+     
        <div className="product-view">
          <img className="image-view" src={product.avt}/>
          <img className="image-view" src={product.avt}/>
@@ -117,9 +139,10 @@ const ProductInfo = ({product, currentUser})=>{
        <div className="product-info">
          <div className="product-name">{product.name}</div>
          <div className="product-price">{`$${product.price}`}</div>
+         
          <div className="product-size">
             <div>Size</div>
-            <form onSubmit={submitComment} className="size-selector-holder">
+            <form onSubmit={submitReview} className="size-selector-holder">
               {SIZE_LIST.map((size, sizeIndex)=>{
                         const content = (
                           <label key={sizeIndex}> 
@@ -147,6 +170,10 @@ const ProductInfo = ({product, currentUser})=>{
                         return content;
               })}
             </form>
+         </div>
+         <div className="product-rating"> 
+          <StarRating rating={product.rating}/>
+          <div className="number-of-reviews">{`${listReviews.length} Review`}</div>
          </div>
          <div className="product-color">
             <div>Color</div>
@@ -196,8 +223,8 @@ const ProductInfo = ({product, currentUser})=>{
          </div>
       </div> 
       <div className="header">
-          <hr className="decor-review-header"/>
-          <div className="review-text">Reviews</div>
+          <hr className="decor-header"/>
+          <div className="header-text">Reviews</div>
       </div>
       {
         (currentUser && didUserWriteReview === false) &&
@@ -217,16 +244,17 @@ const ProductInfo = ({product, currentUser})=>{
                     className="comment-content"></textarea>
                 <span className="rating-area">
                   <div className="rating-msg">Rating for us:</div>
+                  <StarRating updateRatingPoint={updateRatingPoint}/>
                 </span>
-                {(reviewContent === '' && reviewTitle === '') && 
+                {(reviewContent === '' && reviewTitle === '' && ratingPoint === 0 ) && 
                  <button 
-                    onClick={submitComment}
+                    onClick={submitReview}
                     className="submit-comment-btn" 
                     disabled 
                     type='submit'>Submit</button>}
-                {(reviewContent !== '' || reviewTitle !== '') && 
+                {(ratingPoint > 0 || reviewContent !== '' || reviewTitle !== '') && 
                   <button 
-                    onClick={submitComment}
+                    onClick={submitReview}
                     className="submit-comment-btn active-btn" 
                     type='submit'>Submit</button>}
               </div>
@@ -234,27 +262,50 @@ const ProductInfo = ({product, currentUser})=>{
          <div className="horizontal-line"></div>
         </>
       }
-       
-       <div className="reviews-list">
+       <ul className="reviews-list">
           {
             listReviews.map((review, reviewIndex) => {
               const content = (
-                <div key={reviewIndex}>
-                  <div className="review-holder">
-                    <div className="review-info">
-                      <div className="review-author">{review.author}</div>
-                      <div className="review-create-at">{review.createAt}</div>
-                    </div>
-                    <div className="review-title">{review.reviewTitle}</div>
-                    <p className="review-content">{review.reviewContent}</p>
-                  </div>
-                  <div className="separate-line"></div>
-                </div>
+                <li className="review-item" key={reviewIndex}>
+                        <div className="review-holder">
+                          <div className="review-info">
+                            <div className="review-author">{review.author}</div>
+                            <div className="review-create-at">{review.createAt}</div>
+                          </div>
+                            <div className="review-title">{review.reviewTitle}</div>
+                            <div 
+                                className={
+                                    classnames({
+                                      'only-stars': review.reviewContent === '' && review.reviewTitle === ''
+                                      })}>
+                              <StarRating rating={review.rating}/>
+                            </div>
+                            <p className="review-content">{review.reviewContent}</p>
+                        </div>
+                        <div className="separate-line"></div>
+                </li>
               )
               return content;
             })
           }
-       </div>
+       </ul>
+       <div className="header">
+          <hr className="decor-header"/>
+          <div className="header-text recommend-text">You may also like</div>
+      </div>
+      <div className="recommend-product-holder">
+        { recommendProductList.length >0 &&
+          recommendProductList.map((productRecommend, index)=>{
+            const content = (
+                <div key={index} className="product-recommend-view">
+                  <img className="image-view" src={productRecommend.avt}/>
+                  <div className="product-recommend-name">{productRecommend.name}</div>
+                </div>
+            );
+            return content;
+          })
+        }
+      </div>
     </div>
   );
   return content;
