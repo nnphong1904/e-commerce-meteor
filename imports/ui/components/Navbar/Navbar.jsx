@@ -112,8 +112,8 @@ const Navbar = (props)=>{
   return content;
 }
 
-export default React.memo(withTracker(()=>{
+export default withTracker(()=>{
   return {
     currentUser: Meteor.user(),
   }
-})(Navbar));
+})(Navbar);

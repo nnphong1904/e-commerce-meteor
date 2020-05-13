@@ -66,10 +66,11 @@
 	letter-spacing: normal;
 }
 
-.product-info .horizontal-line {
-	margin-top: 30px;
-	width: 200px;
+.product-info-container .horizontal-line {
+	margin: 30px 20% 0 15%;
+	width: 72%;
 }
+
 .product-info {
 	margin-left: 70px;
 }
@@ -202,7 +203,7 @@
 
 .review-text {
 	position: absolute;
-	left: 200px;
+	left: 100px;
 	top: -8px;
 	z-index: 1;
 	width: 100px;
@@ -217,11 +218,54 @@
 	margin-right: auto;
 	height: 40px;
 	width: 90%;
+	border: none;
+	box-shadow: inset 1px 1px 3px 0
+		rgba(159, 159, 159, 0.26);
 }
 .comment-content {
 	display: block;
-	margin-top: 50px;
+	margin: 50px auto 0 auto;
+	width: 90%;
+	height: 155px;
+	border: none;
+	box-shadow: inset 1px 1px 3px 0
+		rgba(159, 159, 159, 0.26);
 }
 
-.post-comment-area {
+.post-review-area {
+	width: 55%;
+	margin: 21px 0 30px 31%;
+	background: #f9f9f9;
+	padding-top: 25px;
+	position: relative;
+}
+
+.you {
+	position: absolute;
+	left: -123px;
+	top: 30px;
+}
+.submit-comment-btn {
+	width: 120px;
+	height: 35px;
+	opacity: 0.5;
+	background-color: #d4d3d3;
+	margin: 31px 0 31px 72%;
+}
+.footer {
+	height: 200px;
+}
+
+.rating-area {
+	position: absolute;
+	display: inline-block;
+	margin-left: 30px;
+	margin-top: 40px;
+}
+.rating-msg {
+	color: #808080;
+	font-size: 10px;
+}
+.form-comment {
+	position: relative;
 }

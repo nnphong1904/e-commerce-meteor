@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './ProductInfo.css';
+import { withTracker } from 'meteor/react-meteor-data';
 import classnames from 'classnames';
 
 const SIZE_LIST = ['S', 'M', 'L'];
@@ -23,8 +24,9 @@ const getNumberOfItemEachSize = (size, product)=>{
     return result.length > 0 ? result[0].noItems : 0;
   }
 }
-const ProductInfo = ({product})=>{
+const ProductInfo = ({product, currentUser})=>{
 //  console.log(product);
+  console.log(currentUser);
   const [productQuantity, setProductQuantity] = useState(0);
   const [listProductSameBrand, setListProductSameBrand] = useState([]);
 
@@ -153,14 +155,35 @@ const ProductInfo = ({product})=>{
       <div className="header">
           <hr className="decor-review-header"/>
           <div className="review-text">Reviews</div>
-          <div className="post-review-are">
-            <input type="text" className="comment-title"/>
-            <textarea className="comment-content"></textarea>
-          </div>
       </div>
+      {
+        currentUser &&
+        <>
+          <div className="post-review-area">
+              <span className="you">You</span>
+              <form className="form-comment">
+                <input type="text" className="comment-title"/>
+                <textarea className="comment-content"></textarea>
+                <span className="rating-area">
+                  <div className="rating-msg">Rating for us:</div>
+                </span>
+                <input className="submit-comment-btn" type='submit'/>
+              </form>
+         </div>
+         <div className="horizontal-line"></div>
+        </>
+      }
+       
+       <div className="footer">
+
+       </div>
     </div>
   );
   return content;
 }
 
-export default ProductInfo;
+export default withTracker(()=>{
+  return {
+    currentUser: Meteor.user()
+  }
+})(ProductInfo);
