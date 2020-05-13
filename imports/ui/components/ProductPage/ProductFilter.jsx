@@ -27,9 +27,9 @@ const ProductFilter = ({fetchProduct})=>{
   const [priceValue1, setPriceValue1] = useState('39');
   const [priceValue2, setPriceValue2] = useState('300');
 
-  const [listFilterBranch, setListFilterBranch] = useState([]);
-  const [listFilterColor, setListFilterColor] = useState([]);
-  const [filterAvailableItem, setFilterAvailableItem] = useState({'in stored':false, 'out stock':false});
+  // const [listFilterBranch, setListFilterBranch] = useState([]);
+  // const [listFilterColor, setListFilterColor] = useState([]);
+  // const [filterAvailableItem, setFilterAvailableItem] = useState({'in stored':false, 'out stock':false});
 
   const [filterCondition, setFilterCondition] = useState({
     category:'',
@@ -147,12 +147,15 @@ const ProductFilter = ({fetchProduct})=>{
   }
 
   const filterByCategory = (e)=>{
-   // e.target.style.color='#ff6900';
-   console.log(e.target.key);
-    const selectedCategory = e.target.innerText.toLowerCase();
+    const selectedCategory = e.target.value.toLowerCase();
     let currentFilterCondition = {...filterCondition};
+    
     if (currentFilterCondition.category !== selectedCategory){
       currentFilterCondition = {...currentFilterCondition, category: selectedCategory};
+    }
+    else{
+      e.target.checked = false;
+      currentFilterCondition.category='';
     }
     fetchProduct(currentFilterCondition);
     setFilterCondition({...currentFilterCondition});
@@ -168,58 +171,77 @@ const ProductFilter = ({fetchProduct})=>{
   const content = (
     <div className="product-filter-container">
     {/* ========= filter by category ================ */}
+    
       <div className="filter-title">Category</div>
-      <ul className="category-content-container">
-        <li className="category-detail">
-          <a onClick={({})=>fetchProduct({})}><span>All</span> Dresses</a>
-        </li>
-        <li key={1} className="category-detail">
-          <label>
-            <input 
-              name="rompers/jumpsuits"
-              onClick={(e)=>filterByCategory(e)} 
-              className="category-selector" 
-              type="radio"/>
-            <span>Rompers/Jumpsuits</span>
-          </label>
-        </li>
-        <li key={2} className="category-detail">
-          <label>
-            <input onClick={(e)=>filterByCategory(e)} className="category-selector" type="radio"/>
-            <span>Rompers/Jumpsuits</span>
-          </label>
-        </li>
-        <li key={3} className="category-detail">
-         <label>
-            <input onClick={(e)=>filterByCategory(e)} className="category-selector" type="radio"/>
-            <span>Rompers/Jumpsuits</span>
-          </label>
-        </li>
-        <li key={4} className="category-detail">
-          <label>
-            <input onClick={(e)=>filterByCategory(e)} className="category-selector" type="radio"/>
-            <span>Rompers/Jumpsuits</span>
-          </label>
-        </li>
-        <li key={5} className="category-detail">
-         <label>
-            <input onClick={(e)=>filterByCategory(e)} className="category-selector" type="radio"/>
-            <span>Rompers/Jumpsuits</span>
-          </label>
-        </li>
-        <li key={6} className="category-detail">
-          <label>
-            <input onClick={(e)=>filterByCategory(e)} className="category-selector" type="radio"/>
-            <span>Rompers/Jumpsuits</span>
-          </label>
-        </li>
-        <li key={8} className="category-detail">
-          <label>
-            <input onClick={(e)=>filterByCategory(e)} className="category-selector" type="radio"/>
-            <span>Rompers/Jumpsuits</span>
-          </label>
-        </li>
-      </ul>
+        <div className="category-detail">
+          <button  onClick={({})=>fetchProduct({})}><span>All</span> Dresses</button>
+        </div>
+        <form className="category-detail">
+           <label className="category-holder">
+              <input
+                name="category-selector"
+                value="rompers/jumpsuits"
+                onClick={(e)=>filterByCategory(e)} 
+                className="category-selector" 
+                type="radio"/>
+              <span>Rompers/Jumpsuits</span>
+            </label>
+            <label className="category-holder">
+              <input 
+                name="category-selector"
+                value="casual dresses"
+                onClick={(e)=>filterByCategory(e)} 
+                className="category-selector" 
+                type="radio"/>
+              <span>Casual dresses</span>
+            </label>
+            <label className="category-holder">
+              <input
+                name="category-selector"
+                value="going out dresses" 
+                onClick={(e)=>filterByCategory(e)} 
+                className="category-selector" 
+                type="radio"/>
+              <span>Going out dresses</span>
+            </label>
+            <label className="category-holder">
+              <input
+                name="category-selector"
+                value="party/ocassion dresses" 
+                onClick={(e)=>filterByCategory(e)} 
+                className="category-selector" 
+                type="radio"/>
+              <span>Party/Ocassion dresses</span>
+            </label>
+            <label className="category-holder">
+              <input 
+                name="category-selector"
+                value="mini-dresses"
+                onClick={(e)=>filterByCategory(e)} 
+                className="category-selector" 
+                type="radio"/>
+              <span>Mini dresses</span>
+            </label>
+            <label className="category-holder">
+              <input
+                name="category-selector"
+                value="maxi/midi dresses" 
+                onClick={(e)=>filterByCategory(e)} 
+                className="category-selector" 
+                type="radio"/>
+              <span>Maxi/Midi dresses</span>
+           </label>
+            <label className="category-holder">
+              <input
+                name="category-selector"
+                value="sets" 
+                onClick={(e)=>filterByCategory(e)} 
+                className="category-selector" 
+                type="radio"/>
+              <span>Sets</span>
+            </label>
+        </form>
+    
       {/* ========filter by size, branch, price...============= */}
       {/* ===============filter by size======================== */}
       <div className="filter-title">Filter</div>
