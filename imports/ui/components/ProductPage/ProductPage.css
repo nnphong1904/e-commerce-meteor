@@ -255,7 +255,7 @@
 	font-weight: 600;
 	border: none;
 }
-/* .product-filter-container
+.product-filter-container
 	.filter-content-container
 	.filter-detail
 	.selector-container
@@ -265,8 +265,8 @@
 	border: solid 1px #808080;
 	margin-right: 10px;
 	background: none;
-} */
-/* .product-filter-container
+}
+.product-filter-container
 	.filter-content-container
 	.filter-detail
 	.selector-container
@@ -274,9 +274,9 @@
 	background: #ffa15f;
 	color: white;
 	font-weight: 800;
-} */
+}
 
-/* .product-filter-container
+.product-filter-container
 	.filter-content-container
 	.filter-detail
 	.selector-container
@@ -284,7 +284,7 @@
 	background: #ffa15f;
 	color: white;
 	font-weight: 800;
-} */
+}
 
 .product-filter-container
 	.filter-content-container
@@ -539,7 +539,7 @@
 .product-filter-container
 	.filter-content-container
 	.filter-detail
-	.available-f.ilter-container
+	.available-filter-container
 	.available-holder
 	input:checked
 	~ .check-mark {

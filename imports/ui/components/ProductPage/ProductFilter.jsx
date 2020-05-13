@@ -85,7 +85,9 @@ const ProductFilter = ({fetchProduct})=>{
   //========== filter logic implementation================
 
   const filterByAvailableItem = (e)=>{
+
     const filterByNumberOfItemCondition = e.target.value;
+    console.log(e.target.value);
     let currentFilterCondition = {...filterCondition};
     if (filterByNumberOfItemCondition === 'in stored'){
       currentFilterCondition.outStockOrInStored.inStored = !currentFilterCondition.outStockOrInStored.inStored;
