@@ -20,8 +20,7 @@ FlowRouter.route('/products',{
 
 FlowRouter.route('/products/:productName',{
   name:'products info',
-  action(queryParam){
-    console.log(queryParam);
-    mount(({component})=><App component={component}/>,{component: <ProductInfo />});
+  action(params, queryParam){
+    mount(({component})=><App component={component}/>,{component: <ProductInfo product={queryParam.product}/>});
   }
 })

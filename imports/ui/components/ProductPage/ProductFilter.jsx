@@ -265,6 +265,7 @@ const ProductFilter = ({fetchProduct})=>{
             <img ref={arrowIconRefSize} className="Arrow" src={Arrow}/>
           </a>
           <div ref={filterSizeRef} className="selector-container">
+
             <form className="size-selector-holder">
                 {SIZE_LIST.map((size, sizeIndex)=>{
                     const content = (

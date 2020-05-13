@@ -243,9 +243,11 @@
 	border: solid 1px #808080;
 	display: inline-block;
 	width: 25px;
+	height: 25px;
+	padding-top: 5px;
 }
 .size-name:hover {
-	background: #ff6900;
+	background: #ffa15f;
 	color: white;
 	font-weight: 600;
 	border: none;

@@ -1,0 +1,195 @@
+.product-view {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin: 0 80px 0 200px;
+}
+.image-view {
+	display: block;
+	height: 80px;
+	width: 80px;
+	flex: 0 0 23%;
+}
+.big-image {
+	height: 100%;
+	width: 250px;
+}
+.product-info-details {
+	display: flex;
+	align-items: stretch;
+	justify-content: space-evenly;
+	height: 480px;
+}
+
+.product-info-container {
+	margin-top: 30px;
+}
+
+.check-boxed {
+	display: none;
+}
+.color-picker-details .check-mark {
+	border-radius: 24px;
+	transition: all 0.2s;
+	margin-right: 15px;
+}
+
+.color-picker-details
+	.check-boxed:checked
+	~ .check-mark {
+	border: solid 1px royalblue;
+}
+
+.check-mark:hover {
+	border: solid 1px royalblue;
+}
+
+.quantity-selector::-webkit-inner-spin-button,
+.quantity-selector::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	appearance: none;
+	margin: 0;
+}
+
+.add-to-cart-btn {
+	border: none;
+	color: white;
+	width: 200px;
+	height: 50px;
+	box-shadow: 0 6px 18px 0 rgba(0, 0, 0, 0.12);
+	background-color: #5f6dff;
+	font-size: 12px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.5;
+	letter-spacing: normal;
+}
+
+.product-info .horizontal-line {
+	margin-top: 30px;
+	width: 200px;
+}
+.product-info {
+	margin-left: 70px;
+}
+
+.product-name {
+	width: 378px;
+	height: 32px;
+	font-size: 24px;
+	font-weight: 500;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.33;
+	letter-spacing: normal;
+}
+
+.product-price {
+	width: 80px;
+	height: 32px;
+	font-size: 24px;
+	font-weight: 300;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.33;
+	letter-spacing: normal;
+	color: #b7b7b7;
+}
+
+.product-size {
+	margin-top: 20px;
+	position: relative;
+	height: 65px;
+}
+.size-selector {
+	display: none;
+}
+.size-selector-holder {
+	position: absolute;
+}
+.product-color {
+	margin-top: 20px;
+}
+
+.product-quantity {
+	margin-top: 20px;
+	height: 30px;
+}
+
+.add-to-cart-btn {
+	margin-top: 20px;
+}
+
+.quantity-selector {
+	width: 30px;
+	border: none;
+	height: 100%;
+	position: absolute;
+	z-index: 1;
+	text-align: center;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.change-quantity-btn {
+	border: none;
+	display: inline-block;
+	position: absolute;
+	font-size: 15px;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 0;
+}
+.change-quantity-holder {
+	margin-left: 21px;
+	border: solid 1px #d4d3d3;
+	padding: 0;
+	height: 25px;
+	width: 80px;
+	display: inline-block;
+	position: relative;
+}
+
+.increase {
+	left: 10px;
+}
+.increase:focus {
+	outline: none;
+}
+.decrease {
+	right: 10px;
+}
+.decrease:focus {
+	outline: none;
+}
+.same-brand {
+	font-size: 14px;
+	font-weight: 500;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.57;
+	letter-spacing: normal;
+}
+.brand {
+	color: #4d4d4d;
+}
+
+.image-view.same-branch-product {
+	flex: 0 0 18%;
+}
+
+.product-view.same-brand-list {
+	margin: 0 200px 0 0;
+}
+
+.disabled {
+	color: rgba(0, 0, 0, 0.3);
+	border-color: rgba(0, 0, 0, 0.3);
+}
+.disabled:hover {
+	color: rgba(0, 0, 0, 0.3);
+	border: solid 1px rgba(0, 0, 0, 0.3);
+	background: white;
+	font-weight: normal;
+}
