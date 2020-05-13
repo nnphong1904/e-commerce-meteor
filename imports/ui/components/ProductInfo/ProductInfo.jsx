@@ -1,8 +1,14 @@
 import React from 'react';
 
-const ProductInfo = (props)=>{
+const ProductInfo = ({product})=>{
 
-  const content = (<div>Product Info</div>)
+  const content = (
+    <div className="product-info-container">
+      <div className="product-info-details">
+        ProductInfo
+      </div>
+    </div>
+  );
   return content;
 }
 

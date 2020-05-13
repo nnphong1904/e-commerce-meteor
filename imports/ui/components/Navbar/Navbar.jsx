@@ -106,7 +106,7 @@ const Navbar = (props)=>{
                   </ul>
             </div>
       </div>
-      
+      <div className="filter-value">Ladies/Dresses</div>
     </div>
   );
   return content;

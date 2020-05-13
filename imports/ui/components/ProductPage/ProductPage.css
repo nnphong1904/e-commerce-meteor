@@ -396,6 +396,15 @@
 	.filter-detail
 	.branch-list-container
 	.branch-holder
+	input:checked
+	~ .branch-name {
+	color: #ffa15f;
+}
+.product-filter-container
+	.filter-content-container
+	.filter-detail
+	.branch-list-container
+	.branch-holder
 	.check-mark::after {
 	left: 7px;
 	top: 3px;
@@ -435,6 +444,8 @@
 .branch-holder .branch-name {
 	margin-top: 5%;
 	display: inline-block;
+	position: absolute;
+	left: 5px;
 }
 
 .branch-list-container {

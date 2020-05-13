@@ -23,7 +23,7 @@ const ProductPage = ()=>{
   const content = (
 
       <>
-        <div className="filter-value">Ladies/Dresses</div>
+        {/* <div className="filter-value">Ladies/Dresses</div> */}
         <div className="product-page-container">
           <ProductFilter fetchProduct={fetchProduct}/>
             {products.length>0 &&
