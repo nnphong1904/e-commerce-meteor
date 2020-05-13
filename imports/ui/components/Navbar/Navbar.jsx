@@ -9,6 +9,8 @@ import Avatar from 'react-avatar';
 
 
 const Navbar = (props)=>{
+
+  // const ref = React.createRef();
   const [userProfile, setUserProfile] =useState({});
   useEffect(() => {
     Meteor.call('getCurrentUser', {}, (err,result)=>{
@@ -17,7 +19,7 @@ const Navbar = (props)=>{
         setUserProfile({...result.data.profile});
       }
     })
-  }, [])
+  }, [props.currentUser]);
   const loginBtnClick = ()=>{
     props.setDisplayLoginForm(true);
   }
@@ -32,6 +34,9 @@ const Navbar = (props)=>{
     props.setDisplayRegisterForm(true);
   }
   
+  // const onclickRef = ()=>{
+  //   console.log(ref.current.children[0].innerText);
+  // }
   const content = (
     <div className="navbar">
       <div className="upper-part">

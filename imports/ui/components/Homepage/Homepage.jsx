@@ -1,8 +1,6 @@
-import React from 'react';
-import background from '../../assets/image/thumbnail_background.jpg';
+import React from 'react';  
 import './Homepage.css';
 const Homepage = ()=>{
-
   const goProductsPage = ()=>{
     console.log('hello');
     FlowRouter.go('/products');
