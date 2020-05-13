@@ -490,6 +490,7 @@ const ProductFilter = ({fetchProduct})=>{
             id="price-filter-1"
             type="range" 
             ref={filterPriceRef1}
+            onClick={(e)=>console.log(e.target)}
             onMouseUp={()=>filterByPrice(parseInt(priceValue1), parseInt(priceValue2))} 
             onChange={(e)=>{onChangeHandlerForPriceValue1(e)}} 
             min="39" max="300" 
@@ -501,6 +502,7 @@ const ProductFilter = ({fetchProduct})=>{
             id="price-filter-2"
             type="range" 
             ref={filterPriceRef2}
+            onClick={(e)=>console.log(e.target)}
             onMouseUp={()=>filterByPrice(parseInt(priceValue1), parseInt(priceValue2))} 
             onChange={(e)=>{onChangeHandlerForPriceValue2(e)}} 
             min="39" max="300" 
