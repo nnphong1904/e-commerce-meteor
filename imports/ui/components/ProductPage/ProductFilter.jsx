@@ -114,8 +114,8 @@ const ProductFilter = ({fetchProduct})=>{
   }
   
   const filterBySize = (e)=>{
-    console.log(e.target);
-    const size = e.target.innerText;
+    console.log(e.target.value);
+    const size = e.target.value;
     let currentFilterCondition = {...filterCondition};
     if (currentFilterCondition.size !== size)
     {
@@ -123,7 +123,7 @@ const ProductFilter = ({fetchProduct})=>{
     }
     else if (currentFilterCondition.size === size){
       currentFilterCondition = {...currentFilterCondition, size:''};
-      
+      e.target.checked = false;
     }
     fetchProduct(currentFilterCondition);
     setFilterCondition({...currentFilterCondition})
@@ -176,7 +176,7 @@ const ProductFilter = ({fetchProduct})=>{
         <div className="category-detail">
           <button  onClick={({})=>fetchProduct({})}><span>All</span> Dresses</button>
         </div>
-        <form className="category-detail">
+        <form className="category-detail category-selector-form">
            <label className="category-holder">
               <input
                 name="category-selector"
@@ -241,6 +241,7 @@ const ProductFilter = ({fetchProduct})=>{
               <span>Sets</span>
             </label>
         </form>
+        <div className="horizontal-line"></div>
     
       {/* ========filter by size, branch, price...============= */}
       {/* ===============filter by size======================== */}
@@ -258,9 +259,42 @@ const ProductFilter = ({fetchProduct})=>{
             <img ref={arrowIconRefSize} className="Arrow" src={Arrow}/>
           </a>
           <div ref={filterSizeRef} className="selector-container">
-              <button onClick={(e)=>filterBySize(e)} className="box-selector-holder">S</button>
+            <form className="size-selector-holder">
+                <label>
+                  
+                  <input
+                      onClick={(e)=>filterBySize(e)}
+                      className="size-selector"
+                      type="radio"
+                      name="size-selector"
+                      value="S"
+                  />
+                  <span className="size-name">S</span>
+                </label>
+                <label >
+                  <input
+                      onClick={(e)=>filterBySize(e)}
+                      className="size-selector"
+                      type="radio"
+                      name="size-selector"
+                      value="M"
+                  />
+                  <span className="size-name">M</span>
+                </label>
+                <label >
+                  <input
+                      onClick={(e)=>filterBySize(e)}
+                      className="size-selector"
+                      type="radio"
+                      name="size-selector"
+                      value="L"
+                  />
+                  <span className="size-name">L</span>
+                </label>
+            </form>
+              {/* <button onClick={(e)=>filterBySize(e)} className="box-selector-holder">S</button>
               <button onClick={(e)=>filterBySize(e)} className="box-selector-holder">M</button>
-              <button onClick={(e)=>filterBySize(e)}  className="box-selector-holder">L</button>
+              <button onClick={(e)=>filterBySize(e)}  className="box-selector-holder">L</button> */}
           </div>
         </li>
         {/* ================filter by color===================== */}
