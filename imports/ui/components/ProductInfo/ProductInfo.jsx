@@ -11,6 +11,13 @@ const COLOR_LIST = [
   {colorId:'payne-grey', colorValue: `payne's grey`}, 
   {colorId:'white-smoke', colorValue:'white smoke'},
 ];
+
+const MONTH = [
+                'Jan', 'Feb', 'Mar', 
+                'Apr', 'May', 'Jun', 
+                'Jul', 'Aug', 'Sep', 
+                'Oct', 'Nov', 'Dec'
+              ];
 const calNumberOfItem = (sizeList)=>{
   return  sizeList.reduce((numberItem, size)=>numberItem + parseInt(size.noItems), 0);
 }
@@ -24,17 +31,53 @@ const getNumberOfItemEachSize = (size, product)=>{
     return result.length > 0 ? result[0].noItems : 0;
   }
 }
+
+
 const ProductInfo = ({product, currentUser})=>{
 //  console.log(product);
-  console.log(currentUser);
+
   const [productQuantity, setProductQuantity] = useState(0);
   const [listProductSameBrand, setListProductSameBrand] = useState([]);
+
+  const [reviewTitle, setReviewTitle] = useState('');
+  const [reviewContent, setReviewContent] = useState('');
+  const [listReviews, setListReviews] = useState([
+    {
+      reviewTitle:'Test Review',
+      reviewContent:`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
+      author: 'Phong Nguyen',
+      createAt: '30 Jul'
+    }
+  ])
+  const [didUserWriteReview, setDidUserWriteReview] = useState(false);
 
   useEffect(() => {
     Meteor.call('fetchProduct', {branch: [product.branch]}, (err, docs)=>{
       setListProductSameBrand([...docs.data.slice(0,4)]);
     })
   }, [product])
+
+  const submitComment = ()=>{
+    const author = currentUser.profile.name;
+    const day = new Date();
+    const date = day.getDate();
+    const month = MONTH[day.getMonth()];
+    const createAt = `${date} ${month}`;
+    const review = {
+      reviewTitle,
+      reviewContent,
+      author,
+      createAt
+    };
+    setListReviews([...listReviews, {...review}]);
+    setDidUserWriteReview(true);
+    setReviewContent('');
+    setReviewTitle('');
+  }
+
+  const onChangeHandler = (e, setState)=>{
+    setState(e.target.value);
+  }
 
   const changProductQuantity = (e)=>{
     setProductQuantity(e.target.value);
@@ -76,7 +119,7 @@ const ProductInfo = ({product, currentUser})=>{
          <div className="product-price">{`$${product.price}`}</div>
          <div className="product-size">
             <div>Size</div>
-            <form className="size-selector-holder">
+            <form onSubmit={submitComment} className="size-selector-holder">
               {SIZE_LIST.map((size, sizeIndex)=>{
                         const content = (
                           <label key={sizeIndex}> 
@@ -144,7 +187,7 @@ const ProductInfo = ({product, currentUser})=>{
         </div>
         <div className="product-view same-brand-list ">
           <div className="same-brand">
-            <div>Move from</div>
+            <div>More from</div>
             <div className="brand">{product.branch.charAt(0).toUpperCase() + product.branch.slice(1)}</div>
           </div>
           {
@@ -157,25 +200,60 @@ const ProductInfo = ({product, currentUser})=>{
           <div className="review-text">Reviews</div>
       </div>
       {
-        currentUser &&
+        (currentUser && didUserWriteReview === false) &&
         <>
           <div className="post-review-area">
               <span className="you">You</span>
-              <form className="form-comment">
-                <input type="text" className="comment-title"/>
-                <textarea className="comment-content"></textarea>
+              <div className="form-comment">
+                <input 
+                    type="text" 
+                    className="comment-title"
+                    value={reviewTitle}
+                    onChange={e=>onChangeHandler(e, setReviewTitle)}
+                    />
+                <textarea 
+                    value={reviewContent}
+                    onChange={e=>onChangeHandler(e, setReviewContent)}
+                    className="comment-content"></textarea>
                 <span className="rating-area">
                   <div className="rating-msg">Rating for us:</div>
                 </span>
-                <input className="submit-comment-btn" type='submit'/>
-              </form>
+                {(reviewContent === '' && reviewTitle === '') && 
+                 <button 
+                    onClick={submitComment}
+                    className="submit-comment-btn" 
+                    disabled 
+                    type='submit'>Submit</button>}
+                {(reviewContent !== '' || reviewTitle !== '') && 
+                  <button 
+                    onClick={submitComment}
+                    className="submit-comment-btn active-btn" 
+                    type='submit'>Submit</button>}
+              </div>
          </div>
          <div className="horizontal-line"></div>
         </>
       }
        
-       <div className="footer">
-
+       <div className="reviews-list">
+          {
+            listReviews.map((review, reviewIndex) => {
+              const content = (
+                <div key={reviewIndex}>
+                  <div className="review-holder">
+                    <div className="review-info">
+                      <div className="review-author">{review.author}</div>
+                      <div className="review-create-at">{review.createAt}</div>
+                    </div>
+                    <div className="review-title">{review.reviewTitle}</div>
+                    <p className="review-content">{review.reviewContent}</p>
+                  </div>
+                  <div className="separate-line"></div>
+                </div>
+              )
+              return content;
+            })
+          }
        </div>
     </div>
   );
