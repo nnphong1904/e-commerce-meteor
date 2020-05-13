@@ -148,6 +148,7 @@ const ProductFilter = ({fetchProduct})=>{
 
   const filterByCategory = (e)=>{
     const selectedCategory = e.target.value.toLowerCase();
+    console.log(selectedCategory);
     let currentFilterCondition = {...filterCondition};
     
     if (currentFilterCondition.category !== selectedCategory){

@@ -56,7 +56,8 @@ export const fetchProduct = async (condition)=>{
           sizes:1, 
           branch:1, 
           color: 1,
-          numberOfItem: {$sum:'$sizes.noItems'}
+          numberOfItem: {$sum:'$sizes.noItems'},
+          category:1
         }
       },
       {
