@@ -10,7 +10,7 @@ export const addProduct = (product)=>{
 }
 
 export const fetchProduct = async (condition)=>{
- //console.log(condition);
+ 
   try{
     if (Object.entries(condition).length === 0)    
       {
@@ -18,23 +18,26 @@ export const fetchProduct = async (condition)=>{
         return {success: true, data:[...result]};
       } 
     let matchingFilterCondition = {};
-    if (condition.size !== '') matchingFilterCondition.sizes =  {$elemMatch: {size:condition.size}};
-   
-    if (condition.category !== '') matchingFilterCondition.category = condition.category;
+    if (condition.size !== '' && condition.size !== undefined) matchingFilterCondition.sizes =  {$elemMatch: {size:condition.size}};
+     
+    if (condition.category !== '' && condition.category !== undefined ) matchingFilterCondition.category = condition.category;
   
-    if (condition.color.length > 0) matchingFilterCondition.color = {$in: condition.color};
+    if (condition.color !== undefined && condition.color.length > 0) matchingFilterCondition.color = {$in: condition.color};
+    
+    console.log(matchingFilterCondition);
 
-    if (condition.branch.length > 0) matchingFilterCondition.branch = {$in: condition.branch};
-
-    if (condition.price.doPriceFilter === true) 
+    if (condition.branch !== undefined && condition.branch.length > 0  ) matchingFilterCondition.branch = {$in: condition.branch};
+     
+    if (condition.price !== undefined && condition.price.doPriceFilter === true  ) 
      {
        const maxPrice = parseInt(condition.price.priceValue1) >= parseInt(condition.price.priceValue2) ? parseInt(condition.price.priceValue1) : parseInt(condition.price.priceValue2);
        const minPrice = parseInt(condition.price.priceValue1) <= parseInt(condition.price.priceValue2) ? parseInt(condition.price.priceValue1) : parseInt(condition.price.priceValue2);
 
        matchingFilterCondition.$and = [{price:{$lte: maxPrice}}, {price:{$gte: minPrice}}];
      }
+     console.log(matchingFilterCondition);
 
-     if (condition.outStockOrInStored.doFilterByNumberOfItem === true){
+     if (condition.outStockOrInStored !== undefined && condition.outStockOrInStored.doFilterByNumberOfItem === true  ){
        if (condition.outStockOrInStored.outOffStock !== condition.outStockOrInStored.inStored){
          if (condition.outStockOrInStored.outOffStock === false){
            matchingFilterCondition.numberOfItem = {$ne:0};
@@ -63,6 +66,7 @@ export const fetchProduct = async (condition)=>{
       {
         $match:{
         ...matchingFilterCondition
+      
         }
       }]; 
       

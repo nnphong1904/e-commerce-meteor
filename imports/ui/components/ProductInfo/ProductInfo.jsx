@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ProductInfo.css';
 import classnames from 'classnames';
 
@@ -26,6 +26,13 @@ const getNumberOfItemEachSize = (size, product)=>{
 const ProductInfo = ({product})=>{
 //  console.log(product);
   const [productQuantity, setProductQuantity] = useState(0);
+  const [listProductSameBrand, setListProductSameBrand] = useState([]);
+
+  useEffect(() => {
+    Meteor.call('fetchProduct', {branch: [product.branch]}, (err, docs)=>{
+      setListProductSameBrand([...docs.data.slice(0,4)]);
+    })
+  }, [product])
 
   const changProductQuantity = (e)=>{
     setProductQuantity(e.target.value);
@@ -69,7 +76,6 @@ const ProductInfo = ({product})=>{
             <div>Size</div>
             <form className="size-selector-holder">
               {SIZE_LIST.map((size, sizeIndex)=>{
-                  console.log(getNumberOfItemEachSize(size, product));
                         const content = (
                           <label key={sizeIndex}> 
                             {getNumberOfItemEachSize(size, product) === 0 &&
@@ -130,18 +136,28 @@ const ProductInfo = ({product})=>{
           </div>
           <button className="add-to-cart-btn">Add to cart</button>
           <div className="horizontal-line"></div>
+          <div className="info-of-model">
+            <div className="size-of-model">{`Model wearing size ${product.sizes[0].size}`}</div>
+          </div>
         </div>
         <div className="product-view same-brand-list ">
           <div className="same-brand">
             <div>Move from</div>
             <div className="brand">{product.branch.charAt(0).toUpperCase() + product.branch.slice(1)}</div>
           </div>
-          <img className="image-view same-branch-product" src={product.avt}/>
-          <img className="image-view same-branch-product" src={product.avt}/>
-          <img className="image-view same-branch-product" src={product.avt}/>
-          <img className="image-view same-branch-product" src={product.avt}/>
-        </div>
+          {
+            listProductSameBrand.map((product, productIndex) => <img key={productIndex} className="image-view same-branch-product" src={product.avt}/> )
+          }
+         </div>
       </div> 
+      <div className="header">
+          <hr className="decor-review-header"/>
+          <div className="review-text">Reviews</div>
+          <div className="post-review-are">
+            <input type="text" className="comment-title"/>
+            <textarea className="comment-content"></textarea>
+          </div>
+      </div>
     </div>
   );
   return content;

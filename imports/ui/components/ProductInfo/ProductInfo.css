@@ -193,3 +193,35 @@
 	background: white;
 	font-weight: normal;
 }
+
+.header {
+	margin: 50px 200px 0 200px;
+	position: relative;
+	background: #f9f9f9;
+}
+
+.review-text {
+	position: absolute;
+	left: 200px;
+	top: -8px;
+	z-index: 1;
+	width: 100px;
+	background: white;
+	text-align: center;
+}
+
+.comment-title {
+	display: block;
+	margin-top: 21px;
+	margin-left: auto;
+	margin-right: auto;
+	height: 40px;
+	width: 90%;
+}
+.comment-content {
+	display: block;
+	margin-top: 50px;
+}
+
+.post-comment-area {
+}
