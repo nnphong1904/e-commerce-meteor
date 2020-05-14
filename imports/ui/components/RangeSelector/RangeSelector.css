@@ -1,0 +1,35 @@
+.range-slider-holder {
+	width: 100%;
+	position: relative;
+}
+.range-slider {
+	outline: none;
+	margin: 0;
+	width: 100%;
+}
+#range-slider-2 {
+	position: absolute;
+	left: 0;
+}
+#range-slider-1 {
+	position: absolute;
+	top: 0;
+}
+.range-slider:focus {
+	outline: none;
+}
+.range-slider::-webkit-slider-runnable-track {
+	cursor: pointer;
+	background: #ffa15f;
+	height: 3px;
+	border-radius: 1.3px;
+}
+.range-slider::-webkit-slider-thumb {
+	height: 20px;
+	width: 20px;
+	border-radius: 20px;
+	background: #ffa15f;
+	cursor: pointer;
+	-webkit-appearance: none;
+	margin-top: -10px;
+}

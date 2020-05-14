@@ -2,6 +2,8 @@ import React, { createRef, useState, Fragment } from 'react';
 import Arrow from '../../assets/image/arrow.svg';
 import Checkbox from '../../components/CheckBox/CheckBox.jsx';
 import InputRadio from '../../components/InputRadio/InputRadio.jsx';
+import CircleCheckBox from '../../components/CircleCheckBox/CircleCheckBox.jsx';
+import RangeSelector from '../../components/RangeSelector/RangeSelector.jsx';
 import './ProductFilter.css'
 const COLOR_LIST = [  
                     {colorId:'wild-watermelon', colorValue: 'wild watermelon'}, 
@@ -297,20 +299,10 @@ const ProductFilter = ({fetchProduct})=>{
             {
               COLOR_LIST.map((color, colorIndex)=>{
                 const content = (
-                  <label key={colorIndex} className="color-picker-details">
-                    <input  
-                            onClick={
-                              (e)=>{
-                                filterByColor(e);
-                              }
-                            }
-                            className="check-boxed"
-                            type="checkbox"
-                            value={color.colorValue}
-                            />
-                      <span id={color.colorId} className="check-mark"></span> 
-                  </label>             
-                )
+                  <Fragment key={colorIndex}>
+                    <CircleCheckBox value={color.colorValue} id={color.colorId} onClickFunction={filterByColor}/>
+                  </Fragment>
+                );
                 return content;
               })
             }
@@ -355,7 +347,8 @@ const ProductFilter = ({fetchProduct})=>{
             <div className="title">Price</div>
             <img ref={arrowIconRefPrice} className="Arrow" src={Arrow}/>
           </a>
-          <input  
+          <RangeSelector value1={priceValue1} value2={priceValue2} />
+          {/* <input  
             id="price-filter-1"
             type="range" 
             ref={filterPriceRef1}
@@ -384,8 +377,8 @@ const ProductFilter = ({fetchProduct})=>{
             </div>
             <div className="max-price">{
               parseInt(filterCondition.price.priceValue1) >= parseInt(filterCondition.price.priceValue2) ? filterCondition.price.priceValue1 : filterCondition.price.priceValue2}
-            </div>
-          </div>
+            </div> 
+          </div>*/}
         </li>
         {/* filter by available item */}
         <li className="filter-detail">
