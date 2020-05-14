@@ -1,4 +1,5 @@
 import ProductCollection from '../product';
+import arrayBufferToHex from 'array-buffer-to-hex';
 export const addProduct = (product)=>{
   try{
     ProductCollection.insert(product);
@@ -18,13 +19,15 @@ export const fetchProduct = async (condition)=>{
         return {success: true, data:[...result]};
       } 
     let matchingFilterCondition = {};
+
+  
     if (condition.size !== '' && condition.size !== undefined) matchingFilterCondition.sizes =  {$elemMatch: {size:condition.size}};
      
     if (condition.category !== '' && condition.category !== undefined ) matchingFilterCondition.category = condition.category;
   
     if (condition.color !== undefined && condition.color.length > 0) matchingFilterCondition.color = {$in: condition.color};
     
-    console.log(matchingFilterCondition);
+    
 
     if (condition.branch !== undefined && condition.branch.length > 0  ) matchingFilterCondition.branch = {$in: condition.branch};
      
@@ -35,7 +38,6 @@ export const fetchProduct = async (condition)=>{
 
        matchingFilterCondition.$and = [{price:{$lte: maxPrice}}, {price:{$gte: minPrice}}];
      }
-     console.log(matchingFilterCondition);
 
      if (condition.outStockOrInStored !== undefined && condition.outStockOrInStored.doFilterByNumberOfItem === true  ){
        if (condition.outStockOrInStored.outOffStock !== condition.outStockOrInStored.inStored){
@@ -48,7 +50,6 @@ export const fetchProduct = async (condition)=>{
        }
       
      }
-  // console.log(matchingFilterCondition);
     const pipe = [{
         $project: {
           name:1, 
@@ -66,9 +67,9 @@ export const fetchProduct = async (condition)=>{
       {
         $match:{
         ...matchingFilterCondition
-      
         }
       }]; 
+      
       
       const result =  await ProductCollection.rawCollection().aggregate(pipe).toArray();
       return {success: true, data: [...result]};
@@ -78,5 +79,16 @@ export const fetchProduct = async (condition)=>{
   }
 }
 
-
+export const fetchProductById = async (id)=>{
+  console.log('hello1');
+  const newObjectId = new Mongo.ObjectID(id);
+  try{
+    const result = await ProductCollection.find({_id: newObjectId}).fetch();
+    return {success: true, data: result};
+  }
+  catch(err){
+    return {success: false, err};
+  }
+  
+}
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './ProductInfo.css';
+import arrayBufferToHex from 'array-buffer-to-hex';
 import { withTracker } from 'meteor/react-meteor-data';
 import classnames from 'classnames';
 import StarRating from './StarRating.jsx';
@@ -20,13 +21,19 @@ const MONTH = [
                 'Jul', 'Aug', 'Sep', 
                 'Oct', 'Nov', 'Dec'
               ];
-
+const BRAND_NAME = new Map([
+  ['h&m','H&M'],
+  ['zara','Zara'],
+  ['pull&bear','Pull&bear'],
+  ['dior','Dior'],
+  ['chanel','chanel']
+]);
 
 
 
 const ProductInfo = ({product, currentUser})=>{
-//  console.log(product);
-  
+
+
   const [productQuantity, setProductQuantity] = useState(0);
   const [listProductSameBrand, setListProductSameBrand] = useState([]);
 
@@ -42,18 +49,20 @@ const ProductInfo = ({product, currentUser})=>{
       rating: 4
     }
   ])
+  
   const [didUserWriteReview, setDidUserWriteReview] = useState(false);
   const [recommendProductList, setRecommendProductList] = useState([]);
 
 
   useEffect(() => {
+   
     Meteor.call('fetchProduct', {branch: [product.branch]}, (err, docs)=>{
       setListProductSameBrand([...docs.data.slice(0,4)]);
     });
 
     Meteor.call('fetchProduct', {category: product.category}, (err, docs)=>{
       setRecommendProductList([...docs.data.slice(0,8)]);
-      console.log(docs.data.slice(0,8));
+      // console.log(docs.data.slice(0,8));
     })
     
   }, [product])
@@ -71,6 +80,10 @@ const ProductInfo = ({product, currentUser})=>{
       const result = sizeAndNumberOfItem.filter(sizeObj => sizeObj.size === size);
       return result.length > 0 ? result[0].noItems : 0;
     }
+  }
+  const goProductInfo = (product)=>{
+    const id = arrayBufferToHex(product._id.id);
+    FlowRouter.go(`/products/${id}`);
   }
 
   const updateRatingPoint = (ratingPoint)=>{
@@ -215,10 +228,14 @@ const ProductInfo = ({product, currentUser})=>{
         <div className="product-view same-brand-list ">
           <div className="same-brand">
             <div>More from</div>
-            <div className="brand">{product.branch.charAt(0).toUpperCase() + product.branch.slice(1)}</div>
+            <div className="brand">{BRAND_NAME.get(product.branch)}</div>
           </div>
           {
-            listProductSameBrand.map((product, productIndex) => <img key={productIndex} className="image-view same-branch-product" src={product.avt}/> )
+            listProductSameBrand.map((product, productIndex) => <img 
+              onClick={()=>goProductInfo(product)}
+              key={productIndex} 
+              className="image-view same-branch-product" 
+              src={product.avt}/> )
           }
          </div>
       </div> 
@@ -297,7 +314,8 @@ const ProductInfo = ({product, currentUser})=>{
         { recommendProductList.length >0 &&
           recommendProductList.map((productRecommend, index)=>{
             const content = (
-                <div key={index} className="product-recommend-view">
+                <div 
+                    onClick={()=>goProductInfo(productRecommend)} key={index} className="product-recommend-view">
                   <img className="image-view" src={productRecommend.avt}/>
                   <div className="product-recommend-name">{productRecommend.name}</div>
                 </div>

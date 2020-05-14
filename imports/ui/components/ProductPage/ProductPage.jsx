@@ -6,6 +6,7 @@ const ProductPage = ()=>{
   const [products, setProducts] = useState([]);
   console.log('rendering');
   const fetchProduct = async (condition)=>{
+      console.log('fetching by aggregate...');
       await Meteor.call('fetchProduct',condition,(err,result)=>{
         if (!err) setProducts([...result.data]);
         else {

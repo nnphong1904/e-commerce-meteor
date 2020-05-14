@@ -18,9 +18,16 @@ FlowRouter.route('/products',{
   }
 })
 
-FlowRouter.route('/products/:productName',{
+FlowRouter.route('/products/:productId',{
   name:'products info',
   action(params, queryParam){
-    mount(({component})=><App component={component}/>,{component: <ProductInfo product={queryParam.product}/>});
+
+    const productId = params.productId;
+    
+    Meteor.call('fetchProductById',productId, (err, docs)=>{
+      if (docs){
+        mount(({component})=><App component={component}/>,{component: <ProductInfo product={docs.data[0]}/>});
+      }
+    })
   }
 })
