@@ -1,6 +1,8 @@
-import React, { createRef, useState } from 'react';
-import Arrow from '../../assets/image/arrow.svg'
-
+import React, { createRef, useState, Fragment } from 'react';
+import Arrow from '../../assets/image/arrow.svg';
+import Checkbox from '../../components/CheckBox/CheckBox.jsx';
+import InputRadio from '../../components/InputRadio/InputRadio.jsx';
+import './ProductFilter.css'
 const COLOR_LIST = [  
                     {colorId:'wild-watermelon', colorValue: 'wild watermelon'}, 
                     {colorId:'sunglow', colorValue:'sunglow'},
@@ -10,7 +12,7 @@ const COLOR_LIST = [
                   ];
 const SIZE_LIST = ['S', 'M', 'L'];
 const BRAND_LIST = ['Zara', 'Pull&Bear', 'Dior', 'Chanel', 'H&M'];
-  //        console.log(BRAND_LIST[0].brandRef === BRAND_LIST[1].brandRef);
+ 
 
               
 
@@ -30,6 +32,9 @@ const ProductFilter = ({fetchProduct})=>{
   const arrowIconRefBranch = createRef();
   const arrowIconRefColor = createRef();
   const arrowIconRefAvailable = createRef();
+
+  const [priceValue1, setPriceValue1] = useState(39);
+  const [priceValue2, setPriceValue2] = useState(300);
 
  
   const [filterCondition, setFilterCondition] = useState({
@@ -263,21 +268,13 @@ const ProductFilter = ({fetchProduct})=>{
             <img ref={arrowIconRefSize} className="Arrow" src={Arrow}/>
           </a>
           <div ref={filterSizeRef} className="selector-container">
-
-            <form className="size-selector-holder">
+            <form className="size-filter-container">
                 {SIZE_LIST.map((size, sizeIndex)=>{
                     const content = (
-                      <label key={sizeIndex}> 
-                        <input
-                            onClick={(e)=>filterBySize(e)}
-                            className="size-selector"
-                            type="radio"
-                            name="size-selector"
-                            value={size}
-                        />
-                        <span className="size-name">{size}</span>
-                      </label>
-                    )
+                      <Fragment key={sizeIndex}>
+                        <InputRadio title={size} value={size} onClickFunction={filterBySize} />
+                      </Fragment>
+                    );
                     return content;
                 })}
             </form>
@@ -332,21 +329,14 @@ const ProductFilter = ({fetchProduct})=>{
             <div className="title">Brand</div>
             <img ref={arrowIconRefBranch} className="Arrow" src={Arrow}/>           
           </a>
-          <div ref={filterBranchRef} className="branch-list-container">
+          <div ref={filterBranchRef} className="checkbox-container brand-container">
           {
             BRAND_LIST.map((brand, brandIndex)=>{
               const content = (
-                  <label key={brandIndex}  className="branch-holder">
-                    <input  onClick={(e)=>{
-                            filterByBranch(e);
-                          }} 
-                          className="check-boxed"
-                          value={brand}
-                          type="checkbox"/>
-                    <span className="check-mark"></span> 
-                    <span className="branch-name">{brand}</span> 
-                  </label>
-              )
+                  <Fragment key={brandIndex}>
+                    <Checkbox  title={brand} value={brand} onClickFunction={filterByBranch} />
+                  </Fragment>
+             )
               return content;
             })
           }
@@ -410,33 +400,9 @@ const ProductFilter = ({fetchProduct})=>{
             <div className="title">Available</div>
             <img ref={arrowIconRefAvailable} className="Arrow" src={Arrow}/>
           </a>
-          <div ref={filterAvailableRef} className="available-filter-container">
-            <label className="available-holder">
-                <span className="available-title">In stored</span>
-                <input
-                      onClick={(e)=>{
-                        filterByAvailableItem(e);
-                      }} 
-                      className="check-boxed"
-                      type="checkbox"
-                      value="in stored"
-                      />
-                <span className="check-mark"></span>
-                  
-            </label>
-            <label className="available-holder">
-                <span className="available-title">Out of stock</span>
-                <input
-                      onClick={(e)=>{
-                        filterByAvailableItem(e);
-                      }} 
-                      className="check-boxed"
-                      type="checkbox"
-                      value="out of stock"
-                      />
-                <span className="check-mark"></span>
-                  
-            </label>
+          <div ref={filterAvailableRef} className="checkbox-container available-container ">
+            <Checkbox title="In Stored" value="in stored" onClickFunction={filterByAvailableItem}/>
+            <Checkbox title="Out of stock" value="out of stock" onClickFunction={filterByAvailableItem}/>
           </div>
         </li>
       </ul>

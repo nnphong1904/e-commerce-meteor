@@ -23,7 +23,7 @@
 
 /* for filter area on left hand side of product page */
 
-.product-filter-container {
+/* .product-filter-container {
 	position: absolute;
 	left: 13%;
 	top: 30%;
@@ -111,9 +111,7 @@
 .product-filter-container
 	.category-detail
 	button:focus {
-	/* color: #ff6900; */
 	outline: none;
-	/* border: none; */
 }
 
 .product-filter-container
@@ -286,10 +284,10 @@
 #price-filter-2 {
 	position: absolute;
 	top: 25%;
-}
+} */
 
-/* for check-box */
-.product-filter-container
+/* ================================for check-box ========================================*/
+/* .product-filter-container
 	.filter-content-container
 	.filter-detail
 	.branch-list-container
@@ -509,4 +507,4 @@
 	input:checked
 	~ .check-mark::after {
 	display: block;
-}
+} */
