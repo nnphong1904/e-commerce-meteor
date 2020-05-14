@@ -1,0 +1,16 @@
+.stars {
+	width: 100px;
+	margin: 0;
+}
+.star {
+	color: rgba(61, 61, 63, 0.5);
+	font-size: 15px;
+}
+.star::before {
+	content: '\2605';
+	cursor: pointer;
+}
+.star.rated::before {
+	content: '\2065';
+	color: gold;
+}

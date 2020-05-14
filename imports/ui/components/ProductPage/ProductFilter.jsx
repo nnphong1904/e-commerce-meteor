@@ -1,6 +1,18 @@
 import React, { createRef, useState } from 'react';
 import Arrow from '../../assets/image/arrow.svg'
 
+const COLOR_LIST = [  
+                    {colorId:'wild-watermelon', colorValue: 'wild watermelon'}, 
+                    {colorId:'sunglow', colorValue:'sunglow'},
+                    {colorId:'neon-blue', colorValue:'neon blue'}, 
+                    {colorId:'payne-grey', colorValue: `payne's grey`}, 
+                    {colorId:'white-smoke', colorValue:'white smoke'},
+                  ];
+const SIZE_LIST = ['S', 'M', 'L'];
+const BRAND_LIST = ['Zara', 'Pull&Bear', 'Dior', 'Chanel', 'H&M'];
+  //        console.log(BRAND_LIST[0].brandRef === BRAND_LIST[1].brandRef);
+
+              
 
 const ProductFilter = ({fetchProduct})=>{
 
@@ -12,11 +24,6 @@ const ProductFilter = ({fetchProduct})=>{
   const filterColorRef = createRef();
   const filterAvailableRef = createRef();
 
-  const branchNameRef1 = createRef();
-  const branchNameRef2 = createRef();
-  const branchNameRef3 = createRef();
-  const branchNameRef4 = createRef();
-  const branchNameRef5 = createRef();
 
   const arrowIconRefSize = createRef();
   const arrowIconRefPrice = createRef();
@@ -24,13 +31,7 @@ const ProductFilter = ({fetchProduct})=>{
   const arrowIconRefColor = createRef();
   const arrowIconRefAvailable = createRef();
 
-  const [priceValue1, setPriceValue1] = useState('39');
-  const [priceValue2, setPriceValue2] = useState('300');
-
-  // const [listFilterBranch, setListFilterBranch] = useState([]);
-  // const [listFilterColor, setListFilterColor] = useState([]);
-  // const [filterAvailableItem, setFilterAvailableItem] = useState({'in stored':false, 'out stock':false});
-
+ 
   const [filterCondition, setFilterCondition] = useState({
     category:'',
     price: {
@@ -116,7 +117,6 @@ const ProductFilter = ({fetchProduct})=>{
   }
   
   const filterBySize = (e)=>{
-    console.log(e.target.value);
     const size = e.target.value;
     let currentFilterCondition = {...filterCondition};
     if (currentFilterCondition.size !== size)
@@ -129,11 +129,12 @@ const ProductFilter = ({fetchProduct})=>{
     }
     fetchProduct(currentFilterCondition);
     setFilterCondition({...currentFilterCondition})
-  }//need to check again
+  }
 
-  const filterByBranch = (e, ref)=>{
+  const filterByBranch = (e)=>{
    
-    const selectedBranch = ref.current.innerText.toLowerCase();
+    const selectedBranch = e.target.value.toLowerCase();
+    console.log(selectedBranch);
     let currentFilterCondition = {...filterCondition};
     let currentBranchFilterCondition = [...filterCondition.branch];
     const indexOfSelectedBranch = currentBranchFilterCondition.indexOf(selectedBranch);
@@ -262,42 +263,24 @@ const ProductFilter = ({fetchProduct})=>{
             <img ref={arrowIconRefSize} className="Arrow" src={Arrow}/>
           </a>
           <div ref={filterSizeRef} className="selector-container">
+
             <form className="size-selector-holder">
-                <label>
-                  
-                  <input
-                      onClick={(e)=>filterBySize(e)}
-                      className="size-selector"
-                      type="radio"
-                      name="size-selector"
-                      value="S"
-                  />
-                  <span className="size-name">S</span>
-                </label>
-                <label >
-                  <input
-                      onClick={(e)=>filterBySize(e)}
-                      className="size-selector"
-                      type="radio"
-                      name="size-selector"
-                      value="M"
-                  />
-                  <span className="size-name">M</span>
-                </label>
-                <label >
-                  <input
-                      onClick={(e)=>filterBySize(e)}
-                      className="size-selector"
-                      type="radio"
-                      name="size-selector"
-                      value="L"
-                  />
-                  <span className="size-name">L</span>
-                </label>
+                {SIZE_LIST.map((size, sizeIndex)=>{
+                    const content = (
+                      <label key={sizeIndex}> 
+                        <input
+                            onClick={(e)=>filterBySize(e)}
+                            className="size-selector"
+                            type="radio"
+                            name="size-selector"
+                            value={size}
+                        />
+                        <span className="size-name">{size}</span>
+                      </label>
+                    )
+                    return content;
+                })}
             </form>
-              {/* <button onClick={(e)=>filterBySize(e)} className="box-selector-holder">S</button>
-              <button onClick={(e)=>filterBySize(e)} className="box-selector-holder">M</button>
-              <button onClick={(e)=>filterBySize(e)}  className="box-selector-holder">L</button> */}
           </div>
         </li>
         {/* ================filter by color===================== */}
@@ -314,96 +297,29 @@ const ProductFilter = ({fetchProduct})=>{
             <img ref={arrowIconRefColor} className="Arrow" src={Arrow}/>
           </a>
           <div ref={filterColorRef} className="color-picker-container">
-            <label className="color-picker-details">
-              <input  
-                      onClick={
-                        (e)=>{
-                          filterByColor(e);
-                        }
-                      }
-                      className="check-boxed"
-                      type="checkbox"
-                      value="wild watermelon"
-                      />
-                <span id="wild-watermelon" className="check-mark"></span> 
-            </label>                
-            
-         
-            <label className="color-picker-details">
-              <input   
-                      onClick={
-                        (e)=>{
-                          filterByColor(e);
-                        }
-                      }
-                      className="check-boxed"
-                      type="checkbox"
-                      value="sunglow"
-                      />
-                <span id="sunglow" className="check-mark"></span>                 
-            </label>
-                     
-            <label className="color-picker-details">
-              <input   
-                      onClick={
+            {
+              COLOR_LIST.map((color, colorIndex)=>{
+                const content = (
+                  <label key={colorIndex} className="color-picker-details">
+                    <input  
+                            onClick={
                               (e)=>{
                                 filterByColor(e);
                               }
-                      }
-                      className="check-boxed"
-                      type="checkbox"
-                      value="neon blue"
-                      />
-                <span id="neon-blue" className="check-mark"></span>
-            </label>             
-         
-             <label className="color-picker-details">
-                <input   
-                      onClick={
-                        (e)=>{
-                          filterByColor(e);
-                        }
-                      }
-                      className="check-boxed"
-                      type="checkbox"
-                      value="atomic tangerine"
-                      />
-                <span id="atomic-tangerine" className="check-mark"></span>
-             </label>                 
-         
-          
-           <label className="color-picker-details">
-              <input 
-                      onClick={
-                        (e)=>{
-                          filterByColor(e);
-                        }
-                      }
-                      className="check-boxed"
-                      type="checkbox"
-                      value="payne's grey"
-                      />
-                <span id="payne-grey" className="check-mark"></span>  
-           </label>                
-          
-            
-            <label className="color-picker-details">
-              <input 
-                      onClick={
-                        (e)=>{
-                          filterByColor(e);
-                        }
-                      }
-                      className="check-boxed"
-                      type="checkbox"
-                      value="white-smoke"
-                      />
-                <span id="white-smoke" className="check-mark"></span>   
-            </label>               
-  
+                            }
+                            className="check-boxed"
+                            type="checkbox"
+                            value={color.colorValue}
+                            />
+                      <span id={color.colorId} className="check-mark"></span> 
+                  </label>             
+                )
+                return content;
+              })
+            }
           </div>
         </li>
-        {/* ================filter by branch==================== */}
+        {/* ================filter by brand==================== */}
         <li className="filter-detail">
           <a 
               onClick={
@@ -413,64 +329,27 @@ const ProductFilter = ({fetchProduct})=>{
                 }
               }
               className="filter-holder">
-            <div className="title">Branch</div>
+            <div className="title">Brand</div>
             <img ref={arrowIconRefBranch} className="Arrow" src={Arrow}/>           
           </a>
           <div ref={filterBranchRef} className="branch-list-container">
-            <label  className="branch-holder">
-              <span ref={branchNameRef1} className="branch-name">Zara</span>
-              <input  onClick={(e)=>{
-                      changeBranchNameColor(branchNameRef1);
-                      filterByBranch(e, branchNameRef1);
-                    }} 
-                    className="check-boxed"
-                    type="checkbox"/>
-              <span className="check-mark"></span>  
-            </label>
-            <label className="branch-holder">
-              <span ref={branchNameRef2} className="branch-name">H&M</span>
-              <input 
-                    onClick={(e)=>{
-                            changeBranchNameColor(branchNameRef2);
-                            filterByBranch(e, branchNameRef2);
-                          }}
-                    className="check-boxed" 
-                    type="checkbox"/>
-              <span className="check-mark"></span>  
-            </label>
-            <label className="branch-holder">
-              <span ref={branchNameRef3} className="branch-name">Pull&Bear</span>
-              <input 
-                    onClick={(e)=>{
-                      changeBranchNameColor(branchNameRef3);
-                      filterByBranch(e, branchNameRef3);
-                    }}
-                    className="check-boxed" 
-                    type="checkbox"/>
-              <span className="check-mark"></span>  
-            </label>
-            <label className="branch-holder">
-              <span ref={branchNameRef4} className="branch-name">Dior</span>
-              <input
-                    onClick={(e)=>{
-                      changeBranchNameColor(branchNameRef4);
-                      filterByBranch(e, branchNameRef4);
-                    }} 
-                    className="check-boxed"
-                    type="checkbox"/>
-              <span className="check-mark"></span>  
-            </label>
-            <label className="branch-holder">
-              <span ref={branchNameRef5} className="branch-name">Chanel</span>
-              <input
-                  onClick={(e)=>{
-                      changeBranchNameColor(branchNameRef5);
-                      filterByBranch(e, branchNameRef5);
-                    }} 
-                  className="check-boxed"
-                  type="checkbox"/>
-              <span className="check-mark"></span>  
-            </label>
+          {
+            BRAND_LIST.map((brand, brandIndex)=>{
+              const content = (
+                  <label key={brandIndex}  className="branch-holder">
+                    <input  onClick={(e)=>{
+                            filterByBranch(e);
+                          }} 
+                          className="check-boxed"
+                          value={brand}
+                          type="checkbox"/>
+                    <span className="check-mark"></span> 
+                    <span className="branch-name">{brand}</span> 
+                  </label>
+              )
+              return content;
+            })
+          }
           </div>
         </li>
         {/* =================filter by price====================== */}

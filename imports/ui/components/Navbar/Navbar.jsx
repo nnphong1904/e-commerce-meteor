@@ -106,14 +106,14 @@ const Navbar = (props)=>{
                   </ul>
             </div>
       </div>
-      
+      <div className="filter-value">Ladies/Dresses</div>
     </div>
   );
   return content;
 }
 
-export default React.memo(withTracker(()=>{
+export default withTracker(()=>{
   return {
     currentUser: Meteor.user(),
   }
-})(Navbar));
+})(Navbar);
