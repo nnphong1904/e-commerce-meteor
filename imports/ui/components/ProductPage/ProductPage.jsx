@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
 import ProductFilter from './ProductFilter';
 import './ProductPage.css';
-const  NUMBER_ITEM_PER_PAGE = 20;
 const ProductPage = ()=>{
+ 
   const [currentPage, setCurrentPage] = useState(1);
   const [products, setProducts] = useState([]);
   console.log('rendering');
   const fetchProduct = async (condition)=>{
-      console.log('fetching by aggregate...');
-      await Meteor.call('fetchProduct',condition,currentPage,NUMBER_ITEM_PER_PAGE,(err,result)=>{
+      await Meteor.call('fetchProduct',condition,currentPage,(err,result)=>{
         if (!err) setProducts([...result.data]);
         else {
           console.log(err);
@@ -26,7 +25,6 @@ const ProductPage = ()=>{
   const content = (
 
       <>
-        {/* <div className="filter-value">Ladies/Dresses</div> */}
         <div className="product-page-container">
           <ProductFilter fetchProduct={fetchProduct}/>
             {products.length>0 &&
@@ -34,7 +32,6 @@ const ProductPage = ()=>{
             }
             {products.length===0 && <div>No Results</div>}
         </div>
-
       </> 
   );
 

@@ -36,6 +36,7 @@ const ProductInfo = ({product, currentUser})=>{
 
   const [productQuantity, setProductQuantity] = useState(0);
   const [listProductSameBrand, setListProductSameBrand] = useState([]);
+  const [productSize, setProductSize] = useState('');
 
   const [reviewTitle, setReviewTitle] = useState('');
   const [reviewContent, setReviewContent] = useState('');
@@ -62,11 +63,20 @@ const ProductInfo = ({product, currentUser})=>{
 
     Meteor.call('fetchProduct', {category: product.category}, (err, docs)=>{
       setRecommendProductList([...docs.data.slice(0,8)]);
-      // console.log(docs.data.slice(0,8));
     })
     
   }, [product])
   
+
+  const selectSize = (e)=>{
+    if (e.target.value === productSize){
+      e.target.checked = false;
+      setProductSize('');
+      return;
+    }
+    setProductSize(e.target.value);
+  }
+
   const calNumberOfItem = (sizeList)=>{
     return  sizeList.reduce((numberItem, size)=>numberItem + parseInt(size.noItems), 0);
   }
@@ -171,6 +181,7 @@ const ProductInfo = ({product, currentUser})=>{
                             {
                               getNumberOfItemEachSize(size, product) > 0 &&
                               <input
+                                onClick={(e)=>selectSize(e)}
                                 className= "size-selector"
                                 type="radio"
                                 name="size-selector"

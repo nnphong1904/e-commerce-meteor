@@ -461,11 +461,7 @@
 .color-picker-container .color-picker-details {
 	list-style-type: none;
 }
-.color-picker-container
-	.color-picker-details:hover {
-	transform: scale(1.2);
-	border: none;
-}
+
 .color-picker-container
 	.color-picker-details
 	.check-boxed {
@@ -477,20 +473,19 @@
 	height: 26px;
 	width: 26px;
 	border-radius: 26px;
+	border: solid 1px white;
 }
 .color-picker-container
 	.color-picker-details
 	.check-mark:hover {
-	border: none;
+	border-color: blue;
 }
 
 .color-picker-container
 	.color-picker-details
 	.check-boxed:checked
 	+ span {
-	/* border: solid 1px royalblue; */
-	transform: scale(1.2);
-	border: none;
+	border-color: royalblue;
 }
 #wild-watermelon {
 	background: #ff5f6d;

@@ -5,12 +5,22 @@ import Homepage from '../components/Homepage/Homepage.jsx';
 import ProductPage from '../components/ProductPage/ProductPage.jsx';
 import ProductInfo from '../components/ProductInfo/ProductInfo.jsx';
 
+
 FlowRouter.route('/',{
   name:'home',
   action(){
     mount(({component})=><App component={component}/>,{component: <Homepage/>});
   }
 })
+
+
+FlowRouter.route('/page',{
+  name:'home',
+  action(){
+    mount(({component})=><App component={component}/>,{component: <PageSelector/>});
+  }
+})
+
 FlowRouter.route('/products',{
   name:'products',
   action(){

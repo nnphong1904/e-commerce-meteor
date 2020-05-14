@@ -31,8 +31,7 @@ const ProductFilter = ({fetchProduct})=>{
   const arrowIconRefColor = createRef();
   const arrowIconRefAvailable = createRef();
 
-  // const [priceValue1, setPriceValue1] = useState('39');
-  // const [priceValue2, setPriceValue2] = useState('300');
+ 
   const [filterCondition, setFilterCondition] = useState({
     category:'',
     price: {
@@ -118,7 +117,6 @@ const ProductFilter = ({fetchProduct})=>{
   }
   
   const filterBySize = (e)=>{
-    console.log(e.target.value);
     const size = e.target.value;
     let currentFilterCondition = {...filterCondition};
     if (currentFilterCondition.size !== size)
@@ -131,7 +129,7 @@ const ProductFilter = ({fetchProduct})=>{
     }
     fetchProduct(currentFilterCondition);
     setFilterCondition({...currentFilterCondition})
-  }//need to check again
+  }
 
   const filterByBranch = (e)=>{
    

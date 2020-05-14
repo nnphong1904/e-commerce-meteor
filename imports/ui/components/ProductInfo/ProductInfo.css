@@ -34,16 +34,18 @@
 	border-radius: 24px;
 	transition: all 0.2s;
 	margin-right: 15px;
+	border: solid 1px white;
 }
 
 .color-picker-details
 	.check-boxed:checked
 	~ .check-mark {
-	transform: scale(1.2);
+	/* transform: scale(1.1); */
+	border-color: royalblue;
 }
 
 .check-mark:hover {
-	transform: scale(1.2);
+	border-color: royalblue;
 }
 
 .quantity-selector::-webkit-inner-spin-button,
@@ -112,8 +114,6 @@
 }
 .product-color {
 	margin-top: 20px;
-}
-.product-color .color-picker-details .check-mark {
 }
 
 .product-quantity {
