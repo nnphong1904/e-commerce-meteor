@@ -263,13 +263,13 @@ const ProductInfo = ({product, currentUser})=>{
                   <div className="rating-msg">Rating for us:</div>
                   <StarRating updateRatingPoint={updateRatingPoint}/>
                 </span>
-                {(reviewContent === '' && reviewTitle === '' && ratingPoint === 0 ) && 
+                {(reviewTitle === ''  ) && 
                  <button 
                     onClick={submitReview}
                     className="submit-comment-btn" 
                     disabled 
                     type='submit'>Submit</button>}
-                {(ratingPoint > 0 || reviewContent !== '' || reviewTitle !== '') && 
+                {( reviewTitle !== '') && 
                   <button 
                     onClick={submitReview}
                     className="submit-comment-btn active-btn" 
