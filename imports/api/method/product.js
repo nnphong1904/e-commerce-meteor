@@ -10,9 +10,9 @@ export const addProduct = (product)=>{
   }
 }
 
-export const fetchProduct = async (condition)=>{
- 
+export const fetchProduct = async (condition, currentPage, numberItemPerPage)=>{
   try{
+   
     if (Object.entries(condition).length === 0)    
       {
         const result = await ProductCollection.find({}).fetch();
@@ -72,6 +72,14 @@ export const fetchProduct = async (condition)=>{
       
       
       const result =  await ProductCollection.rawCollection().aggregate(pipe).toArray();
+      if (result){
+        // console.log(currentPage, numberItemPerPage);
+        const startIndex = (currentPage-1)*numberItemPerPage;
+        const endIndex = (startIndex + numberItemPerPage ) > result.length ? (startIndex + numberItemPerPage ) : result.length ; 
+        console.log({startIndex, endIndex});
+      }
+      
+      
       return {success: true, data: [...result]};
     }
   catch(err){

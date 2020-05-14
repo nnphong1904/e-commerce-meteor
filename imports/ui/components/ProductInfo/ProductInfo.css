@@ -39,11 +39,11 @@
 .color-picker-details
 	.check-boxed:checked
 	~ .check-mark {
-	border: solid 1px royalblue;
+	transform: scale(1.2);
 }
 
 .check-mark:hover {
-	border: solid 1px royalblue;
+	transform: scale(1.2);
 }
 
 .quantity-selector::-webkit-inner-spin-button,
@@ -112,6 +112,8 @@
 }
 .product-color {
 	margin-top: 20px;
+}
+.product-color .color-picker-details .check-mark {
 }
 
 .product-quantity {
