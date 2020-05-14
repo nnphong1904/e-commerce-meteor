@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ProductCard from './ProductCard';
+import ProductCard from '../../components/ProductCard/ProductCard.jsx';
 import ProductFilter from './ProductFilter';
 import './ProductPage.css';
 const ProductPage = ()=>{

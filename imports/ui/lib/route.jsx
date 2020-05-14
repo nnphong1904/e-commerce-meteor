@@ -1,10 +1,10 @@
 import React from 'react';
 import {mount} from 'react-mounter';
 import {App} from '../App';
-import Homepage from '../components/Homepage/Homepage.jsx';
-import ProductPage from '../components/ProductPage/ProductPage.jsx';
-import ProductInfo from '../components/ProductInfo/ProductInfo.jsx';
-
+import Homepage from '../layouts/Homepage/Homepage.jsx';
+import ProductPage from '../layouts/ProductPage/ProductPage.jsx';
+import ProductInfo from '../layouts/ProductInfo/ProductInfo.jsx';
+import {Info} from '../layouts/Info/Info.jsx';
 
 FlowRouter.route('/',{
   name:'home',
@@ -39,5 +39,12 @@ FlowRouter.route('/products/:productId',{
         mount(({component})=><App component={component}/>,{component: <ProductInfo product={docs.data[0]}/>});
       }
     })
+  }
+})
+
+FlowRouter.route('/info',{
+  name:'info',
+  action(){
+    mount(({component})=><App component={component}/>,{component: <Info/>});
   }
 })

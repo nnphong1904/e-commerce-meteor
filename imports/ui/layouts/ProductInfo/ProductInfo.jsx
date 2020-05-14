@@ -3,7 +3,7 @@ import './ProductInfo.css';
 import arrayBufferToHex from 'array-buffer-to-hex';
 import { withTracker } from 'meteor/react-meteor-data';
 import classnames from 'classnames';
-import StarRating from './StarRating.jsx';
+import StarRating from '../../components/StarRating/StarRating.jsx';
 
 
 const SIZE_LIST = ['S', 'M', 'L'];
