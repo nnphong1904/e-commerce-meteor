@@ -23,10 +23,11 @@ const RegisterForm = (props)=>{
     props.setDisplayRegisterForm(false)
   }
   const onSubmit = (e)=>{
+    console.log({email, name, password});
     e.preventDefault();
-    // if (errorName===''){
-    //   setErrorName('Please fill in your name');
-    // }
+    if (errorName===''){
+      setErrorName('Please fill in your name');
+    }
     if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
       setErrorEmail('Your email is invalid');
     }
@@ -35,11 +36,24 @@ const RegisterForm = (props)=>{
     }
     const newUser = {email,password, profile: {name,role:0}};
     try{
+      if (errorName==='' || name ==='' ||password.length<6){
+        return ;
+      }
       Meteor.call('addUser',newUser,(err,result)=>{
        if (!err){
-         Meteor.loginWithPassword(email, password,(err)=>{
-          props.setDisplayRegisterForm(false)
-         })
+        if (result.success === true) 
+        {
+          Meteor.loginWithPassword(email, password,(err)=>{
+            props.setDisplayRegisterForm(false)
+          })
+        }
+        else{
+          if (result.status === 403)
+          {
+            setErrorEmail('Your email is already exist');
+          }
+        }
+
        }
        else {
          console.log(err);
@@ -49,9 +63,13 @@ const RegisterForm = (props)=>{
     catch(err){
       console.log(err);
     }
-    setEmail('');
-    setPassword('')
-    setName('');
+    
+    setPassword('');
+    setErrorEmail('');
+    setErrorName('');
+    setErrorPassword('');
+    // setEmail('');
+    // setName('');
   }
 
   const content = (
