@@ -23,7 +23,12 @@ const ProductPage = ()=>{
         }
       })
     }
-  
+  const goProductInfo = (product)=>{
+      const productId = product._id._bsontype === 'ObjectID' ? arrayBufferToHex(product._id.id) : product._id._str;
+      console.log(productId);
+      FlowRouter.go(`/products/${productId}`);
+
+  }
 
   useEffect(()=>{
     fetchProduct({});
@@ -39,7 +44,7 @@ const ProductPage = ()=>{
         <div className="product-page-container">
           <ProductFilter fetchProduct={fetchProduct}/>
             {products.length>0 &&
-              products.map(product => <ProductCard key={product.decId} product={product} />)
+              products.map(product => <ProductCard onClickFunction={goProductInfo} key={product.decId} product={product} />)
             }
             {products.length===0 && <div>No Results</div>}
         </div>

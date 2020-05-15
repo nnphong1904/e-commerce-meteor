@@ -1,0 +1,7 @@
+.product-holder {
+	display: flex;
+}
+.product-holder .product-avatar {
+	height: 113px;
+	width: 80px;
+}

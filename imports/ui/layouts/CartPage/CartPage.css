@@ -1,0 +1,17 @@
+.product {
+	width: 310px;
+}
+.product .product-card-container {
+	height: 113px;
+}
+
+.product .product-card-container {
+	display: flex;
+}
+.product-card-container .product-avt {
+	height: 113px;
+	width: 80px;
+}
+.column-header {
+	text-align: left;
+}

@@ -24,52 +24,84 @@ const RegisterForm = (props)=>{
   }
   const onSubmit = (e)=>{
     console.log({email, name, password});
+    let currentErrorName = '';
+    let currentErrorEmail = '';
+    let currentErrorPassword = '';
     e.preventDefault();
-    if (errorName===''){
-      setErrorName('Please fill in your name');
+    if (name===''){
+      currentErrorName='Please fill in your name';
+   //   setErrorName('Please fill in your name');
+    }
+    else {
+      currentErrorName='';
     }
     if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
-      setErrorEmail('Your email is invalid');
+      currentErrorEmail='Your email is invalid';
+  //    setErrorEmail('Your email is invalid');
+    }
+    else {
+      currentErrorEmail='';
     }
     if (password.length <6){
-      setErrorPassword('Your password must be more than 6 characters');
+      currentErrorPassword='Your password must be more than 6 characters';
+   //   setErrorPassword('Your password must be more than 6 characters');
     }
+    else{
+      currentErrorPassword='';
+    }
+    console.log({currentErrorEmail, currentErrorName, currentErrorPassword});
     const newUser = {email,password, profile: {name,role:0}};
     try{
-      if (errorName==='' || name ==='' ||password.length<6){
-        return ;
-      }
-      Meteor.call('addUser',newUser,(err,result)=>{
-       if (!err){
-        if (result.success === true) 
-        {
-          Meteor.loginWithPassword(email, password,(err)=>{
-            props.setDisplayRegisterForm(false)
-          })
-        }
-        else{
-          if (result.status === 403)
-          {
-            setErrorEmail('Your email is already exist');
+      // if (name==='' || email ==='' ||password.length<6){
+      //   return ;
+      // }
+      if (currentErrorPassword==='' && currentErrorEmail==='' && currentErrorName==='')
+      {
+        console.log('start register');
+            Meteor.call('addUser',newUser,(err,result)=>{
+              console.log(result);
+          if (!err){
+            if (result.success === true) 
+            {
+              Meteor.loginWithPassword(email, password,(err)=>{
+                props.setDisplayRegisterForm(false)
+              })
+            }
+            else{
+              console.log('email existed');
+              console.log(result.status);
+              if (result.status === 403)
+              {
+             //    currentErrorEmail='Your email is already exist';
+              setErrorEmail('Your email is already exist');
+              }
+            }
           }
-        }
-
-       }
-       else {
-         console.log(err);
-       }
-      });
+          else {
+            console.log(err);
+          }
+          });
+      }
     }
     catch(err){
       console.log(err);
     }
     
+    setErrorEmail(currentErrorEmail);
+    setErrorName(currentErrorName);
+    setErrorPassword(currentErrorPassword);
+    // setErrorEmail('');
+    // setErrorName('');
+    // setErrorPassword('');
+    if (currentErrorEmail!=='')
+      {
+        setEmail('');
+      }
+    if (currentErrorName!=='')
+    {
+      setName('');
+    }
     setPassword('');
-    setErrorEmail('');
-    setErrorName('');
-    setErrorPassword('');
-    // setEmail('');
-    // setName('');
   }
 
   const content = (
