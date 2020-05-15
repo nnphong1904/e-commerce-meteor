@@ -1,7 +1,10 @@
 .circle-checkbox {
 	opacity: 0;
 }
-
+.disabled {
+	color: rgba(0, 0, 0, 0.3);
+	border-color: rgba(0, 0, 0, 0.3);
+}
 .circle-check-mark {
 	height: 26px;
 	width: 26px;

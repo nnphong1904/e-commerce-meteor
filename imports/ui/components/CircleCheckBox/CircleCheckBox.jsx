@@ -1,6 +1,6 @@
 import React from 'react';
 import './CircleCheckBox.css';
-const CircleCheckBox = ({title='', id ='', value='', onClickFunction=()=>{}})=>{
+const CircleCheckBox = ({title='', isDisabled=false, id ='', value='', onClickFunction=()=>{}})=>{
 
   const content = (
     <label className="circle-checkbox-holder">
@@ -10,8 +10,10 @@ const CircleCheckBox = ({title='', id ='', value='', onClickFunction=()=>{}})=>{
                   }}
         className="circle-checkbox"
         type="checkbox"
+        disabled={isDisabled}
         value={value}/>
-          <span id={id} className="circle-check-mark">{title}</span> 
+        { isDisabled && <span id={id} className="circle-check-mark disabled">{title}</span> }
+        { !isDisabled && <span id={id} className="circle-check-mark">{title}</span> }
       </label>             
   )
   return content;

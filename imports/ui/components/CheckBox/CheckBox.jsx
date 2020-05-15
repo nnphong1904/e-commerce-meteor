@@ -1,6 +1,6 @@
 import React from 'react';
 import './CheckBox.css';
-const Checkbox = ({title='', value='' ,onClickFunction= ()=>{}})=>{
+const Checkbox = ({title='', isDisabled=false, value='' ,onClickFunction= ()=>{}})=>{
 
   const content = (
     <label className="check-box-holder">
@@ -11,10 +11,11 @@ const Checkbox = ({title='', value='' ,onClickFunction= ()=>{}})=>{
                       }} 
                       className="check-boxed"
                       type="checkbox"
+                      disabled={isDisabled}
                       value={value}
                       />
-                <span className="check-mark"></span>
-                  
+               { !isDisabled && <span className="check-mark"></span>}
+               { isDisabled && <span className="check-mark disabled"></span>}  
             </label>
   )
   return content;
