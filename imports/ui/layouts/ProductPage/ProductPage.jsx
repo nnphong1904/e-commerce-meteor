@@ -10,12 +10,11 @@ const ProductPage = ()=>{
   const [products, setProducts] = useState([]);
   const [numberOfPage, setNumberOfPage] = useState()
   console.log('rendering');
-  console.log(currentPage);
   const fetchProduct = async (condition)=>{
       await Meteor.call('fetchProduct',condition,currentPage,(err,result)=>{
         if (!err) {
           setProducts([...result.data]);
-          setNumberOfPage(result.dataLength/NUMBER_ITEM_PER_PAGE);
+          setNumberOfPage(Math.round(result.dataLength/NUMBER_ITEM_PER_PAGE));
         }
         else {
           console.log(err);

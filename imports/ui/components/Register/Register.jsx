@@ -23,37 +23,86 @@ const RegisterForm = (props)=>{
     props.setDisplayRegisterForm(false)
   }
   const onSubmit = (e)=>{
+    console.log({email, name, password});
+    let currentErrorName = '';
+    let currentErrorEmail = '';
+    let currentErrorPassword = '';
     e.preventDefault();
-    // if (errorName===''){
-    //   setErrorName('Please fill in your name');
-    // }
+    if (name===''){
+      currentErrorName='Please fill in your name';
+   //   setErrorName('Please fill in your name');
+    }
+    else {
+      currentErrorName='';
+    }
     if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
-      setErrorEmail('Your email is invalid');
+      currentErrorEmail='Your email is invalid';
+  //    setErrorEmail('Your email is invalid');
+    }
+    else {
+      currentErrorEmail='';
     }
     if (password.length <6){
-      setErrorPassword('Your password must be more than 6 characters');
+      currentErrorPassword='Your password must be more than 6 characters';
+   //   setErrorPassword('Your password must be more than 6 characters');
     }
+    else{
+      currentErrorPassword='';
+    }
+    console.log({currentErrorEmail, currentErrorName, currentErrorPassword});
     const newUser = {email,password, profile: {name,role:0}};
     try{
-      Meteor.call('addUser',newUser,(err,result)=>{
-       if (!err){
-         Meteor.loginWithPassword(email, password,(err)=>{
-          props.setDisplayRegisterForm(false)
-         })
-       }
-       else {
-         console.log(err);
-       }
-      });
+      // if (name==='' || email ==='' ||password.length<6){
+      //   return ;
+      // }
+      if (currentErrorPassword==='' && currentErrorEmail==='' && currentErrorName==='')
+      {
+        console.log('start register');
+            Meteor.call('addUser',newUser,(err,result)=>{
+              console.log(result);
+          if (!err){
+            if (result.success === true) 
+            {
+              Meteor.loginWithPassword(email, password,(err)=>{
+                props.setDisplayRegisterForm(false)
+              })
+            }
+            else{
+              console.log('email existed');
+              console.log(result.status);
+              if (result.status === 403)
+              {
+             //    currentErrorEmail='Your email is already exist';
+              setErrorEmail('Your email is already exist');
+              }
+            }
+          }
+          else {
+            console.log(err);
+          }
+          });
+      }
     }
     catch(err){
       console.log(err);
     }
-    setEmail('');
-    setPassword('')
-    setName('');
+    
+    setErrorEmail(currentErrorEmail);
+    setErrorName(currentErrorName);
+    setErrorPassword(currentErrorPassword);
+    // setErrorEmail('');
+    // setErrorName('');
+    // setErrorPassword('');
+    if (currentErrorEmail!=='')
+      {
+        setEmail('');
+      }
+    if (currentErrorName!=='')
+    {
+      setName('');
+    }
+    setPassword('');
   }
-
   const content = (
     <div onClick={e=>exitRegisterForm(e)}  id="overlay"  className="overlay">
      <div className="login-container">
