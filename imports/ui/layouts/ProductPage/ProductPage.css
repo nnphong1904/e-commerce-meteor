@@ -20,7 +20,10 @@
 	text-align: center;
 	color: #4d4d4d;
 }
-
+.page-selector-container {
+	margin-left: 83%;
+	margin-top: 20px;
+}
 /* for filter area on left hand side of product page */
 
 /* .product-filter-container {
