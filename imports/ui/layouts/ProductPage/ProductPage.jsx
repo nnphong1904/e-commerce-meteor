@@ -34,7 +34,7 @@ const ProductPage = ()=>{
 
       <>
         <div className="page-selector-container">
-          <PageSelector onClickFunction={changeCurrentPage}/>
+          <PageSelector textDisplay={`/100`} onClickFunction={changeCurrentPage}/>
         </div>
         <div className="product-page-container">
           <ProductFilter fetchProduct={fetchProduct}/>

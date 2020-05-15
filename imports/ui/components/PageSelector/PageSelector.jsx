@@ -38,7 +38,7 @@ const PageSelector = ({textDisplay='', minValue=1, maxValue=100, onClickFunction
           className="input-value" 
           value={currentValue} 
           type="number"/>
-        <span className="display-text">{`/100`}</span>
+        <span className="display-text">{textDisplay}</span>
       </div>
       <img 
         onClick={
