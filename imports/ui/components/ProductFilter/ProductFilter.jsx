@@ -21,8 +21,7 @@ const BRAND_LIST = ['Zara', 'Pull&Bear', 'Dior', 'Chanel', 'H&M'];
 const ProductFilter = ({fetchProduct})=>{
 
   const filterSizeRef = createRef();
-  const filterPriceRef1 = createRef();
-  const filterPriceRef2 = createRef();
+  const filterPriceRef = createRef();
   const priceTextHolderRef = createRef();
   const filterBranchRef = createRef();
   const filterColorRef = createRef();
@@ -76,6 +75,7 @@ const ProductFilter = ({fetchProduct})=>{
   }
 
   const toggleFilter = (ref)=>{
+    console.log(ref.current);
     ref.current.style.display=ref.current.style.display===''?'block':'';
   }
   const toggleTextPriceFilter = ()=>{
@@ -340,16 +340,20 @@ const ProductFilter = ({fetchProduct})=>{
         <li className="filter-detail">
           <a onClick={
               ()=>{
-                toggleFilter(filterPriceRef1);
-                toggleFilter(filterPriceRef2);
-                toggleTextPriceFilter();
+                toggleFilter(filterPriceRef);
                 rotateArrowIcon(arrowIconRefPrice);
                 }} 
                 className="filter-holder">
             <div className="title">Price</div>
             <img ref={arrowIconRefPrice} className="Arrow" src={Arrow}/>
           </a>
-          <RangeSelector onMouseUpFnc={filterByPrice} value1={priceValue1} value2={priceValue2} />
+          <div ref={filterPriceRef} className="range-slider-container">
+            <RangeSelector 
+                onMouseUpFnc={filterByPrice} 
+                value1={priceValue1} 
+                value2={priceValue2} />
+          </div>
+          
           
         </li>
         {/* filter by available item */}
