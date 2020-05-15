@@ -55,40 +55,12 @@ const ProductFilter = ({fetchProduct})=>{
     }
   })
 
-  const changeBranchNameColor = (ref)=>{
-    if (ref.current.style.color !== 'rgb(255, 161, 95)'){
-      ref.current.style.color = '#ffa15f'
-      return;
-    }
-    ref.current.style.color = '#4d4d4d';
-  }
-  const rotateArrowIcon = (ref)=>{
-     if (ref.current.style.transform === '' )
-      {
-        ref.current.style.transform='rotate(180deg)';
-      }
-     else if (ref.current.style.transform==='rotate(180deg)'){
-        ref.current.style.transform = 'rotate(360deg)';
-        ref.current.style.transform='';
-     }
-
-  }
 
   const toggleFilter = (ref)=>{
     console.log(ref.current);
     ref.current.style.display=ref.current.style.display===''?'block':'';
   }
-  const toggleTextPriceFilter = ()=>{
-    priceTextHolderRef.current.style.display = priceTextHolderRef.current.style.display==='' ? 'flex' : '';
-  }
-  const onChangeHandlerForPriceValue1 = (e)=>{
-    const newPrice = {...filterCondition.price, priceValue1: e.target.value};
-    setFilterCondition({...filterCondition, price:{...newPrice}});
-  }
-  const onChangeHandlerForPriceValue2 = (e)=>{
-    const newPrice = {...filterCondition.price, priceValue2: e.target.value};
-    setFilterCondition({...filterCondition, price:{...newPrice}});
-  }
+  
 
   //========== filter logic implementation================
 
@@ -229,7 +201,7 @@ const ProductFilter = ({fetchProduct})=>{
             <label className="category-holder">
               <input 
                 name="category-selector"
-                value="mini-dresses"
+                value="mini dresses"
                 onClick={(e)=>filterByCategory(e)} 
                 className="category-selector" 
                 type="radio"/>
