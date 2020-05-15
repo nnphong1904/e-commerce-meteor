@@ -1,6 +1,10 @@
-import React, { createRef, useState } from 'react';
-import Arrow from '../../assets/image/arrow.svg'
-
+import React, { createRef, useState, Fragment } from 'react';
+import Arrow from '../../assets/image/arrow.svg';
+import Checkbox from '../../components/CheckBox/CheckBox.jsx';
+import InputRadio from '../../components/InputRadio/InputRadio.jsx';
+import CircleCheckBox from '../../components/CircleCheckBox/CircleCheckBox.jsx';
+import RangeSelector from '../../components/RangeSelector/RangeSelector.jsx';
+import './ProductFilter.css'
 const COLOR_LIST = [  
                     {colorId:'wild-watermelon', colorValue: 'wild watermelon'}, 
                     {colorId:'sunglow', colorValue:'sunglow'},
@@ -10,15 +14,14 @@ const COLOR_LIST = [
                   ];
 const SIZE_LIST = ['S', 'M', 'L'];
 const BRAND_LIST = ['Zara', 'Pull&Bear', 'Dior', 'Chanel', 'H&M'];
-  //        console.log(BRAND_LIST[0].brandRef === BRAND_LIST[1].brandRef);
+ 
 
               
 
 const ProductFilter = ({fetchProduct})=>{
 
   const filterSizeRef = createRef();
-  const filterPriceRef1 = createRef();
-  const filterPriceRef2 = createRef();
+  const filterPriceRef = createRef();
   const priceTextHolderRef = createRef();
   const filterBranchRef = createRef();
   const filterColorRef = createRef();
@@ -30,6 +33,9 @@ const ProductFilter = ({fetchProduct})=>{
   const arrowIconRefBranch = createRef();
   const arrowIconRefColor = createRef();
   const arrowIconRefAvailable = createRef();
+
+  const [priceValue1, setPriceValue1] = useState(39);
+  const [priceValue2, setPriceValue2] = useState(300);
 
  
   const [filterCondition, setFilterCondition] = useState({
@@ -69,6 +75,7 @@ const ProductFilter = ({fetchProduct})=>{
   }
 
   const toggleFilter = (ref)=>{
+    console.log(ref.current);
     ref.current.style.display=ref.current.style.display===''?'block':'';
   }
   const toggleTextPriceFilter = ()=>{
@@ -165,9 +172,11 @@ const ProductFilter = ({fetchProduct})=>{
     setFilterCondition({...currentFilterCondition});
   } //need to check again
 
-  const filterByPrice = ()=>{
+  const filterByPrice = (valuePrice1, valuePrice2)=>{
     let currentFilterCondition ={...filterCondition};
-    let newPriceObj = {...currentFilterCondition.price, doPriceFilter:true};
+    let newPriceObj = {priceValue1: valuePrice1, priceValue2: valuePrice2, doPriceFilter: true};
+    console.log(newPriceObj);
+    // let newPriceObj = {...currentFilterCondition.price, doPriceFilter:true};
     currentFilterCondition = {...currentFilterCondition, price:{...newPriceObj}}
     fetchProduct(currentFilterCondition);
 
@@ -263,21 +272,13 @@ const ProductFilter = ({fetchProduct})=>{
             <img ref={arrowIconRefSize} className="Arrow" src={Arrow}/>
           </a>
           <div ref={filterSizeRef} className="selector-container">
-
-            <form className="size-selector-holder">
+            <form className="size-filter-container">
                 {SIZE_LIST.map((size, sizeIndex)=>{
                     const content = (
-                      <label key={sizeIndex}> 
-                        <input
-                            onClick={(e)=>filterBySize(e)}
-                            className="size-selector"
-                            type="radio"
-                            name="size-selector"
-                            value={size}
-                        />
-                        <span className="size-name">{size}</span>
-                      </label>
-                    )
+                      <Fragment key={sizeIndex}>
+                        <InputRadio title={size} value={size} onClickFunction={filterBySize} />
+                      </Fragment>
+                    );
                     return content;
                 })}
             </form>
@@ -300,20 +301,10 @@ const ProductFilter = ({fetchProduct})=>{
             {
               COLOR_LIST.map((color, colorIndex)=>{
                 const content = (
-                  <label key={colorIndex} className="color-picker-details">
-                    <input  
-                            onClick={
-                              (e)=>{
-                                filterByColor(e);
-                              }
-                            }
-                            className="check-boxed"
-                            type="checkbox"
-                            value={color.colorValue}
-                            />
-                      <span id={color.colorId} className="check-mark"></span> 
-                  </label>             
-                )
+                  <Fragment key={colorIndex}>
+                    <CircleCheckBox value={color.colorValue} id={color.colorId} onClickFunction={filterByColor}/>
+                  </Fragment>
+                );
                 return content;
               })
             }
@@ -332,21 +323,14 @@ const ProductFilter = ({fetchProduct})=>{
             <div className="title">Brand</div>
             <img ref={arrowIconRefBranch} className="Arrow" src={Arrow}/>           
           </a>
-          <div ref={filterBranchRef} className="branch-list-container">
+          <div ref={filterBranchRef} className="checkbox-container brand-container">
           {
             BRAND_LIST.map((brand, brandIndex)=>{
               const content = (
-                  <label key={brandIndex}  className="branch-holder">
-                    <input  onClick={(e)=>{
-                            filterByBranch(e);
-                          }} 
-                          className="check-boxed"
-                          value={brand}
-                          type="checkbox"/>
-                    <span className="check-mark"></span> 
-                    <span className="branch-name">{brand}</span> 
-                  </label>
-              )
+                  <Fragment key={brandIndex}>
+                    <Checkbox  title={brand} value={brand} onClickFunction={filterByBranch} />
+                  </Fragment>
+             )
               return content;
             })
           }
@@ -356,46 +340,21 @@ const ProductFilter = ({fetchProduct})=>{
         <li className="filter-detail">
           <a onClick={
               ()=>{
-                toggleFilter(filterPriceRef1);
-                toggleFilter(filterPriceRef2);
-                toggleTextPriceFilter();
+                toggleFilter(filterPriceRef);
                 rotateArrowIcon(arrowIconRefPrice);
                 }} 
                 className="filter-holder">
             <div className="title">Price</div>
             <img ref={arrowIconRefPrice} className="Arrow" src={Arrow}/>
           </a>
-          <input  
-            id="price-filter-1"
-            type="range" 
-            ref={filterPriceRef1}
-            onClick={(e)=>console.log(e.target)}
-            onMouseUp={()=>filterByPrice(parseInt(priceValue1), parseInt(priceValue2))} 
-            onChange={(e)=>{onChangeHandlerForPriceValue1(e)}} 
-            min="39" max="300" 
-            className="price-slider" 
-            value={filterCondition.price.priceValue1}
-            step={1}
-            />
-            <input  
-            id="price-filter-2"
-            type="range" 
-            ref={filterPriceRef2}
-            onClick={(e)=>console.log(e.target)}
-            onMouseUp={()=>filterByPrice(parseInt(priceValue1), parseInt(priceValue2))} 
-            onChange={(e)=>{onChangeHandlerForPriceValue2(e)}} 
-            min="39" max="300" 
-            className="price-slider" 
-            value={filterCondition.price.priceValue2}
-           />
-          <div ref={priceTextHolderRef} className="price-text-holder">
-            <div className="min-price">{
-              parseInt(filterCondition.price.priceValue1) < parseInt(filterCondition.price.priceValue2) ? filterCondition.price.priceValue1 : filterCondition.price.priceValue2}
-            </div>
-            <div className="max-price">{
-              parseInt(filterCondition.price.priceValue1) >= parseInt(filterCondition.price.priceValue2) ? filterCondition.price.priceValue1 : filterCondition.price.priceValue2}
-            </div>
+          <div ref={filterPriceRef} className="range-slider-container">
+            <RangeSelector 
+                onMouseUpFnc={filterByPrice} 
+                value1={priceValue1} 
+                value2={priceValue2} />
           </div>
+          
+          
         </li>
         {/* filter by available item */}
         <li className="filter-detail">
@@ -410,33 +369,9 @@ const ProductFilter = ({fetchProduct})=>{
             <div className="title">Available</div>
             <img ref={arrowIconRefAvailable} className="Arrow" src={Arrow}/>
           </a>
-          <div ref={filterAvailableRef} className="available-filter-container">
-            <label className="available-holder">
-                <span className="available-title">In stored</span>
-                <input
-                      onClick={(e)=>{
-                        filterByAvailableItem(e);
-                      }} 
-                      className="check-boxed"
-                      type="checkbox"
-                      value="in stored"
-                      />
-                <span className="check-mark"></span>
-                  
-            </label>
-            <label className="available-holder">
-                <span className="available-title">Out of stock</span>
-                <input
-                      onClick={(e)=>{
-                        filterByAvailableItem(e);
-                      }} 
-                      className="check-boxed"
-                      type="checkbox"
-                      value="out of stock"
-                      />
-                <span className="check-mark"></span>
-                  
-            </label>
+          <div ref={filterAvailableRef} className="checkbox-container available-container ">
+            <Checkbox title="In Stored" value="in stored" onClickFunction={filterByAvailableItem}/>
+            <Checkbox title="Out of stock" value="out of stock" onClickFunction={filterByAvailableItem}/>
           </div>
         </li>
       </ul>

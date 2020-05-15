@@ -1,0 +1,26 @@
+.circle-checkbox {
+	opacity: 0;
+}
+.disabled {
+	color: rgba(0, 0, 0, 0.3);
+	border-color: rgba(0, 0, 0, 0.3);
+}
+.circle-check-mark {
+	height: 26px;
+	width: 26px;
+	border-radius: 26px;
+	border: solid 1px white;
+	display: inline-block;
+	background-color: #ffa15f;
+	margin-right: 6px;
+	position: relative;
+	top: 5px;
+}
+
+.circle-check-mark:hover {
+	border-color: blue;
+}
+
+.circle-checkbox:checked + span {
+	border-color: royalblue;
+}

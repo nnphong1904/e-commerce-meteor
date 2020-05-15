@@ -1,5 +1,4 @@
 import React, { useState, Children } from 'react';
-import { Info } from './components/Info.jsx';
 import Navbar from './components/Navbar/Navbar.jsx';
 import LoginForm from './components/Login/Login.jsx';
 import RegisterForm from './components/Register/Register.jsx';

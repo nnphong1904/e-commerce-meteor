@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import arrayBufferToHex from 'array-buffer-to-hex';
-import './ProductPage.css';
+import './ProductCard.css';
+import '../StarRating/StarRating.jsx';
+import StarRating from '../StarRating/StarRating.jsx';
 const ProductCard = ({product})=>{
   
   const goProductInfo = (product)=>{

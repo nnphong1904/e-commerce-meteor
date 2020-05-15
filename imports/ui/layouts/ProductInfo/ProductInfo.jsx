@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import './ProductInfo.css';
 import arrayBufferToHex from 'array-buffer-to-hex';
 import { withTracker } from 'meteor/react-meteor-data';
 import classnames from 'classnames';
-import StarRating from './StarRating.jsx';
-
+import StarRating from '../../components/StarRating/StarRating.jsx';
+import CircleCheckBox from '../../components/CircleCheckBox/CircleCheckBox.jsx';
+import InputRadio from '../../components/InputRadio/InputRadio.jsx';
 
 const SIZE_LIST = ['S', 'M', 'L'];
 const COLOR_LIST = [  
@@ -167,31 +168,16 @@ const ProductInfo = ({product, currentUser})=>{
             <div>Size</div>
             <form onSubmit={submitReview} className="size-selector-holder">
               {SIZE_LIST.map((size, sizeIndex)=>{
-                        const content = (
-                          <label key={sizeIndex}> 
-                            {getNumberOfItemEachSize(size, product) === 0 &&
-                              <input
-                                className= "size-selector"
-                                type="radio"
-                                name="size-selector"
-                                value={size}
-                                disabled={true}
-                              />
-                            }
-                            {
-                              getNumberOfItemEachSize(size, product) > 0 &&
-                              <input
-                                onClick={(e)=>selectSize(e)}
-                                className= "size-selector"
-                                type="radio"
-                                name="size-selector"
-                                value={size}
-                              />
-                            }
-                            <span className={classnames('size-name', {'disabled':getNumberOfItemEachSize(size, product) === 0})}>{size}</span>
-                          </label>
-                        )
-                        return content;
+                   const content = (
+                    <>
+                       {getNumberOfItemEachSize(size, product) === 0 && 
+                       <InputRadio title={size} value={size} isDisabled={true} />}
+                       {getNumberOfItemEachSize(size, product) > 0 && 
+                       <InputRadio onClickFunction={selectSize} title={size} value={size} />}
+                    </>
+                   );
+                   
+                   return content
               })}
             </form>
          </div>
@@ -204,15 +190,10 @@ const ProductInfo = ({product, currentUser})=>{
             {
               COLOR_LIST.map((color, colorIndex)=>{
                 const content = (
-                  <label key={colorIndex} className="color-picker-details">
-                    <input  
-                            className="check-boxed"
-                             type="checkbox"
-                            value={color.colorValue}
-                            />
-                      <span id={color.colorId} className="check-mark"></span> 
-                  </label>             
-                )
+                  <Fragment>
+                    <CircleCheckBox id={color.colorId} />
+                  </Fragment>
+                );
                 return content;
               })
             }
