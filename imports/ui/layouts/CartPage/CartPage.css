@@ -1,17 +1,8 @@
-.product {
-	width: 310px;
+.products-list {
+	width: 47%;
+	margin-left: 80px;
 }
-.product .product-card-container {
-	height: 113px;
-}
-
-.product .product-card-container {
-	display: flex;
-}
-.product-card-container .product-avt {
-	height: 113px;
-	width: 80px;
-}
-.column-header {
-	text-align: left;
+.MuiTableCell-body .circle-check-mark {
+	display: block;
+	margin-bottom: 30px;
 }
