@@ -3,7 +3,7 @@
 	display: flex;
 	width: 61%;
 	flex-wrap: wrap;
-	margin: 10px 0 0 31%;
+	margin: 0 0 0 31%;
 	font-family: Montserrat, sans-serif;
 }
 .filter-value {
@@ -20,7 +20,9 @@
 	text-align: center;
 	color: #4d4d4d;
 }
-
+.page-selector-container {
+	margin-left: 83%;
+}
 /* for filter area on left hand side of product page */
 
 /* .product-filter-container {

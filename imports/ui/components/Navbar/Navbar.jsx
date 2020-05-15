@@ -12,6 +12,7 @@ const Navbar = (props)=>{
 
   // const ref = React.createRef();
   const [userProfile, setUserProfile] =useState({});
+  const [searchContent, setSearchContent] = useState('');
   useEffect(() => {
     Meteor.call('getCurrentUser', {}, (err,result)=>{
       if (result.data!==null) 
@@ -20,6 +21,13 @@ const Navbar = (props)=>{
       }
     })
   }, [props.currentUser]);
+  const onChangeHandler = (e, setState)=>{
+    setState(e.target.value);
+  }
+
+  const onKeyUpHandler = (e)=>{
+    if (e.keyCode === 13) setSearchContent('');
+  }
   const loginBtnClick = ()=>{
     props.setDisplayLoginForm(true);
   }
@@ -41,6 +49,9 @@ const Navbar = (props)=>{
     <div className="navbar">
       <div className="upper-part">
         <input 
+          value={searchContent}
+          onKeyUp={(e)=>{onKeyUpHandler(e)}}
+          onChange = {(e)=>{onChangeHandler(e, setSearchContent)}}
           className="search-box" 
           type="text" 
           placeholder="Search"/>
