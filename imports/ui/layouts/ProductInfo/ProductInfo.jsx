@@ -169,12 +169,12 @@ const ProductInfo = ({product, currentUser})=>{
             <form onSubmit={submitReview} className="size-selector-holder">
               {SIZE_LIST.map((size, sizeIndex)=>{
                    const content = (
-                    <>
+                    <Fragment key={sizeIndex}>
                        {getNumberOfItemEachSize(size, product) === 0 && 
                        <InputRadio title={size} value={size} isDisabled={true} />}
                        {getNumberOfItemEachSize(size, product) > 0 && 
                        <InputRadio onClickFunction={selectSize} title={size} value={size} />}
-                    </>
+                    </Fragment>
                    );
                    
                    return content
@@ -190,7 +190,7 @@ const ProductInfo = ({product, currentUser})=>{
             {
               COLOR_LIST.map((color, colorIndex)=>{
                 const content = (
-                  <Fragment>
+                  <Fragment key={colorIndex}>
                     <CircleCheckBox id={color.colorId} />
                   </Fragment>
                 );
