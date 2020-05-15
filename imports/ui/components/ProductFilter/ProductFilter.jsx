@@ -78,17 +78,7 @@ const ProductFilter = ({fetchProduct})=>{
     console.log(ref.current);
     ref.current.style.display=ref.current.style.display===''?'block':'';
   }
-  const toggleTextPriceFilter = ()=>{
-    priceTextHolderRef.current.style.display = priceTextHolderRef.current.style.display==='' ? 'flex' : '';
-  }
-  const onChangeHandlerForPriceValue1 = (e)=>{
-    const newPrice = {...filterCondition.price, priceValue1: e.target.value};
-    setFilterCondition({...filterCondition, price:{...newPrice}});
-  }
-  const onChangeHandlerForPriceValue2 = (e)=>{
-    const newPrice = {...filterCondition.price, priceValue2: e.target.value};
-    setFilterCondition({...filterCondition, price:{...newPrice}});
-  }
+  
 
   //========== filter logic implementation================
 
