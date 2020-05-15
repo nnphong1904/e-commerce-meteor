@@ -41,6 +41,10 @@ const Navbar = (props)=>{
   const registerBtnClick = ()=>{
     props.setDisplayRegisterForm(true);
   }
+
+  const goProductsPage = ()=>{
+    FlowRouter.go('/products');
+  }
   
   // const onclickRef = ()=>{
   //   console.log(ref.current.children[0].innerText);
@@ -55,7 +59,7 @@ const Navbar = (props)=>{
           className="search-box" 
           type="text" 
           placeholder="Search"/>
-        <img src={Logo} className="Logo"/>
+        <img onClick={goProductsPage} src={Logo} className="Logo"/>
         <div className="auth">
             { props.currentUser===null &&
               <>

@@ -16,7 +16,7 @@ const PrettySlider = withStyles({
     border: '2px solid currentColor',
     marginTop: -8,
     marginLeft: -3,
-    '&:focus, &:hover, &$active': {
+    '&:focus, &:hover': {
       boxShadow: 'inherit',
     },
     

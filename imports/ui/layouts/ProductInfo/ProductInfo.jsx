@@ -191,7 +191,8 @@ const ProductInfo = ({product, currentUser})=>{
               COLOR_LIST.map((color, colorIndex)=>{
                 const content = (
                   <Fragment key={colorIndex}>
-                    <CircleCheckBox id={color.colorId} />
+                      {product.color === color.colorValue &&<CircleCheckBox  id={color.colorId} />}
+                      {product.color !== color.colorValue && <CircleCheckBox isDisabled={true} id={color.colorId}/>}
                   </Fragment>
                 );
                 return content;
