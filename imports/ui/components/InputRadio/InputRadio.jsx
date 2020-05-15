@@ -1,11 +1,12 @@
 import React from 'react';
 import './InputRadio.css';
 
-const InputRadio = ({title='', isDisabled=false, value='' ,onClickFunction= ()=>{}}) =>{
+const InputRadio = ({title='', isChecked=false, isDisabled=false, value='' ,onClickFunction= ()=>{}}) =>{
 
   const content = (
     <label> 
       <input
+          checked={isChecked}
           onClick={(e)=>onClickFunction(e)}
           className="radio-input"
           type="radio"

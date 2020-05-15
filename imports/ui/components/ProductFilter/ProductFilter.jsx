@@ -229,7 +229,7 @@ const ProductFilter = ({fetchProduct})=>{
             <label className="category-holder">
               <input 
                 name="category-selector"
-                value="mini-dresses"
+                value="mini dresses"
                 onClick={(e)=>filterByCategory(e)} 
                 className="category-selector" 
                 type="radio"/>

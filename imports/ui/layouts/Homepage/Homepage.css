@@ -47,6 +47,7 @@
 }
 .shop-now-btn:hover {
 	background: #e6954f;
+	cursor: pointer;
 }
 
 .filter-container {

@@ -12,6 +12,9 @@
 .category-selector {
 	display: none;
 }
+.category-holder span  {
+	cursor: pointer;
+}
 .category-holder {
 	display: block;
 	margin-top: 15px;

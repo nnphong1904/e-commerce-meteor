@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, createRef} from 'react';
 import './Navbar.css';
 import {Meteor} from 'meteor/meteor';
 import Logo from '../../assets/image/logo.svg';
@@ -12,6 +12,15 @@ const Navbar = (props)=>{
 
   // const ref = React.createRef();
   const [userProfile, setUserProfile] =useState({});
+  const [whoShouldBuy, setWhoShouldBuy] = useState('');
+  const [typeProduct, setTypeProduct] = useState('');
+  const [didOpenTypeProductSection, setDidOpenTypeProductSection] = useState(false);
+  const productTypeRef = createRef();
+  const menRef = createRef();
+  const ladiesRef = createRef();
+  const boysRef = createRef();
+  const girlsRef = createRef();
+
   useEffect(() => {
     Meteor.call('getCurrentUser', {}, (err,result)=>{
       if (result.data!==null) 
@@ -20,11 +29,40 @@ const Navbar = (props)=>{
       }
     })
   }, [props.currentUser]);
+  
+
+  const toggleTypeProductSection = ()=>{
+    console.log(didOpenTypeProductSection);
+    if (didOpenTypeProductSection === false){
+      productTypeRef.current.style.transform = 'scaleY(1) translateX(-50%)';
+    }
+    else {
+      productTypeRef.current.style.transform = 'scaleY(0) translateX(-50%)';
+    }
+    setDidOpenTypeProductSection(!didOpenTypeProductSection);
+  }
+  const selectWhoShouldBuy = (ref, setState)=>{
+    setState(ref.current.innerText);
+  }
+  const selectTypeOfProduct = (e)=>{
+    setTypeProduct(e.target.innerText);
+    setDidOpenTypeProductSection(false);
+    productTypeRef.current.style.transform = 'scaleY(0) translateX(-50%)';
+    FlowRouter.go('/products');
+  }
+  const hideTypeProductSection = ()=>{
+    if (didOpenTypeProductSection === true){
+      productTypeRef.current.style.transform = 'scaleY(0) translateX(-50%)';
+      setDidOpenTypeProductSection(false);
+    }
+  }
   const loginBtnClick = ()=>{
     props.setDisplayLoginForm(true);
   }
   
   const logoutBtnClick = ()=>{
+    setTypeProduct('');
+    setWhoShouldBuy('');
     Meteor.logout((err)=>{
       console.log(err);
     })
@@ -34,17 +72,17 @@ const Navbar = (props)=>{
     props.setDisplayRegisterForm(true);
   }
   
-  // const onclickRef = ()=>{
-  //   console.log(ref.current.children[0].innerText);
-  // }
+  const goProductsPage = ()=>{
+    FlowRouter.go('/products');
+  }
   const content = (
-    <div className="navbar">
+    <div onClick={hideTypeProductSection} className="navbar">
       <div className="upper-part">
         <input 
           className="search-box" 
           type="text" 
           placeholder="Search"/>
-        <img src={Logo} className="Logo"/>
+        <img onClick={goProductsPage} src={Logo} className="Logo clickable"/>
         <div className="auth">
             { props.currentUser===null &&
               <>
@@ -52,13 +90,13 @@ const Navbar = (props)=>{
                   <button 
                   onClick={loginBtnClick}
                   className="login-btn">
-                  <div>Log In</div>
+                 Log In
                 </button>
               </>
             }
             {
               props.currentUser !== null &&
-              <span id="avt"><Avatar name={userProfile.name} size={25} round={true}/></span>
+              <span id="avatar"><Avatar name={userProfile.name} size={25} round={true}/></span>
             }
             { props.currentUser !== null &&
               <button onClick={logoutBtnClick} className="logout-btn">Log Out</button>
@@ -70,43 +108,106 @@ const Navbar = (props)=>{
       <div className="lower-part">
             <ul className="gender-age-filter">
                <li>
-                <div>Men</div>
-                <img src={Arrow} className="Arrow"/> 
+                <button 
+                  onClick={e =>{
+                    selectWhoShouldBuy(menRef, setWhoShouldBuy);
+                    toggleTypeProductSection(e, menRef);
+                }}  
+                  className="who-should-buy">
+                  <span ref={menRef}>Men</span>
+                  <img src={Arrow} className="Arrow"/>
+                </button>
+                
               </li> 
                <li>
-                <span>Ladies</span>
-                <img src={Arrow} className="Arrow"/>
-                <div id="forLadies" className="item-selector">
-              </div> 
+                <button 
+                  onClick={e =>{
+                    selectWhoShouldBuy(ladiesRef, setWhoShouldBuy);
+                    toggleTypeProductSection(e, ladiesRef);
+                }}  
+                  className="who-should-buy">
+                  <span ref={ladiesRef}>Ladies</span>
+                  <img src={Arrow} className="Arrow"/>
+                </button> 
                </li> 
                <li>
-                <span>Boys</span>
-                <img src={Arrow} className="Arrow"/>
-                <div id="forBoys" className="item-selector">
-                 
-              </div> 
+                 <button 
+                    onClick={e =>{
+                      selectWhoShouldBuy(girlsRef, setWhoShouldBuy);
+                      toggleTypeProductSection(e, girlsRef);
+                  }}  
+                    className="who-should-buy">
+                    <span ref={girlsRef}>Girls</span>
+                    <img src={Arrow} className="Arrow"/>
+                  </button> 
                </li> 
                <li>
-                <span>Girls</span>
-                <img src={Arrow} className="Arrow"/>
-                <div id="forGirls" className="item-selector">
-                 
-              </div> 
+                <button 
+                    onClick={e =>{
+                      selectWhoShouldBuy(boysRef, setWhoShouldBuy);
+                      toggleTypeProductSection(e, boysRef);
+                  }}  
+                    className="who-should-buy">
+                    <span ref={boysRef}>Boys</span>
+                    <img src={Arrow} className="Arrow"/>
+                  </button>
                </li>
             </ul>
-            <div className="item-selector">
+            <div ref={productTypeRef} className="item-selector">
                   <ul className="list-item-title">
-                    <li>Tops</li>
-                    <li>Bottoms</li>
-                    <li>Dresses</li>
-                    <li>Jackets</li>
-                    <li>Shoes</li>
-                    <li>Accessories</li>
-                    <li>Sale</li>
+                    <li>
+                      <button
+                      onClick={(e)=>{
+                        selectTypeOfProduct(e);
+                      }} 
+                      className="type-of-product">Tops</button>
+                    </li>
+                    <li>
+                      <button
+                      onClick={(e)=>{
+                        selectTypeOfProduct(e);
+                      }} 
+                      className="type-of-product">Dresses</button>
+                      </li>
+                    <li>
+                      <button
+                      onClick={(e)=>{
+                        selectTypeOfProduct(e);
+                      }} 
+                      className="type-of-product">Bottoms</button>
+                      </li>
+                    <li>
+                      <button
+                      onClick={(e)=>{
+                        selectTypeOfProduct(e);
+                      }} 
+                      className="type-of-product">Jackets</button>
+                      </li>
+                    <li>
+                      <button
+                      onClick={(e)=>{
+                        selectTypeOfProduct(e);
+                      }} 
+                      className="type-of-product">Shoes</button>
+                      </li>
+                    <li>
+                      <button
+                      onClick={(e)=>{
+                        selectTypeOfProduct(e);
+                      }} 
+                      className="type-of-product">Accessories</button>
+                      </li>
+                    <li>
+                      <button
+                      onClick={(e)=>{
+                        selectTypeOfProduct(e);
+                      }} 
+                      className="type-of-product">Sale</button>
+                      </li>
                   </ul>
             </div>
       </div>
-      <div className="filter-value">Ladies/Dresses</div>
+      { whoShouldBuy!=='' && typeProduct!=='' && <div className="filter-value">{`${whoShouldBuy}/${typeProduct}`}</div>}
     </div>
   );
   return content;

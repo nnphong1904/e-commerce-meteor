@@ -18,7 +18,7 @@
 }
 
 .circle-check-mark:hover {
-	border-color: blue;
+	border-color: royalblue;
 }
 
 .circle-checkbox:checked + span {

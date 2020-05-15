@@ -37,16 +37,16 @@
 	border: solid 1px white;
 }
 
-.color-picker-details
+/* .color-picker-details
 	.check-boxed:checked
 	~ .check-mark {
-	/* transform: scale(1.1); */
+	transform: scale(1.1);
 	border-color: royalblue;
-}
+} */
 
-.check-mark:hover {
+/* .check-mark:hover {
 	border-color: royalblue;
-}
+} */
 
 .quantity-selector::-webkit-inner-spin-button,
 .quantity-selector::-webkit-outer-spin-button {

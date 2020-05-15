@@ -35,7 +35,7 @@ const BRAND_NAME = new Map([
 const ProductInfo = ({product, currentUser})=>{
 
 
-  const [productQuantity, setProductQuantity] = useState(0);
+  const [productQuantity, setProductQuantity] = useState(1);
   const [listProductSameBrand, setListProductSameBrand] = useState([]);
   const [productSize, setProductSize] = useState('');
 
@@ -168,6 +168,7 @@ const ProductInfo = ({product, currentUser})=>{
             <div>Size</div>
             <form onSubmit={submitReview} className="size-selector-holder">
               {SIZE_LIST.map((size, sizeIndex)=>{
+                const defaultSelectedSize = 1;
                    const content = (
                     <Fragment key={sizeIndex}>
                        {getNumberOfItemEachSize(size, product) === 0 && 
@@ -176,7 +177,6 @@ const ProductInfo = ({product, currentUser})=>{
                        <InputRadio onClickFunction={selectSize} title={size} value={size} />}
                     </Fragment>
                    );
-                   
                    return content
               })}
             </form>
