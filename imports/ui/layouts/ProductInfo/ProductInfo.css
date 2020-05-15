@@ -119,12 +119,17 @@
 .product-quantity {
 	margin-top: 20px;
 	height: 30px;
+	display: flex;
+	align-items: center;
+}
+.quantity-title {
+	margin-right: 30px;
 }
 
 .add-to-cart-btn {
 	margin-top: 20px;
 }
-
+/* 
 .quantity-selector {
 	width: 30px;
 	border: none;
@@ -168,7 +173,7 @@
 }
 .decrease:focus {
 	outline: none;
-}
+} */
 .same-brand {
 	font-size: 14px;
 	font-weight: 500;

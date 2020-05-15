@@ -1,0 +1,41 @@
+.change-quantity-holder {
+	border: solid 1px #d4d3d3;
+	padding: 0;
+	height: 25px;
+	width: 80px;
+	display: inline-block;
+	position: relative;
+}
+.increase {
+	left: 10px;
+	top: 10px;
+}
+.increase:focus {
+	outline: none;
+}
+.decrease {
+	right: 10px;
+	top: 10px;
+}
+.decrease:focus {
+	outline: none;
+}
+.change-quantity-btn {
+	border: none;
+	display: inline-block;
+	position: absolute;
+	font-size: 15px;
+	top: 43%;
+	transform: translateY(-50%);
+	z-index: 0;
+}
+.quantity-selector {
+	width: 30px;
+	border: none;
+	height: 100%;
+	position: absolute;
+	z-index: 1;
+	text-align: center;
+	left: 50%;
+	transform: translateX(-50%);
+}

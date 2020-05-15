@@ -4,7 +4,8 @@ import {App} from '../App';
 import Homepage from '../layouts/Homepage/Homepage.jsx';
 import ProductPage from '../layouts/ProductPage/ProductPage.jsx';
 import ProductInfo from '../layouts/ProductInfo/ProductInfo.jsx';
-import {Info} from '../layouts/Info/Info.jsx';
+import CartPage from '../layouts/CartPage/CartPage.jsx';
+
 
 FlowRouter.route('/',{
   name:'home',
@@ -42,9 +43,9 @@ FlowRouter.route('/products/:productId',{
   }
 })
 
-FlowRouter.route('/info',{
+FlowRouter.route('/cart',{
   name:'info',
   action(){
-    mount(({component})=><App component={component}/>,{component: <Info/>});
+    mount(({component})=><App component={component}/>,{component: <CartPage/>});
   }
 })

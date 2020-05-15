@@ -1,0 +1,32 @@
+.product-in-cart-color {
+	width: 50px;
+	position: relative;
+}
+.wrapper {
+	position: absolute;
+}
+.wrapped-product-color {
+	top: -18px;
+	left: -8px;
+}
+.selector-quantity-in-cart {
+	position: relative;
+}
+.wrapped-quantity-selector {
+	top: -16px;
+	left: -10px;
+}
+.product-in-cart-size {
+	position: relative;
+}
+.wrapped-product-size {
+	top: -10px;
+	left: 10px;
+}
+.product-in-cart-price {
+	position: relative;
+}
+.wrapped-product-price {
+	top: -13px;
+	left: 13px;
+}

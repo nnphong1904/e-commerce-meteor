@@ -6,7 +6,7 @@ import classnames from 'classnames';
 import StarRating from '../../components/StarRating/StarRating.jsx';
 import CircleCheckBox from '../../components/CircleCheckBox/CircleCheckBox.jsx';
 import InputRadio from '../../components/InputRadio/InputRadio.jsx';
-
+import QuantitySelector from '../../components/QuantitySelector/QuantitySelector.jsx';
 const SIZE_LIST = ['S', 'M', 'L'];
 const COLOR_LIST = [  
   {colorId:'wild-watermelon', colorValue: 'wild watermelon'}, 
@@ -212,17 +212,12 @@ const ProductInfo = ({product, currentUser})=>{
             }
          </div>
          <div className="product-quantity">
-             <span>Quantity</span>
-             <span className="change-quantity-holder">
-                    <button onClick={increaseQuantity} className="increase change-quantity-btn">+</button>
-                    <input 
-                      type="number" 
-                      className="quantity-selector" 
-                      value={productQuantity}
-                      onChange={e=>changProductQuantity(e)}
-                      />
-                    <button onClick={decreaseQuantity} className="decrease change-quantity-btn">-</button>
-              </span>
+             <span className="quantity-title">Quantity</span>
+             <QuantitySelector 
+                  onClickLeftBtnFunction={increaseQuantity} 
+                  onClickRightBtnFunction={decreaseQuantity}
+                  quantityValue={productQuantity}
+                  onChangeFunction={changProductQuantity} />
           </div>
           <button className="add-to-cart-btn">Add to cart</button>
           <div className="horizontal-line"></div>

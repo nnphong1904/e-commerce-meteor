@@ -1,0 +1,8 @@
+.profile-holder {
+	display: flex;
+}
+.profile-avatar {
+	width: 80px;
+	height: 113px;
+	margin-right: 10px;
+}
