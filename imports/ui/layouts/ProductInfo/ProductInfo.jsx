@@ -30,14 +30,31 @@ const BRAND_NAME = new Map([
   ['chanel','chanel']
 ]);
 
-
-
+const getNumberOfItemEachSize = (size, product)=>{
+  let sizeAndNumberOfItem;
+  if (product !== undefined)
+  {
+    sizeAndNumberOfItem = product.sizes;
+   // console.log(sizeAndNumberOfItem[0].size);
+    const result = sizeAndNumberOfItem.filter(sizeObj => sizeObj.size === size);
+    return result.length > 0 ? result[0].noItems : 0;
+  }
+}
+const getDefaultSize = (product)=>{
+  let getDefaultSize='';
+  for (let i = SIZE_LIST.length; i>=0; i--){
+    if (getNumberOfItemEachSize(SIZE_LIST[i], product)>0){
+      getDefaultSize = SIZE_LIST[i];
+      return getDefaultSize;
+    }
+  }
+}
 const ProductInfo = ({product, currentUser})=>{
 
 
   const [productQuantity, setProductQuantity] = useState(1);
   const [listProductSameBrand, setListProductSameBrand] = useState([]);
-  const [productSize, setProductSize] = useState('');
+  const [productSize, setProductSize] = useState(getDefaultSize(product));
 
   const [reviewTitle, setReviewTitle] = useState('');
   const [reviewContent, setReviewContent] = useState('');
@@ -52,6 +69,8 @@ const ProductInfo = ({product, currentUser})=>{
     }
   ])
   
+  console.log(productSize);
+
   const [didUserWriteReview, setDidUserWriteReview] = useState(false);
   const [recommendProductList, setRecommendProductList] = useState([]);
 
@@ -82,16 +101,7 @@ const ProductInfo = ({product, currentUser})=>{
     return  sizeList.reduce((numberItem, size)=>numberItem + parseInt(size.noItems), 0);
   }
 
-  const getNumberOfItemEachSize = (size, product)=>{
-    let sizeAndNumberOfItem;
-    if (product !== undefined)
-    {
-      sizeAndNumberOfItem = product.sizes;
-     // console.log(sizeAndNumberOfItem[0].size);
-      const result = sizeAndNumberOfItem.filter(sizeObj => sizeObj.size === size);
-      return result.length > 0 ? result[0].noItems : 0;
-    }
-  }
+  
   const goProductInfo = (product)=>{
     const id = arrayBufferToHex(product._id.id);
     FlowRouter.go(`/products/${id}`);
@@ -168,17 +178,20 @@ const ProductInfo = ({product, currentUser})=>{
             <div>Size</div>
             <form onSubmit={submitReview} className="size-selector-holder">
               {SIZE_LIST.map((size, sizeIndex)=>{
-                const defaultSelectedSize = 1;
-                   const content = (
+              
+                 const content = (
                     <Fragment key={sizeIndex}>
                        {getNumberOfItemEachSize(size, product) === 0 && 
-                       <InputRadio title={size} value={size} isDisabled={true} />}
+                       <InputRadio  title={size} value={size} isDisabled={true} />}
                        {getNumberOfItemEachSize(size, product) > 0 && 
-                       <InputRadio onClickFunction={selectSize} title={size} value={size} />}
+                       <InputRadio currentSize={productSize} isChecked={true} onClickFunction={selectSize} title={size} value={size} />}
                     </Fragment>
                    );
+            
                    return content
-              })}
+              })
+              
+              }
             </form>
          </div>
          <div className="product-rating"> 
