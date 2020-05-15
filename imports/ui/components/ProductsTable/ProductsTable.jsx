@@ -15,9 +15,15 @@ import './ProductsTable.css';
 const useStyles = makeStyles({
   table: {
     border:0,
+  
   },
   'table-holder':{
-    boxShadow: 'none'
+    boxShadow: 'none',
+    
+  },
+  tableItem: {
+    paddingLeft:0,
+
   }
 });
 
@@ -27,18 +33,23 @@ const ProductsTable = (props)=>{
     <TableContainer className={classes["table-holder"]} component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
-          <TableRow>
-            <TableCell align="left">Product</TableCell>
-            <TableCell align="left">Color</TableCell>
-            <TableCell align="left">Size</TableCell>
-            <TableCell align="left">Quantity</TableCell>
-            <TableCell align="left">Amount</TableCell>
+          <TableRow >
+            <TableCell className={classes.tableItem} align="left">Product</TableCell>
+            <TableCell  align="left">Color</TableCell>
+            <TableCell  align="left">Size</TableCell>
+            <TableCell  align="left">Quantity</TableCell>
+            <TableCell  align="left">Amount</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>        
             <TableRow>
-              <TableCell component="th" scope="row">
-                <ProductProfile/>
+              <TableCell className={classes.tableItem}>
+                <div className="product-in-cart-profile">
+                  <ProductProfile/>
+                  <div className="wrapper wrapped-remove-btn">
+                    <button className="product-btn">Remove</button>
+                  </div>
+                </div>
               </TableCell>
               <TableCell align="left">
                 <div className="product-in-cart-color">

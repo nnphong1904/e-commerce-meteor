@@ -30,3 +30,20 @@
 	top: -13px;
 	left: 13px;
 }
+.wrapped-remove-btn {
+	left: 100px;
+	bottom: 0;
+}
+.product-in-cart-profile {
+	position: relative;
+}
+.product-btn {
+	border: none;
+	font-size: 12px;
+	font-weight: normal;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.83;
+	letter-spacing: normal;
+	color: #202124;
+}

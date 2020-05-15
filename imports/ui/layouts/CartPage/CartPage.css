@@ -1,4 +1,9 @@
 .table-container {
 	width: 55%;
-	margin-left: 50px;
+	margin-left: 100px;
+}
+.cart-page-header {
+	margin-top: 40px;
+	margin-left: 100px;
+	margin-bottom: 20px;
 }
