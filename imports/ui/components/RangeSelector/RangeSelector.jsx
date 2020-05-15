@@ -1,45 +1,64 @@
 import React, { useState } from 'react';
 import './RangeSelector.css';
+import Slider from '@material-ui/core/Slider';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+const PrettySlider = withStyles({
+  root: {
+    color: '#ffa15f',
+    height: 8,
+    width: '94%'
+    
+  },
+  thumb: {
+    height: 18,
+    width: 18,
+    backgroundColor: '#ffa15f',
+    border: '2px solid currentColor',
+    marginTop: -8,
+    marginLeft: 0,
+    marginRight: 5,
+    '&:focus, &:hover, &$active': {
+      boxShadow: 'inherit',
+    },
+    
+   
+  },
+  track: {
+    height: 3,
+    borderRadius: 3,
+    
+  },
+  rail: {
+    height: 3,
+    borderRadius: 3,
+    marginLeft: 8,
+  },
+})(Slider);
 const RangeSelector = (
     {
       value1=0, value2=10, 
-      onClickFnc = ()=>{}, 
-      onMouseUpFnc = ()=>{}, 
+      onMouseUpFnc=()=>{}
     })=>{
 
-  const [currentValue1, setCurrentValue1] = useState(value1);
-  const [currentValue2, setCurrentValue2] = useState(value2);
+      const [value, setValue] = useState([value1, value2]);
 
-  const onChangeHandler = (e, setState)=>{
-    setState(e.target.value);
-  }
+      const handleChange = (event, newValue) => {
+        
+        setValue(newValue);
+      };
+
+  
   const content = (
     <div className="range-slider-holder">
-      <input  
-            id="range-slider-1"
-            type="range" 
-            onClick={(e)=>console.log(e.target)}
-            onMouseUp={()=>onMouseUpFnc(e, parseInt(currentValue1), parseInt(currentValue2))} 
-            onChange={(e)=>{onChangeHandler(e, setCurrentValue1)}} 
-            min="39" max="300" 
-            className="range-slider" 
-            value={currentValue1}/>
-      <input  
-            id="range-slider-2"
-            type="range" 
-            onClick={(e)=>console.log(e.target)}
-            onMouseUp={()=>onMouseUpFnc(e, parseInt(currentValue1), parseInt(currentValue2))} 
-            onChange={(e)=>{onChangeHandler(e, setCurrentValue1)}} 
-            min="39" max="300" 
-            className="range-slider" 
-            value={currentValue2}/>
-      <div className="price-text-holder">
-            <div className="min-price">{
-              parseInt(currentValue1) < parseInt(currentValue2) ? currentValue1 : currentValue2}
-            </div>
-            <div className="max-price">{
-              parseInt(currentValue1) >= parseInt(currentValue2) ? currentValue1 : currentValue2}
-            </div> 
+      <PrettySlider  
+          min={39}
+          max={300}
+          value={value} 
+          onChange={handleChange}
+          onMouseUp={()=>{onMouseUpFnc(value[0], value[1])}} />
+      <div className="value-display">
+        <div id="min-value">{`$${value[0]}`}</div>
+        <div id="max-value">{`$${value[1]}`}</div>
       </div>
     </div>
   );

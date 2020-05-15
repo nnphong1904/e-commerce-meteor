@@ -172,9 +172,11 @@ const ProductFilter = ({fetchProduct})=>{
     setFilterCondition({...currentFilterCondition});
   } //need to check again
 
-  const filterByPrice = ()=>{
+  const filterByPrice = (valuePrice1, valuePrice2)=>{
     let currentFilterCondition ={...filterCondition};
-    let newPriceObj = {...currentFilterCondition.price, doPriceFilter:true};
+    let newPriceObj = {priceValue1: valuePrice1, priceValue2: valuePrice2, doPriceFilter: true};
+    console.log(newPriceObj);
+    // let newPriceObj = {...currentFilterCondition.price, doPriceFilter:true};
     currentFilterCondition = {...currentFilterCondition, price:{...newPriceObj}}
     fetchProduct(currentFilterCondition);
 
@@ -347,38 +349,8 @@ const ProductFilter = ({fetchProduct})=>{
             <div className="title">Price</div>
             <img ref={arrowIconRefPrice} className="Arrow" src={Arrow}/>
           </a>
-          <RangeSelector value1={priceValue1} value2={priceValue2} />
-          {/* <input  
-            id="price-filter-1"
-            type="range" 
-            ref={filterPriceRef1}
-            onClick={(e)=>console.log(e.target)}
-            onMouseUp={()=>filterByPrice(parseInt(priceValue1), parseInt(priceValue2))} 
-            onChange={(e)=>{onChangeHandlerForPriceValue1(e)}} 
-            min="39" max="300" 
-            className="price-slider" 
-            value={filterCondition.price.priceValue1}
-            step={1}
-            />
-            <input  
-            id="price-filter-2"
-            type="range" 
-            ref={filterPriceRef2}
-            onClick={(e)=>console.log(e.target)}
-            onMouseUp={()=>filterByPrice(parseInt(priceValue1), parseInt(priceValue2))} 
-            onChange={(e)=>{onChangeHandlerForPriceValue2(e)}} 
-            min="39" max="300" 
-            className="price-slider" 
-            value={filterCondition.price.priceValue2}
-           />
-          <div ref={priceTextHolderRef} className="price-text-holder">
-            <div className="min-price">{
-              parseInt(filterCondition.price.priceValue1) < parseInt(filterCondition.price.priceValue2) ? filterCondition.price.priceValue1 : filterCondition.price.priceValue2}
-            </div>
-            <div className="max-price">{
-              parseInt(filterCondition.price.priceValue1) >= parseInt(filterCondition.price.priceValue2) ? filterCondition.price.priceValue1 : filterCondition.price.priceValue2}
-            </div> 
-          </div>*/}
+          <RangeSelector onMouseUpFnc={filterByPrice} value1={priceValue1} value2={priceValue2} />
+          
         </li>
         {/* filter by available item */}
         <li className="filter-detail">
