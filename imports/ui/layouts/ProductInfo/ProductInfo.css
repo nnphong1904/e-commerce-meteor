@@ -375,7 +375,6 @@
 .recommend-product-holder {
 	margin: 20px auto 50px auto;
 	display: flex;
-	justify-content: space-between;
 	width: 72%;
 }
 .product-recommend-view .image-view {

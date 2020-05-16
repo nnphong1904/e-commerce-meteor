@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useContext } from 'react';
 import './ProductInfo.css';
 import arrayBufferToHex from 'array-buffer-to-hex';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -8,8 +8,8 @@ import CircleCheckBox from '../../components/CircleCheckBox/CircleCheckBox.jsx';
 import InputRadio from '../../components/InputRadio/InputRadio.jsx';
 import QuantitySelector from '../../components/QuantitySelector/QuantitySelector.jsx';
 import {SIZE_LIST, COLOR_LIST, MONTH, BRAND_NAME} from '../../lib/Constant.js';
-
-
+import {CartContext, CartContextProvider} from '../../components/CartContext/CartContext.jsx';
+// import {AppContext} from '../../components/CartContext/CartContext.js';
 const getNumberOfItemEachSize = (size, product)=>{
   let sizeAndNumberOfItem;
   if (product !== undefined)
@@ -29,9 +29,9 @@ const getDefaultSize = (product)=>{
     }
   }
 }
-const ProductInfo = ({product, currentUser})=>{
-
-
+const ProductInfo = ({product, context, currentUser})=>{
+  const Cart = useContext(CartContext);
+  console.log(Cart);
   const [productQuantity, setProductQuantity] = useState(1);
   const [listProductSameBrand, setListProductSameBrand] = useState([]);
   const [productSize, setProductSize] = useState(getDefaultSize(product));
@@ -147,6 +147,7 @@ const ProductInfo = ({product, currentUser})=>{
     }
   }
   const content = (
+  
     <div className="product-info-container">
       <div className="product-info-details">
      
@@ -314,6 +315,7 @@ const ProductInfo = ({product, currentUser})=>{
         }
       </div>
     </div>
+
   );
   return content;
 }

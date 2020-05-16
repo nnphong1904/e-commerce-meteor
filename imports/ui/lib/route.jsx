@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {mount} from 'react-mounter';
 import {App} from '../App';
 import Homepage from '../layouts/Homepage/Homepage.jsx';
 import ProductPage from '../layouts/ProductPage/ProductPage.jsx';
 import ProductInfo from '../layouts/ProductInfo/ProductInfo.jsx';
 import CartPage from '../layouts/CartPage/CartPage.jsx';
+import {CartContextProvider} from '../components/CartContext/CartContext.jsx';
 
 
 FlowRouter.route('/',{
@@ -37,7 +38,7 @@ FlowRouter.route('/products/:productId',{
     
     Meteor.call('fetchProductById',productId, (err, docs)=>{
       if (docs){
-        mount(({component})=><App component={component}/>,{component: <ProductInfo product={docs.data[0]}/>});
+        mount(({component})=><App component={component}/>,{component: <CartContextProvider><ProductInfo  product={docs.data[0]}/></CartContextProvider>});
       }
     })
   }
