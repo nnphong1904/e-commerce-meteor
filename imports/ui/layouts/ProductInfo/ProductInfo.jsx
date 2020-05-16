@@ -8,7 +8,6 @@ import CircleCheckBox from '../../components/CircleCheckBox/CircleCheckBox.jsx';
 import InputRadio from '../../components/InputRadio/InputRadio.jsx';
 import QuantitySelector from '../../components/QuantitySelector/QuantitySelector.jsx';
 import {SIZE_LIST, COLOR_LIST, MONTH, BRAND_NAME} from '../../lib/Constant.js';
-import {CartContext} from '../../components/CartContext/CartContext.jsx';
 import { Session } from 'meteor/session'
 const getNumberOfItemEachSize = (size, product)=>{
   let sizeAndNumberOfItem;
@@ -36,7 +35,7 @@ const ProductInfo = ({product,  currentUser})=>{
   const [productQuantity, setProductQuantity] = useState(0);
   const [listProductSameBrand, setListProductSameBrand] = useState([]);
   const [productSize, setProductSize] = useState(getDefaultSize(product));
-  const [productColor, setProductColor] = useState('');
+  const [productColor, setProductColor] = useState();
   const [errorMessage, setErrorMessage]  = useState('');
 
   const [reviewTitle, setReviewTitle] = useState('');
@@ -58,7 +57,11 @@ const ProductInfo = ({product,  currentUser})=>{
 
 
   useEffect(() => {
-   
+   const clearErrorMessageIntervalId =  setInterval(()=>{
+      if (errorMessage === ''){
+        setErrorMessage('');
+      }
+    },3000);  
     Meteor.call('fetchProduct', {branch: [product.branch]}, (err, docs)=>{
       setListProductSameBrand([...docs.data.slice(0,4)]);
     });
@@ -66,7 +69,7 @@ const ProductInfo = ({product,  currentUser})=>{
     Meteor.call('fetchProduct', {category: product.category}, (err, docs)=>{
       setRecommendProductList([...docs.data.slice(0,8)]);
     })
-
+    return clearInterval(clearErrorMessageIntervalId);
   }, [product])
   
 
@@ -80,12 +83,13 @@ const ProductInfo = ({product,  currentUser})=>{
     return e.target.value;
   }
   const selectColor = (e)=>{
+    console.log(e.target.id)
     if (e.target.value === productColor){
       e.target.checked = false;
       setProductColor('');
       return '';
     }
-    setProductColor(e.target.value);
+    setProductColor( e.target.value);
     return e.target.value;
   }
 
@@ -250,7 +254,7 @@ const ProductInfo = ({product,  currentUser})=>{
                 COLOR_LIST.map((color, colorIndex)=>{
                   const content = (
                     <Fragment key={colorIndex}>
-                      <CircleCheckBox onClickFunction={selectColor} value={color.colorValue} typeInput='radio' id={color.colorId} />
+                      <CircleCheckBox onClickFunction={selectColor} value={color.colorId} typeInput='radio' id={color.colorId} />
                     </Fragment>
                   );
                   return content;

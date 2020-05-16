@@ -5,7 +5,6 @@ import Homepage from '../layouts/Homepage/Homepage.jsx';
 import ProductPage from '../layouts/ProductPage/ProductPage.jsx';
 import ProductInfo from '../layouts/ProductInfo/ProductInfo.jsx';
 import CartPage from '../layouts/CartPage/CartPage.jsx';
-import {CartContextProvider} from '../components/CartContext/CartContext.jsx';
 
 
 FlowRouter.route('/',{

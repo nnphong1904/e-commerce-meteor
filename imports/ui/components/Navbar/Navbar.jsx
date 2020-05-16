@@ -6,7 +6,6 @@ import Cart from '../../assets/image/cart.svg';
 import Arrow from '../../assets/image/arrow.svg';
 import { withTracker } from 'meteor/react-meteor-data';
 import Avatar from 'react-avatar';
-import {CartContext} from '../CartContext/CartContext.jsx';
 import { Session } from 'meteor/session'
 const Navbar = (props)=>{
  
@@ -105,8 +104,10 @@ const Navbar = (props)=>{
             { props.currentUser !== null &&
               <button onClick={logoutBtnClick} className="logout-btn">Log Out</button>
             }
-        <img src={Cart} onClick={goToCartPage} className="Cart"/>     
-        <div>{props.cartSize}</div>
+        <div onClick={goToCartPage} className="cart-btn">
+          <img src={Cart}  className="Cart"/>     
+          {props.cartSize>0 && <div className="show-cart-size">{props.cartSize}</div>}
+        </div>
         </div>
       </div>
       {/* Lower-part of navbar */}
@@ -221,6 +222,6 @@ const Navbar = (props)=>{
 export default withTracker(()=>{
   return {
     currentUser: Meteor.user(),
-    cartSize: Session.get('myCart').reduce((sum, productInCart)=>sum+productInCart.quantity, 0)
+    cartSize: Session.get('myCart').reduce((sumQuantity, productInCart)=>sumQuantity + productInCart.quantity, 0)
   }
 })(Navbar);

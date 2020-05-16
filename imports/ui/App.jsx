@@ -3,7 +3,6 @@ import Navbar from './components/Navbar/Navbar.jsx';
 import LoginForm from './components/Login/Login.jsx';
 import RegisterForm from './components/Register/Register.jsx';
 import Footer from './components/Footer/Footer.jsx';
-import {CartContextProvider} from './components/CartContext/CartContext.jsx';
 
 export const App = ({component}) => {
   const [displayLoginForm, setDisplayLoginForm] = useState(false);

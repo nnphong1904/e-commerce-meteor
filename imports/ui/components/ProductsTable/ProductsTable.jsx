@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   }
 });
 
-const ProductsTable = ({productList=[]})=>{
+const ProductsTable = ({onClickFunction=()=>{}, productList=[]})=>{
   const classes = useStyles();
   const content = (
     <TableContainer className={classes["table-holder"]} component={Paper}>
@@ -56,7 +56,7 @@ const ProductsTable = ({productList=[]})=>{
               <TableCell align="left">
                 <div className="product-in-cart-color">
                   <div className="wrapper wrapped-product-color">
-                    <CircleCheckBox  />
+                    <CircleCheckBox isDisabled={true} disabledClass='disabled-color' id={product.color} />
                   </div>
                 </div>
               </TableCell>
@@ -67,7 +67,7 @@ const ProductsTable = ({productList=[]})=>{
               </TableCell>
               <TableCell align="left">
                 <div className="selector-quantity-in-cart">
-                  <div id="test" className="wrapper wrapped-quantity-selector"><QuantitySelector quantityValue={product.quantity}/></div>
+                  <div id="test" className="wrapper wrapped-quantity-selector"><QuantitySelector onClickLeftBtnFunction={onClickFunction} quantityValue={product.quantity}/></div>
                 </div>
               </TableCell>
               <TableCell align="left">
