@@ -11,7 +11,8 @@ import { Session } from 'meteor/session'
 const Navbar = (props)=>{
  
   //const {myCart} = useContext(CartContext);
-  console.log(props.cartSize);
+  // const quantity = props.cartSize.reduce((sum, productInCart)=>sum+productInCart.quantity, 0);
+  // console.log(quantity);
   const [userProfile, setUserProfile] =useState({});
   const [whoShouldBuy, setWhoShouldBuy] = useState('');
   const [typeProduct, setTypeProduct] = useState('');
@@ -220,6 +221,6 @@ const Navbar = (props)=>{
 export default withTracker(()=>{
   return {
     currentUser: Meteor.user(),
-    cartSize: Session.get('myCart').length
+    cartSize: Session.get('myCart').reduce((sum, productInCart)=>sum+productInCart.quantity, 0)
   }
 })(Navbar);

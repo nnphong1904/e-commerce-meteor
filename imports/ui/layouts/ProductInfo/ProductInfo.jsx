@@ -164,7 +164,7 @@ const ProductInfo = ({product,  currentUser})=>{
       size: productSize,
       price: product.price
     };
-    console.log(productObjectInCart);
+    
     const myCart = Session.get('myCart');
     const existingProductInCart = myCart.map((productInCart, indexOfProduct) =>{
       if (productInCart.productId === productObjectInCart.productId){
@@ -172,15 +172,30 @@ const ProductInfo = ({product,  currentUser})=>{
       }
     })
     if (existingProductInCart.length === 0){
+      console.log('add new');
       Session.set('myCart', [...myCart, productObjectInCart]);
     }
     else{
-      const newCart = [...myCart.slice(0, existingProductInCart[0]),
+      console.log('update');
+      let newCart = [];
+      console.log(myCart[existingProductInCart[0]].quantity)
+      if (existingProductInCart.length === 1){
+         newCart = [{
+                      ...myCart[existingProductInCart[0]], 
+                      quantity: myCart[existingProductInCart[0]].quantity + productQuantity}];
+      }
+       else
+       {
+          newCart = [...myCart.slice(0, existingProductInCart[0]),
                       myCart.slice(existingProductInCart[0]), 
-                      {...myCart[existingProductInCart[0]], quantity: myCart[existingProductInCart[0]]+productQuantity}];
-      Session.set('myCart',[...newCart]);
+                      {...myCart[existingProductInCart[0]], 
+                        quantity: myCart[existingProductInCart[0]].quantity + productQuantity}
+                    ];
+       }
+       Session.set('myCart',[...newCart]);
     }
-  
+    
+    console.log(Session.get('myCart'));
     
    
    //  addProduct(productObjectInCart);
