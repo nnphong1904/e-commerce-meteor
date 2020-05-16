@@ -7,28 +7,8 @@ import StarRating from '../../components/StarRating/StarRating.jsx';
 import CircleCheckBox from '../../components/CircleCheckBox/CircleCheckBox.jsx';
 import InputRadio from '../../components/InputRadio/InputRadio.jsx';
 import QuantitySelector from '../../components/QuantitySelector/QuantitySelector.jsx';
-const SIZE_LIST = ['S', 'M', 'L'];
-const COLOR_LIST = [  
-  {colorId:'wild-watermelon', colorValue: 'wild watermelon'}, 
-  {colorId:'sunglow', colorValue:'sunglow'},
-  {colorId:'neon-blue', colorValue:'neon blue'}, 
-  {colorId:'payne-grey', colorValue: `payne's grey`}, 
-  {colorId:'white-smoke', colorValue:'white smoke'},
-];
+import {SIZE_LIST, COLOR_LIST, MONTH, BRAND_NAME} from '../../lib/Constant.js';
 
-const MONTH = [
-                'Jan', 'Feb', 'Mar', 
-                'Apr', 'May', 'Jun', 
-                'Jul', 'Aug', 'Sep', 
-                'Oct', 'Nov', 'Dec'
-              ];
-const BRAND_NAME = new Map([
-  ['h&m','H&M'],
-  ['zara','Zara'],
-  ['pull&bear','Pull&bear'],
-  ['dior','Dior'],
-  ['chanel','chanel']
-]);
 
 const getNumberOfItemEachSize = (size, product)=>{
   let sizeAndNumberOfItem;
@@ -55,6 +35,7 @@ const ProductInfo = ({product, currentUser})=>{
   const [productQuantity, setProductQuantity] = useState(1);
   const [listProductSameBrand, setListProductSameBrand] = useState([]);
   const [productSize, setProductSize] = useState(getDefaultSize(product));
+  const [productColor, setProductColor] = useState();
 
   const [reviewTitle, setReviewTitle] = useState('');
   const [reviewContent, setReviewContent] = useState('');
@@ -69,8 +50,6 @@ const ProductInfo = ({product, currentUser})=>{
     }
   ])
   
-  console.log(productSize);
-
   const [didUserWriteReview, setDidUserWriteReview] = useState(false);
   const [recommendProductList, setRecommendProductList] = useState([]);
 
@@ -92,9 +71,19 @@ const ProductInfo = ({product, currentUser})=>{
     if (e.target.value === productSize){
       e.target.checked = false;
       setProductSize('');
-      return;
+      return '';
     }
     setProductSize(e.target.value);
+    return e.target.value;
+  }
+  const selectColor = (e)=>{
+    if (e.target.value === productColor){
+      e.target.checked = false;
+      setProductColor('');
+      return '';
+    }
+    setProductColor(e.target.value);
+    return e.target.value;
   }
 
   const calNumberOfItem = (sizeList)=>{
@@ -204,7 +193,7 @@ const ProductInfo = ({product, currentUser})=>{
               COLOR_LIST.map((color, colorIndex)=>{
                 const content = (
                   <Fragment key={colorIndex}>
-                    <CircleCheckBox id={color.colorId} />
+                    <CircleCheckBox onClickFunction={selectColor} value={color.colorValue} typeInput='radio' id={color.colorId} />
                   </Fragment>
                 );
                 return content;

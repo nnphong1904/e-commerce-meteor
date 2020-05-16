@@ -5,15 +5,9 @@ import InputRadio from '../../components/InputRadio/InputRadio.jsx';
 import CircleCheckBox from '../../components/CircleCheckBox/CircleCheckBox.jsx';
 import RangeSelector from '../../components/RangeSelector/RangeSelector.jsx';
 import './ProductFilter.css'
-const COLOR_LIST = [  
-                    {colorId:'wild-watermelon', colorValue: 'wild watermelon'}, 
-                    {colorId:'sunglow', colorValue:'sunglow'},
-                    {colorId:'neon-blue', colorValue:'neon blue'}, 
-                    {colorId:'payne-grey', colorValue: `payne's grey`}, 
-                    {colorId:'white-smoke', colorValue:'white smoke'},
-                  ];
-const SIZE_LIST = ['S', 'M', 'L'];
-const BRAND_LIST = ['Zara', 'Pull&Bear', 'Dior', 'Chanel', 'H&M'];
+import {BRAND_NAME, COLOR_LIST, SIZE_LIST} from '../../lib/Constant.js';
+
+const BRAND_NAME_LIST = [...BRAND_NAME.values()];
  
 
               
@@ -22,7 +16,6 @@ const ProductFilter = ({fetchProduct})=>{
 
   const filterSizeRef = createRef();
   const filterPriceRef = createRef();
-  const priceTextHolderRef = createRef();
   const filterBranchRef = createRef();
   const filterColorRef = createRef();
   const filterAvailableRef = createRef();
@@ -315,7 +308,7 @@ const ProductFilter = ({fetchProduct})=>{
           </a>
           <div ref={filterBranchRef} className="checkbox-container brand-container">
           {
-            BRAND_LIST.map((brand, brandIndex)=>{
+            BRAND_NAME_LIST.map((brand, brandIndex)=>{
               const content = (
                   <Fragment key={brandIndex}>
                     <Checkbox  title={brand} value={brand} onClickFunction={filterByBranch} />

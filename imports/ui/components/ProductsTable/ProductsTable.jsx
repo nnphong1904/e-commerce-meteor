@@ -53,7 +53,9 @@ const ProductsTable = (props)=>{
               </TableCell>
               <TableCell align="left">
                 <div className="product-in-cart-color">
-                  <div className="wrapper wrapped-product-color"><CircleCheckBox/></div>
+                  <div className="wrapper wrapped-product-color">
+                    <CircleCheckBox />
+                  </div>
                 </div>
               </TableCell>
               <TableCell align="left">
