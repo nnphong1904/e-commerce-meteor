@@ -78,6 +78,7 @@
 .product-info {
 	margin-left: 70px;
 	margin-right: 10px;
+	/* position: relative; */
 }
 
 .product-name {
@@ -394,4 +395,15 @@
 .product-recommend-view {
 	flex: 0 0 11.5%;
 	margin-right: 1.2%;
+}
+.error-message-add-to-cart {
+	font-size: 12px;
+	font-weight: 500;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.33;
+	letter-spacing: normal;
+	color: red;
+	padding-top: 20px;
+	height: 10px;
 }

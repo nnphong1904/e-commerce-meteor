@@ -2,8 +2,9 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { render } from 'react-dom';
 import { App } from '/imports/ui/App';
+import { Session } from 'meteor/session';
 import '../imports/ui/lib/route';
-
+Session.set('myCart', []);
 // Meteor.startup(() => {
-//   render(<App/>, document.getElementById('react-target'));
+//   render(<App/>, document.getElementById('react-root'));
 // });

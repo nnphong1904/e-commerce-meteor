@@ -8,14 +8,14 @@ import CircleCheckBox from '../../components/CircleCheckBox/CircleCheckBox.jsx';
 import InputRadio from '../../components/InputRadio/InputRadio.jsx';
 import QuantitySelector from '../../components/QuantitySelector/QuantitySelector.jsx';
 import {SIZE_LIST, COLOR_LIST, MONTH, BRAND_NAME} from '../../lib/Constant.js';
-import {CartContext, CartContextProvider} from '../../components/CartContext/CartContext.jsx';
-// import {AppContext} from '../../components/CartContext/CartContext.js';
+import {CartContext} from '../../components/CartContext/CartContext.jsx';
+import { Session } from 'meteor/session'
 const getNumberOfItemEachSize = (size, product)=>{
   let sizeAndNumberOfItem;
   if (product !== undefined)
   {
     sizeAndNumberOfItem = product.sizes;
-   // console.log(sizeAndNumberOfItem[0].size);
+   
     const result = sizeAndNumberOfItem.filter(sizeObj => sizeObj.size === size);
     return result.length > 0 ? result[0].noItems : 0;
   }
@@ -29,13 +29,15 @@ const getDefaultSize = (product)=>{
     }
   }
 }
-const ProductInfo = ({product, context, currentUser})=>{
-  const Cart = useContext(CartContext);
-  console.log(Cart);
-  const [productQuantity, setProductQuantity] = useState(1);
+const ProductInfo = ({product,  currentUser})=>{
+  
+  
+
+  const [productQuantity, setProductQuantity] = useState(0);
   const [listProductSameBrand, setListProductSameBrand] = useState([]);
   const [productSize, setProductSize] = useState(getDefaultSize(product));
-  const [productColor, setProductColor] = useState();
+  const [productColor, setProductColor] = useState('');
+  const [errorMessage, setErrorMessage]  = useState('');
 
   const [reviewTitle, setReviewTitle] = useState('');
   const [reviewContent, setReviewContent] = useState('');
@@ -54,6 +56,7 @@ const ProductInfo = ({product, context, currentUser})=>{
   const [recommendProductList, setRecommendProductList] = useState([]);
 
 
+
   useEffect(() => {
    
     Meteor.call('fetchProduct', {branch: [product.branch]}, (err, docs)=>{
@@ -63,7 +66,7 @@ const ProductInfo = ({product, context, currentUser})=>{
     Meteor.call('fetchProduct', {category: product.category}, (err, docs)=>{
       setRecommendProductList([...docs.data.slice(0,8)]);
     })
-    
+
   }, [product])
   
 
@@ -146,11 +149,48 @@ const ProductInfo = ({product, context, currentUser})=>{
       setProductQuantity(oldQuantity => oldQuantity - 1);
     }
   }
+
+  const addProductToCart = (product)=>{
+    if (productColor === '' || productSize === '' || productQuantity === 0){
+      setErrorMessage('Please select size, color and quantity');
+      return;
+    }
+    const productObjectInCart = {
+      productId: product._id._str,
+      name: product.name,
+      avatar: product.avt,
+      color: productColor,
+      quantity: productQuantity,
+      size: productSize,
+      price: product.price
+    };
+    console.log(productObjectInCart);
+    const myCart = Session.get('myCart');
+    const existingProductInCart = myCart.map((productInCart, indexOfProduct) =>{
+      if (productInCart.productId === productObjectInCart.productId){
+        return indexOfProduct;
+      }
+    })
+    if (existingProductInCart.length === 0){
+      Session.set('myCart', [...myCart, productObjectInCart]);
+    }
+    else{
+      const newCart = [...myCart.slice(0, existingProductInCart[0]),
+                      myCart.slice(existingProductInCart[0]), 
+                      {...myCart[existingProductInCart[0]], quantity: myCart[existingProductInCart[0]]+productQuantity}];
+      Session.set('myCart',[...newCart]);
+    }
+  
+    
+   
+   //  addProduct(productObjectInCart);
+    
+  }
   const content = (
   
     <div className="product-info-container">
       <div className="product-info-details">
-     
+    
        <div className="product-view">
          <img className="image-view" src={product.avt}/>
          <img className="image-view" src={product.avt}/>
@@ -163,7 +203,10 @@ const ProductInfo = ({product, context, currentUser})=>{
        <div className="product-info">
          <div className="product-name">{product.name}</div>
          <div className="product-price">{`$${product.price}`}</div>
-         
+         <div className="product-rating"> 
+          <StarRating rating={product.rating}/>
+          <div className="number-of-reviews">{`${listReviews.length} Review`}</div>
+         </div>
          <div className="product-size">
             <div>Size</div>
             <form onSubmit={submitReview} className="size-selector-holder">
@@ -184,22 +227,21 @@ const ProductInfo = ({product, context, currentUser})=>{
               }
             </form>
          </div>
-         <div className="product-rating"> 
-          <StarRating rating={product.rating}/>
-          <div className="number-of-reviews">{`${listReviews.length} Review`}</div>
-         </div>
+         
          <div className="product-color">
             <div>Color</div>
-            {
-              COLOR_LIST.map((color, colorIndex)=>{
-                const content = (
-                  <Fragment key={colorIndex}>
-                    <CircleCheckBox onClickFunction={selectColor} value={color.colorValue} typeInput='radio' id={color.colorId} />
-                  </Fragment>
-                );
-                return content;
-              })
-            }
+            <form className="product-color-selector-holder">
+              {
+                COLOR_LIST.map((color, colorIndex)=>{
+                  const content = (
+                    <Fragment key={colorIndex}>
+                      <CircleCheckBox onClickFunction={selectColor} value={color.colorValue} typeInput='radio' id={color.colorId} />
+                    </Fragment>
+                  );
+                  return content;
+                })
+              }
+            </form>
          </div>
          <div className="product-quantity">
              <span className="quantity-title">Quantity</span>
@@ -209,7 +251,14 @@ const ProductInfo = ({product, context, currentUser})=>{
                   quantityValue={productQuantity}
                   onChangeFunction={changProductQuantity} />
           </div>
-          <button className="add-to-cart-btn">Add to cart</button>
+          <button 
+              onClick={
+                ()=>{
+                  addProductToCart(product);
+                }
+              }
+              className="add-to-cart-btn">Add to cart</button>
+           <div className="error-message-add-to-cart">{errorMessage}</div>
           <div className="horizontal-line"></div>
           <div className="info-of-model">
             <div className="size-of-model">{`Model wearing size ${product.sizes[0].size}`}</div>

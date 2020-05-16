@@ -11,17 +11,17 @@ import {CartContextProvider} from '../components/CartContext/CartContext.jsx';
 FlowRouter.route('/',{
   name:'home',
   action(){
-    mount(({component})=><App component={component}/>,{component: <Homepage/>});
+    mount(({component})=><CartContextProvider><App component={component}/></CartContextProvider>,{component: <Homepage/>});
   }
 })
 
-
+{/* 
 FlowRouter.route('/page',{
   name:'home',
   action(){
     mount(({component})=><App component={component}/>,{component: <PageSelector/>});
   }
-})
+}) */}
 
 FlowRouter.route('/products',{
   name:'products',
@@ -38,7 +38,7 @@ FlowRouter.route('/products/:productId',{
     
     Meteor.call('fetchProductById',productId, (err, docs)=>{
       if (docs){
-        mount(({component})=><App component={component}/>,{component: <CartContextProvider><ProductInfo  product={docs.data[0]}/></CartContextProvider>});
+        mount(({component})=><App component={component}/>,{component: <ProductInfo  product={docs.data[0]}/>});
       }
     })
   }

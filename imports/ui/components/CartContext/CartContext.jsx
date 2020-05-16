@@ -3,30 +3,39 @@ import React, { createContext, useState } from 'react';
 export const CartContext = createContext();
 
 export const CartContextProvider = ({children})=>{
-
+  
   const [myCart, setMyCart] = useState([]);
 
-  const addProductToCart = (product)=>{
-    const existingProductInCart = myCart.filter((productInCart, indexOfProduct) =>{
-      if (productInCart.product._id._str === product._id._str){
-        return {productInCart, indexOfProduct};
+  
+  const addProduct = (product)=>{
+    
+    const existingProductInCart = myCart.map((productInCart, indexOfProduct) =>{
+      if (productInCart.productId === product.productId){
+        return indexOfProduct;
       }
-      return null;
     })
-    if (existingProductInCart === null){
+ 
+   
+    if (existingProductInCart.length === 0){
       setMyCart([...myCart, product]);
+      console.log('a');
     }
     else {
-      setMyCart([
-        ...myCart.slice(0, existingProductInCart.indexOfProduct), 
-        ...myCart.slice(existingProductInCart.indexOfProduct+1),
-        {...myCart[existingProductInCart.indexOfProduct], quantity: myCart[existingProductInCart.indexOfProduct].quantity+1}
+     console.log([
+        ...myCart.slice(0, existingProductInCart[0]), 
+        ...myCart.slice(existingProductInCart[0]+1),
+        {...myCart[existingProductInCart[0]], quantity: myCart[existingProductInCart[0]].quantity+1}
       ]);
+      // setMyCart([
+      //   ...myCart.slice(0, existingProductInCart[0]), 
+      //   ...myCart.slice(existingProductInCart[0]+1),
+      //   {...myCart[existingProductInCart[0]], quantity: myCart[existingProductInCart[0]].quantity+1}
+      // ]);
     }
   }
 
   const content = (
-    <CartContext.Provider value={{myCart, addProductToCart}}>
+    <CartContext.Provider value={{myCart, addProduct}}>
       {children}
     </CartContext.Provider>
   );

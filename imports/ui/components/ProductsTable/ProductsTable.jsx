@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   }
 });
 
-const ProductsTable = (props)=>{
+const ProductsTable = ({productList=[]})=>{
   const classes = useStyles();
   const content = (
     <TableContainer className={classes["table-holder"]} component={Paper}>
@@ -41,11 +41,13 @@ const ProductsTable = (props)=>{
             <TableCell  align="left">Amount</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>        
-            <TableRow>
+        <TableBody> 
+          {productList.map((product, productIndex)=>{
+            const content = (
+              <TableRow key={productIndex}>
               <TableCell className={classes.tableItem}>
                 <div className="product-in-cart-profile">
-                  <ProductProfile/>
+                  <ProductProfile productAvatar={product.avatar} productName={product.name}/>
                   <div className="wrapper wrapped-remove-btn">
                     <button className="product-btn">Remove</button>
                   </div>
@@ -54,7 +56,7 @@ const ProductsTable = (props)=>{
               <TableCell align="left">
                 <div className="product-in-cart-color">
                   <div className="wrapper wrapped-product-color">
-                    <CircleCheckBox />
+                    <CircleCheckBox  />
                   </div>
                 </div>
               </TableCell>
@@ -65,15 +67,17 @@ const ProductsTable = (props)=>{
               </TableCell>
               <TableCell align="left">
                 <div className="selector-quantity-in-cart">
-                  <div id="test" className="wrapper wrapped-quantity-selector"><QuantitySelector/></div>
+                  <div id="test" className="wrapper wrapped-quantity-selector"><QuantitySelector quantityValue={product.quantity}/></div>
                 </div>
               </TableCell>
               <TableCell align="left">
                 <div className="product-in-cart-price">
-                  <div className="wrapper wrapped-product-price">$69</div>
+                  <div className="wrapper wrapped-product-price">{`$${product.price}`}</div>
                 </div>
               </TableCell>
-            </TableRow>
+            </TableRow>);
+            return content;
+          })}       
         </TableBody>
       </Table>
     </TableContainer>
