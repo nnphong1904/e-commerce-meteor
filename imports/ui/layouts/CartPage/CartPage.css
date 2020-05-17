@@ -19,7 +19,7 @@
 }
 .cart-page-container {
 	position: relative;
-	height: 500px;
+	min-height: 50%;
 }
 .bill-holder-header {
 	font-size: 14px;

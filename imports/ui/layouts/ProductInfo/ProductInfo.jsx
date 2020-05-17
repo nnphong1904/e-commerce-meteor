@@ -175,8 +175,8 @@ const ProductInfo = ({product,  currentUser})=>{
     };
     
     const myCart = Session.get('myCart');
-    const existingProductInCart = myCart.findIndex((productInCart, indexOfProduct) => productInCart.productId === productObjectInCart.productId)
-    console.log(existingProductInCart);
+    const existingProductInCart = myCart.findIndex((productInCart, indexOfProduct) => productInCart.productId === productObjectInCart.productId && productInCart.size === productObjectInCart.size && productObjectInCart.color === productInCart.color )
+
     if (existingProductInCart === -1){
       console.log('add new');
       Session.set('myCart', [...myCart, productObjectInCart]);

@@ -42,7 +42,7 @@ const ProductsTable = ({onClickFunction=()=>{}, productList=[]})=>{
             <TableCell  align="left">Amount</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody ref={rowIndexRef}> 
+        <TableBody> 
           {productList.map((product, productIndex)=>{
             const content = (
               <TableRow id={productIndex} key={productIndex}>
