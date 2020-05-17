@@ -7,3 +7,66 @@
 	margin-left: 100px;
 	margin-bottom: 20px;
 }
+.bill-holder {
+	position: absolute;
+	right: 10%;
+	top: 11%;
+}
+.bill-info {
+	width: 330px;
+	height: 148px;
+	background-color: #f9f9f9;
+}
+.cart-page-container {
+	position: relative;
+	height: 500px;
+}
+.bill-holder-header {
+	font-size: 14px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.57;
+	letter-spacing: normal;
+	color: #202124;
+	margin-bottom: 15px;
+}
+.bill-info-details {
+	width: 80%;
+	height: 80%;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	padding: 10px;
+}
+.subtotal {
+	border-top: solid 1px black;
+	padding-top: 10px;
+	font-size: 16px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.5;
+	letter-spacing: normal;
+	color: #202124;
+}
+.ship-handling,
+.total-product,
+.subtotal {
+	display: flex;
+	justify-content: space-between;
+}
+.check-out-btn {
+	width: 100%;
+	height: 49px;
+	background-color: #ff5f6d;
+	font-size: 14px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.57;
+	letter-spacing: normal;
+	color: white;
+	margin-top: 20px;
+}
