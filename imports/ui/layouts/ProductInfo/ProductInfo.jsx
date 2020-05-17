@@ -60,8 +60,8 @@ const ProductInfo = ({product,  currentUser})=>{
        if (errorMessage === ''){
          setErrorMessage('');
        }
-     },1000);  
-     return clearInterval(clearErrorMessageIntervalId);
+     },2000);  
+     return ()=>clearInterval(clearErrorMessageIntervalId);
   }, [])
 
 
