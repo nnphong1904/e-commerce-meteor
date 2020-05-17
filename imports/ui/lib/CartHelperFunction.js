@@ -93,3 +93,7 @@ export const removeItemFromCart = (productIndex)=>{
   // console.log(ref.current.children[0]);
   console.log(productIndex);
 }
+
+export const clearCart = ()=>{
+  Session.set('myCart', []);
+}
