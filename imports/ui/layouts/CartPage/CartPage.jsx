@@ -5,16 +5,57 @@ import './CartPage.css';
 
 const CartPage = ({myCart, cartSize, subtotal})=>{
   const increaseQuantityInCart = (e, ref)=>{
-    console.log(ref.current.id);
+    const indexOfProduct = parseInt(ref.current.id);
+    let myNewCart = [];
+    const updatingProduct = myCart[indexOfProduct];
+    if (indexOfProduct === 0){
+      myNewCart = [{...updatingProduct, quantity: updatingProduct.quantity + 1},...myCart.slice(1)];
+    }
+    else {
+      myNewCart = [...myCart.slice(0, indexOfProduct),
+                   {...updatingProduct, quantity: updatingProduct.quantity + 1},
+                   ...myCart.slice(indexOfProduct+1)
+                  ]
+    }
+    Session.set('myCart', [...myNewCart]);
   }
   const decreaseQuantityInCart = (e, ref)=>{
-    console.log(ref.current.id);
+    const indexOfProduct = parseInt(ref.current.id);
+    let myNewCart = [];
+    const updatingProduct = myCart[indexOfProduct];
+    if (indexOfProduct === 0){
+      myNewCart = [{...updatingProduct, quantity: updatingProduct.quantity - 1},...myCart.slice(1)];
+    }
+    else {
+      myNewCart = [...myCart.slice(0, indexOfProduct),
+                   {...updatingProduct, quantity: updatingProduct.quantity - 1},
+                   ...myCart.slice(indexOfProduct+1)
+                  ]
+    }
+    Session.set('myCart', [...myNewCart]);
+  }
+
+  const removeItemFromCart = ( productIndex)=>{
+    let myNewCart = [];
+    const indexOfProduct = parseInt(productIndex);
+    console.log(indexOfProduct)
+    if (indexOfProduct === 0){
+      myNewCart = [...myCart.slice(1)];
+    }
+    else {
+      myNewCart = [...myCart.slice(0, indexOfProduct),
+                   ...myCart.slice(indexOfProduct+1)
+                  ]
+    }
+    Session.set('myCart', [...myNewCart]);
+    // console.log(ref.current.children[0]);
+    console.log(productIndex);
   }
   const content = (
   <div className="cart-page-container">
     <div className="cart-page-header">MY BAG</div>
     <div className="table-container">
-      <ProductsTable onClickFunction={{increaseQuantityInCart, decreaseQuantityInCart}} productList={myCart} />
+      <ProductsTable onClickFunction={{removeItemFromCart, increaseQuantityInCart, decreaseQuantityInCart}} productList={myCart} />
     </div>
     <div className="bill-holder">
       <div className="bill-holder-header">Total</div>

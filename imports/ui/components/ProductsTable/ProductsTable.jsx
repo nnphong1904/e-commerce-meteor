@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { createRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -28,7 +28,7 @@ const useStyles = makeStyles({
 });
 
 const ProductsTable = ({onClickFunction=()=>{}, productList=[]})=>{
-  console.log(onClickFunction);
+ // console.log(onClickFunction);
   const classes = useStyles();
   const content = (
     <TableContainer className={classes["table-holder"]} component={Paper}>
@@ -42,15 +42,15 @@ const ProductsTable = ({onClickFunction=()=>{}, productList=[]})=>{
             <TableCell  align="left">Amount</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody> 
+        <TableBody ref={rowIndexRef}> 
           {productList.map((product, productIndex)=>{
             const content = (
-              <TableRow key={productIndex}>
-              <TableCell className={classes.tableItem}>
-                <div className="product-in-cart-profile">
+              <TableRow id={productIndex} key={productIndex}>
+              <TableCell  className={classes.tableItem}>
+                <div id={productIndex} className="product-in-cart-profile">
                   <ProductProfile productAvatar={product.avatar} productName={product.name}/>
                   <div className="wrapper wrapped-remove-btn">
-                    <button className="product-btn">Remove</button>
+                    <button id={productIndex} onClick={(e)=>onClickFunction.removeItemFromCart(e.target.id)} className="product-btn">Remove</button>
                   </div>
                 </div>
               </TableCell>
