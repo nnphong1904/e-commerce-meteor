@@ -8,7 +8,8 @@ import CircleCheckBox from '../../components/CircleCheckBox/CircleCheckBox.jsx';
 import InputRadio from '../../components/InputRadio/InputRadio.jsx';
 import QuantitySelector from '../../components/QuantitySelector/QuantitySelector.jsx';
 import {SIZE_LIST, COLOR_LIST, MONTH, BRAND_NAME} from '../../lib/Constant.js';
-import { Session } from 'meteor/session'
+import { Session } from 'meteor/session';
+import {addToCart} from '../../lib/CartHelperFunction.js';
 const getNumberOfItemEachSize = (size, product)=>{
   let sizeAndNumberOfItem;
   if (product !== undefined)
@@ -164,43 +165,45 @@ const ProductInfo = ({product,  currentUser})=>{
       setErrorMessage('Please select size, color and quantity');
       return;
     }
-    const productObjectInCart = {
-      productId: product._id._str,
-      name: product.name,
-      avatar: product.avt,
-      color: productColor,
-      quantity: productQuantity,
-      size: productSize,
-      price: product.price
-    };
-    
-    const myCart = Session.get('myCart');
-    const existingProductInCart = myCart.findIndex((productInCart, indexOfProduct) => productInCart.productId === productObjectInCart.productId && productInCart.size === productObjectInCart.size && productObjectInCart.color === productInCart.color )
 
-    if (existingProductInCart === -1){
-      console.log('add new');
-      Session.set('myCart', [...myCart, productObjectInCart]);
-    }
-    else if (existingProductInCart !== -1){
-      console.log('update');
-      let newCart = [];
-      if (myCart.length === 1){
-         console.log('length 1')
-         newCart = [{
-                      ...myCart[existingProductInCart], 
-                      quantity: myCart[existingProductInCart].quantity + productQuantity}];
-      }
-       else
-       {
-          newCart = [...myCart.slice(0, existingProductInCart),
-                      ...myCart.slice(existingProductInCart+1), 
-                      {...myCart[existingProductInCart], 
-                        quantity: myCart[existingProductInCart].quantity + productQuantity}
-                    ];
-          console.log(newCart);
-       }
-       Session.set('myCart',[...newCart]);
-    }
+    addToCart(product, productColor, productQuantity, productSize);
+    // const productObjectInCart = {
+    //   productId: product._id._str,
+    //   name: product.name,
+    //   avatar: product.avt,
+    //   color: productColor,
+    //   quantity: productQuantity,
+    //   size: productSize,
+    //   price: product.price
+    // };
+    
+    // const myCart = Session.get('myCart');
+    // const existingProductInCart = myCart.findIndex((productInCart, indexOfProduct) => productInCart.productId === productObjectInCart.productId && productInCart.size === productObjectInCart.size && productObjectInCart.color === productInCart.color )
+
+    // if (existingProductInCart === -1){
+    //   console.log('add new');
+    //   Session.set('myCart', [...myCart, productObjectInCart]);
+    // }
+    // else if (existingProductInCart !== -1){
+    //   console.log('update');
+    //   let newCart = [];
+    //   if (myCart.length === 1){
+    //      console.log('length 1')
+    //      newCart = [{
+    //                   ...myCart[existingProductInCart], 
+    //                   quantity: myCart[existingProductInCart].quantity + productQuantity}];
+    //   }
+    //    else
+    //    {
+    //       newCart = [...myCart.slice(0, existingProductInCart),
+    //                   ...myCart.slice(existingProductInCart+1), 
+    //                   {...myCart[existingProductInCart], 
+    //                     quantity: myCart[existingProductInCart].quantity + productQuantity}
+    //                 ];
+    //       console.log(newCart);
+    //    }
+    //    Session.set('myCart',[...newCart]);
+    // }
     
    console.log(Session.get('myCart'));
     
