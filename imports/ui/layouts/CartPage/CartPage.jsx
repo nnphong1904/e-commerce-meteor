@@ -1,7 +1,7 @@
 import React  from 'react';
 import ProductsTable from '../../components/ProductsTable/ProductsTable.jsx';
 import { withTracker } from 'meteor/react-meteor-data';
-import {increaseQuantityInCart, decreaseQuantityInCart} from '../../lib/CartHelperFunction.js';
+import {increaseQuantityInCart, decreaseQuantityInCart, removeItemFromCart} from '../../lib/CartHelperFunction.js';
 import './CartPage.css';
 
 const CartPage = ({myCart, cartSize, subtotal})=>{
