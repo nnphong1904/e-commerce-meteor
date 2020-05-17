@@ -6,11 +6,10 @@ import ProductPage from '../layouts/ProductPage/ProductPage.jsx';
 import ProductInfo from '../layouts/ProductInfo/ProductInfo.jsx';
 import CartPage from '../layouts/CartPage/CartPage.jsx';
 
-
 FlowRouter.route('/',{
   name:'home',
   action(){
-    mount(({component})=><CartContextProvider><App component={component}/></CartContextProvider>,{component: <Homepage/>});
+    mount(({component})=><App component={component}/>,{component: <Homepage/>});
   }
 })
 

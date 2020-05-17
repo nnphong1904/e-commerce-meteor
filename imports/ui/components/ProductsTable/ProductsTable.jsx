@@ -28,6 +28,7 @@ const useStyles = makeStyles({
 });
 
 const ProductsTable = ({onClickFunction=()=>{}, productList=[]})=>{
+  console.log(onClickFunction);
   const classes = useStyles();
   const content = (
     <TableContainer className={classes["table-holder"]} component={Paper}>
@@ -67,7 +68,13 @@ const ProductsTable = ({onClickFunction=()=>{}, productList=[]})=>{
               </TableCell>
               <TableCell align="left">
                 <div className="selector-quantity-in-cart">
-                  <div id="test" className="wrapper wrapped-quantity-selector"><QuantitySelector onClickLeftBtnFunction={onClickFunction} quantityValue={product.quantity}/></div>
+                  <div id="test" className="wrapper wrapped-quantity-selector">
+                    <QuantitySelector 
+                        componentId={productIndex}
+                        onClickLeftBtnFunction={onClickFunction.increaseQuantityInCart}
+                        onClickRightBtnFunction={onClickFunction.decreaseQuantityInCart} 
+                        quantityValue={product.quantity}/>
+                  </div>
                 </div>
               </TableCell>
               <TableCell align="left">

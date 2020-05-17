@@ -54,14 +54,19 @@ const ProductInfo = ({product,  currentUser})=>{
   const [didUserWriteReview, setDidUserWriteReview] = useState(false);
   const [recommendProductList, setRecommendProductList] = useState([]);
 
+  useEffect(()=>{
+    const clearErrorMessageIntervalId =  setInterval(()=>{
+      console.log('interval');
+       if (errorMessage === ''){
+         setErrorMessage('');
+       }
+     },1000);  
+     return clearInterval(clearErrorMessageIntervalId);
+  }, [])
 
 
   useEffect(() => {
-   const clearErrorMessageIntervalId =  setInterval(()=>{
-      if (errorMessage === ''){
-        setErrorMessage('');
-      }
-    },3000);  
+   
     Meteor.call('fetchProduct', {branch: [product.branch]}, (err, docs)=>{
       setListProductSameBrand([...docs.data.slice(0,4)]);
     });
@@ -69,7 +74,7 @@ const ProductInfo = ({product,  currentUser})=>{
     Meteor.call('fetchProduct', {category: product.category}, (err, docs)=>{
       setRecommendProductList([...docs.data.slice(0,8)]);
     })
-    return clearInterval(clearErrorMessageIntervalId);
+    
   }, [product])
   
 
@@ -170,39 +175,37 @@ const ProductInfo = ({product,  currentUser})=>{
     };
     
     const myCart = Session.get('myCart');
-    const existingProductInCart = myCart.map((productInCart, indexOfProduct) =>{
-      if (productInCart.productId === productObjectInCart.productId){
-        return indexOfProduct;
-      }
-    })
-    if (existingProductInCart.length === 0){
+    const existingProductInCart = myCart.findIndex((productInCart, indexOfProduct) => productInCart.productId === productObjectInCart.productId)
+    console.log(existingProductInCart);
+    if (existingProductInCart === -1){
       console.log('add new');
       Session.set('myCart', [...myCart, productObjectInCart]);
     }
-    else{
+    else if (existingProductInCart !== -1){
       console.log('update');
       let newCart = [];
-      console.log(myCart[existingProductInCart[0]].quantity)
-      if (existingProductInCart.length === 1){
+      if (myCart.length === 1){
+         console.log('length 1')
          newCart = [{
-                      ...myCart[existingProductInCart[0]], 
-                      quantity: myCart[existingProductInCart[0]].quantity + productQuantity}];
+                      ...myCart[existingProductInCart], 
+                      quantity: myCart[existingProductInCart].quantity + productQuantity}];
       }
        else
        {
-          newCart = [...myCart.slice(0, existingProductInCart[0]),
-                      myCart.slice(existingProductInCart[0]), 
-                      {...myCart[existingProductInCart[0]], 
-                        quantity: myCart[existingProductInCart[0]].quantity + productQuantity}
+          newCart = [...myCart.slice(0, existingProductInCart),
+                      ...myCart.slice(existingProductInCart+1), 
+                      {...myCart[existingProductInCart], 
+                        quantity: myCart[existingProductInCart].quantity + productQuantity}
                     ];
+          console.log(newCart);
        }
        Session.set('myCart',[...newCart]);
     }
     
-    console.log(Session.get('myCart'));
+   console.log(Session.get('myCart'));
     
    
-   //  addProduct(productObjectInCart);
+    //addProduct(productObjectInCart);
     
   }
   const content = (
