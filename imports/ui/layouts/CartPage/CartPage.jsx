@@ -6,7 +6,7 @@ import shortid from 'shortid';
 import './CartPage.css';
 import Cancel from '../../assets/image/cancel.svg';
 import Notification from '../../components/Notification/Notification.jsx';
-import { canceledOrder } from '../../../api/method/order.js';
+import OrderStatus from '../../components/OrderStatus/OrderStatus.jsx';
 
 const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
   const [myOldOrders, setMyOldOrders] = useState([]);
@@ -129,7 +129,7 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
                   const content = (
                     <div key={orderIndex} className="order-item-holder">
                         <div className='my-order-id'>{order.orderId}</div>
-                        <div className='my-order-status'><span>{order.status}</span></div>
+                        <div className='my-order-status'><OrderStatus status={order.status} /></div>
                         {
                           order.status === 0 && 
                             <div >

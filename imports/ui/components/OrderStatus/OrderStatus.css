@@ -1,0 +1,28 @@
+.order-status-container {
+	width: 70px;
+	height: 20px;
+	font-size: 12px;
+	font-weight: 500;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1;
+	letter-spacing: normal;
+	text-align: center;
+	color: white;
+}
+.order-status-content {
+	padding: 3px 0 3px 0;
+	border-radius: 10px;
+}
+.order-status-holder {
+	border-radius: 15px;
+}
+.completed {
+	background: #82bf11;
+}
+.pending {
+	background: #fbba4e;
+}
+.cancelled {
+	background: #f05d62;
+}
