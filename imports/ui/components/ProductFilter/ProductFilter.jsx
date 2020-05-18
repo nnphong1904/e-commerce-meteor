@@ -13,7 +13,7 @@ const BRAND_NAME_LIST = [...BRAND_NAME.values()];
 
               
 
-const ProductFilter = ({fetchProduct})=>{
+const ProductFilter = ({changeCurrentPage, fetchProduct})=>{
 
   const filterSizeRef = createRef();
   const filterPriceRef = createRef();
@@ -124,9 +124,9 @@ const ProductFilter = ({fetchProduct})=>{
   }
 
   const filterByBranch = (e)=>{
-   
+    changeCurrentPage(1);
     const selectedBranch = e.target.value.toLowerCase();
-    console.log(selectedBranch);
+   
     let currentFilterCondition = {...filterCondition};
     let currentBranchFilterCondition = [...filterCondition.branch];
     const indexOfSelectedBranch = currentBranchFilterCondition.indexOf(selectedBranch);
@@ -135,12 +135,13 @@ const ProductFilter = ({fetchProduct})=>{
     }
     else {
       currentBranchFilterCondition = [...currentBranchFilterCondition.slice(0, indexOfSelectedBranch), ...currentBranchFilterCondition.slice(indexOfSelectedBranch+1)];
-    }
+    } 
     currentFilterCondition = {...currentFilterCondition, branch: [...currentBranchFilterCondition]};
+    console.log(currentFilterCondition);
     fetchProduct(currentFilterCondition);
     setFilterCondition(currentFilterCondition);
   }
-
+ 
   const filterByCategory = (e)=>{
     const selectedCategory = e.target.value.toLowerCase();
     let currentFilterCondition = {...filterCondition};

@@ -12,6 +12,8 @@ export const addProduct = (product)=>{
 }
 
 export const fetchProduct = async (condition, currentPage, numberItemPerPage = 20)=>{
+  console.log(`currentpage: ${currentPage}`);
+  console.log(condition);
   try{
     let result; 
     // console.log(currentPage, numberItemPerPage);
