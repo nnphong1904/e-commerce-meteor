@@ -84,6 +84,7 @@ export const fetchProduct = async (condition, currentPage, numberItemPerPage = 2
         }]; 
         result =  await ProductCollection.rawCollection().aggregate(pipe).toArray();
     }
+    console.log(result.length);
     const dataLength = result.length;
     const startIndex = (currentPage - 1) * numberItemPerPage;
     const endIndex = result.length > numberItemPerPage ? (startIndex + numberItemPerPage) : result.length;

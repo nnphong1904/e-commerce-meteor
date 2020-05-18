@@ -63,6 +63,7 @@
 	letter-spacing: normal;
 	color: #202124;
 	margin-bottom: 29px;
+	cursor: pointer;
 }
 .product-filter-container
 	.category-content-container
@@ -79,7 +80,9 @@
 	color: #202124;
 	transition: all 0.3s;
 }
-
+.title {
+	cursor: pointer;
+}
 .product-filter-container
 	.category-detail
 	button:hover {

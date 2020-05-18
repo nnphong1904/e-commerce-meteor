@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useContext } from 'react';
 import './ProductInfo.css';
 import arrayBufferToHex from 'array-buffer-to-hex';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -6,36 +6,16 @@ import classnames from 'classnames';
 import StarRating from '../../components/StarRating/StarRating.jsx';
 import CircleCheckBox from '../../components/CircleCheckBox/CircleCheckBox.jsx';
 import InputRadio from '../../components/InputRadio/InputRadio.jsx';
-
-const SIZE_LIST = ['S', 'M', 'L'];
-const COLOR_LIST = [  
-  {colorId:'wild-watermelon', colorValue: 'wild watermelon'}, 
-  {colorId:'sunglow', colorValue:'sunglow'},
-  {colorId:'neon-blue', colorValue:'neon blue'}, 
-  {colorId:'payne-grey', colorValue: `payne's grey`}, 
-  {colorId:'white-smoke', colorValue:'white smoke'},
-];
-
-const MONTH = [
-                'Jan', 'Feb', 'Mar', 
-                'Apr', 'May', 'Jun', 
-                'Jul', 'Aug', 'Sep', 
-                'Oct', 'Nov', 'Dec'
-              ];
-const BRAND_NAME = new Map([
-  ['h&m','H&M'],
-  ['zara','Zara'],
-  ['pull&bear','Pull&bear'],
-  ['dior','Dior'],
-  ['chanel','chanel']
-]);
-
+import QuantitySelector from '../../components/QuantitySelector/QuantitySelector.jsx';
+import {SIZE_LIST, COLOR_LIST, MONTH, BRAND_NAME} from '../../lib/Constant.js';
+import { Session } from 'meteor/session';
+import {addToCart} from '../../lib/CartHelperFunction.js';
 const getNumberOfItemEachSize = (size, product)=>{
   let sizeAndNumberOfItem;
   if (product !== undefined)
   {
     sizeAndNumberOfItem = product.sizes;
-   // console.log(sizeAndNumberOfItem[0].size);
+   
     const result = sizeAndNumberOfItem.filter(sizeObj => sizeObj.size === size);
     return result.length > 0 ? result[0].noItems : 0;
   }
@@ -49,12 +29,15 @@ const getDefaultSize = (product)=>{
     }
   }
 }
-const ProductInfo = ({product, currentUser})=>{
+const ProductInfo = ({product,  currentUser})=>{
+  
+  
 
-
-  const [productQuantity, setProductQuantity] = useState(1);
+  const [productQuantity, setProductQuantity] = useState(0);
   const [listProductSameBrand, setListProductSameBrand] = useState([]);
-  const [productSize, setProductSize] = useState(getDefaultSize(product));
+  const [productSize, setProductSize] = useState('');
+  const [productColor, setProductColor] = useState('');
+  const [errorMessage, setErrorMessage]  = useState('');
 
   const [reviewTitle, setReviewTitle] = useState('');
   const [reviewContent, setReviewContent] = useState('');
@@ -69,10 +52,18 @@ const ProductInfo = ({product, currentUser})=>{
     }
   ])
   
-  console.log(productSize);
-
   const [didUserWriteReview, setDidUserWriteReview] = useState(false);
   const [recommendProductList, setRecommendProductList] = useState([]);
+
+  useEffect(()=>{
+    const clearErrorMessageIntervalId =  setInterval(()=>{
+      console.log('interval');
+       if (errorMessage === ''){
+         setErrorMessage('');
+       }
+     },2000);  
+     return ()=>clearInterval(clearErrorMessageIntervalId);
+  }, [])
 
 
   useEffect(() => {
@@ -92,9 +83,21 @@ const ProductInfo = ({product, currentUser})=>{
     if (e.target.value === productSize){
       e.target.checked = false;
       setProductSize('');
-      return;
+      return '';
     }
+    console.log(e.target.value);
     setProductSize(e.target.value);
+    return e.target.value;
+  }
+  const selectColor = (e)=>{
+    console.log(e.target.id)
+    if (e.target.value === productColor){
+      e.target.checked = false;
+      setProductColor('');
+      return '';
+    }
+    setProductColor( e.target.value);
+    return e.target.value;
   }
 
   const calNumberOfItem = (sizeList)=>{
@@ -157,10 +160,22 @@ const ProductInfo = ({product, currentUser})=>{
       setProductQuantity(oldQuantity => oldQuantity - 1);
     }
   }
+
+  const addProductToCart = (product)=>{
+    if (productColor === '' || productSize === '' || productQuantity === 0){
+      setErrorMessage('Please select size, color and quantity');
+      return;
+    }
+    console.log(productSize);
+    addToCart(product, productColor, productQuantity, productSize);
+   
+    
+  }
   const content = (
+  
     <div className="product-info-container">
       <div className="product-info-details">
-     
+    
        <div className="product-view">
          <img className="image-view" src={product.avt}/>
          <img className="image-view" src={product.avt}/>
@@ -173,7 +188,10 @@ const ProductInfo = ({product, currentUser})=>{
        <div className="product-info">
          <div className="product-name">{product.name}</div>
          <div className="product-price">{`$${product.price}`}</div>
-         
+         <div className="product-rating"> 
+          <StarRating rating={product.rating}/>
+          <div className="number-of-reviews">{`${listReviews.length} Review`}</div>
+         </div>
          <div className="product-size">
             <div>Size</div>
             <form onSubmit={submitReview} className="size-selector-holder">
@@ -194,37 +212,38 @@ const ProductInfo = ({product, currentUser})=>{
               }
             </form>
          </div>
-         <div className="product-rating"> 
-          <StarRating rating={product.rating}/>
-          <div className="number-of-reviews">{`${listReviews.length} Review`}</div>
-         </div>
+         
          <div className="product-color">
             <div>Color</div>
-            {
-              COLOR_LIST.map((color, colorIndex)=>{
-                const content = (
-                  <Fragment key={colorIndex}>
-                    <CircleCheckBox id={color.colorId} />
-                  </Fragment>
-                );
-                return content;
-              })
-            }
+            <form className="product-color-selector-holder">
+              {
+                COLOR_LIST.map((color, colorIndex)=>{
+                  const content = (
+                    <Fragment key={colorIndex}>
+                      <CircleCheckBox onClickFunction={selectColor} value={color.colorId} typeInput='radio' id={color.colorId} />
+                    </Fragment>
+                  );
+                  return content;
+                })
+              }
+            </form>
          </div>
          <div className="product-quantity">
-             <span>Quantity</span>
-             <span className="change-quantity-holder">
-                    <button onClick={increaseQuantity} className="increase change-quantity-btn">+</button>
-                    <input 
-                      type="number" 
-                      className="quantity-selector" 
-                      value={productQuantity}
-                      onChange={e=>changProductQuantity(e)}
-                      />
-                    <button onClick={decreaseQuantity} className="decrease change-quantity-btn">-</button>
-              </span>
+             <span className="quantity-title">Quantity</span>
+             <QuantitySelector 
+                  onClickLeftBtnFunction={increaseQuantity} 
+                  onClickRightBtnFunction={decreaseQuantity}
+                  quantityValue={productQuantity}
+                  onChangeFunction={changProductQuantity} />
           </div>
-          <button className="add-to-cart-btn">Add to cart</button>
+          <button 
+              onClick={
+                ()=>{
+                  addProductToCart(product);
+                }
+              }
+              className="add-to-cart-btn">Add to cart</button>
+           <div className="error-message-add-to-cart">{errorMessage}</div>
           <div className="horizontal-line"></div>
           <div className="info-of-model">
             <div className="size-of-model">{`Model wearing size ${product.sizes[0].size}`}</div>
@@ -330,6 +349,7 @@ const ProductInfo = ({product, currentUser})=>{
         }
       </div>
     </div>
+
   );
   return content;
 }

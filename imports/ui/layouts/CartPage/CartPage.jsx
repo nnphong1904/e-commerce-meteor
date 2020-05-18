@@ -1,82 +1,159 @@
-import React from 'react';
+import React, { useState, useEffect }  from 'react';
+import ProductsTable from '../../components/ProductsTable/ProductsTable.jsx';
+import { withTracker } from 'meteor/react-meteor-data';
+import {increaseQuantityInCart, decreaseQuantityInCart, removeItemFromCart, clearCart, changeQuantityInCartByTyping} from '../../lib/CartHelperFunction.js';
+import shortid from 'shortid';
 import './CartPage.css';
-import CircleCheckBox from '../../components/CircleCheckBox/CircleCheckBox.jsx';
-import ProductHolder from '../../components/ProductHolder/ProductHolder.jsx';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import Cancel from '../../assets/image/cancel.svg';
+import Notification from '../../components/Notification/Notification.jsx';
+import OrderStatus from '../../components/OrderStatus/OrderStatus.jsx';
 
-const useStyles = makeStyles({
-  table: {
-    boxShadow: 'none',
-    backgroundColor: 'white',
-    marginLeft: '5px'
-  },
-  tableItem: {
-   
+const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
+  const [myOldOrders, setMyOldOrders] = useState([]);
+  const [orderIdBeingCancelled, setOrderIdBeingCancelled] = useState('');
+  const [showNotificationForConfirmCancelledOrder, setShowNotificationForConfirmCancelledOrder] = useState(false);
+  const [addToCartMessageError, setAddToCartMessageError] = useState('');
+  const [addToCartMessageSuccess, setAddToCartMessageSuccess] = useState('');
+  useEffect(() => {
+    if (!currentUser){
+      return;
+    }
+    console.log('running effect')
+    Meteor.call('fetchOrder', currentUser.emails[0].address, (err, docs)=>{
+      setMyOldOrders([...docs.data]);
+      console.log(docs.data);
+    })
+  }, [currentUser])
+
+  const cancelOrder = (orderId)=>{
+    const myNewOrdersList = myOldOrders.filter(order => order.orderId !== orderId);
+    setMyOldOrders([...myNewOrdersList]);
+    
+    Meteor.call('canceledOrder', orderId);
+    Meteor.call('sendEmailToSeller', {orderId:orderId});
   }
-});
 
-const CartPage = (props)=>{
-  const classes = useStyles();
-  const fakeObject ={
-    avt:'https://i.pinimg.com/564x/06/6b/40/066b401775f48d2e4ac886c387d21363.jpg',
-    price:69.00,
-    name:'Fake Product',
-    sizes: [{size:'M', noItems:10}]
-  };
+  const confirmToCancelledOrderFunction = ()=>{
+    setShowNotificationForConfirmCancelledOrder(false);
+    cancelOrder(orderIdBeingCancelled);
+  }
+  
+
+  const onClickCanceledOrderButton = (e)=>{
+    if (showNotificationForConfirmCancelledOrder === false){
+      setShowNotificationForConfirmCancelledOrder(true);
+      setOrderIdBeingCancelled(e.target.id);
+      return;
+    }
+  }
+
+  const checkoutOrder = (order)=>{
+    let newOrderObj = {};
+    if (!currentUser){
+      console.log('must login');
+      setAddToCartMessageError('You must login to check out order');
+      setAddToCartMessageSuccess('');
+      return ;
+    }
+    if (myCart.length === 0){
+      console.log('now item in cart');
+      setAddToCartMessageError('There is no items in cart');
+      setAddToCartMessageSuccess('');
+      return;
+    }
+    const orderId = shortid.generate();
+    newOrderObj.userEmail = currentUser.emails[0].address;
+    newOrderObj.orderDetails = JSON.stringify(myCart);
+    newOrderObj.status = 0;
+    newOrderObj.subtotal = subtotal;
+    newOrderObj.orderId = orderId;
+    console.log(newOrderObj);
+    Meteor.call('addOrder', newOrderObj,(err, docs)=>{
+      if (!err){
+        console.log('add order success');
+        console.log(docs);
+      }
+    })
+    const orderDetailsForEmail = myCart.map((item)=>`
+        [ Product name: ${item.name}
+          Product color: ${item.color}
+          Product quantity: ${item.quantity}
+          Product size: ${item.size} ]
+          `)
+    const mailContent = `
+      Order ID: ${orderId};
+      Customer email:${newOrderObj.userEmail}
+      Order details: ${orderDetailsForEmail}
+      Subtotal: ${newOrderObj.subtotal}
+    `;
+    Meteor.call('sendEmailToSeller',{orderId: orderId, orderDetails: mailContent});
+    setAddToCartMessageSuccess('You created an order');
+    setAddToCartMessageError('');
+    clearCart();
+  }
+  
   const content = (
-  <div className="cart-page-container">
-  <div className="cart-page-header">MY BAG</div>
-    <div className="products-list">
-      <TableContainer className={classes.table}  component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell className={classes.tableItem} align="left">Product</TableCell>
-              <TableCell className={classes.tableItem} align="left">Color</TableCell>
-              <TableCell className={classes.tableItem} align="left">Size</TableCell>
-              <TableCell className={classes.tableItem} align="left">Quantity</TableCell>
-              <TableCell className={classes.tableItem} align="left">Amount</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-              <TableRow >
-                <TableCell >
-                  <ProductHolder product={fakeObject}/>
-                </TableCell>
-                <TableCell className={classes.tableItem} align="left">
-                  <CircleCheckBox/>
-                </TableCell>
-                <TableCell className={classes.tableItem} align="left">
-                  <span className="product-in-cart-size">
-                    S  
-                  </span>
-                </TableCell>
-                <TableCell className={classes.tableItem} align="left">
-                  <span className="change-quantity-holder">
-                      <button className="increase change-quantity-btn">+</button>
-                      <input 
-                        type="number" 
-                        className="quantity-selector" 
-                        vaulue={1}
-                        />
-                      <button className="decrease change-quantity-btn">-</button>
-                  </span>
-                </TableCell>
-                <TableCell className={classes.tableItem} align="left">asdf</TableCell>
-              </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
-  </div>
+  <>
+    {showNotificationForConfirmCancelledOrder && <Notification onClickFunction={confirmToCancelledOrderFunction}/>}
+    <div className="cart-page-container">
+      <div className="cart-page-header">MY BAG</div>
+      <div className="table-container">
+        <ProductsTable onClickFunction={{removeItemFromCart, increaseQuantityInCart, decreaseQuantityInCart}} onChangeFunction={{changeQuantityInCartByTyping}} productList={myCart} />
+      </div>
+      <div className="bill-holder">
+        <div className="bill-holder-header">Total</div>
+        <div className="bill-info">
+          <div className="bill-info-details">
+            <div className="ship-handling">Shipping & Handling: <span className="ship-handling-price">Free</span></div>
+            <div className="total-product">Total product: <span className="total-product-value">{cartSize}</span></div>
+            <div className="subtotal">Subtotal: <span className="subtotal-value">{`$${subtotal}`}</span></div>
+          </div>
+          <button 
+              onClick={(e)=>{
+                checkoutOrder({})
+                }} 
+              className="check-out-btn">Check out</button>
+          <div className="add-to-cart-message">
+            {addToCartMessageError !== '' && <div className="add-to-cart-message-error">{addToCartMessageError}</div>}
+            {addToCartMessageSuccess !== '' && <div className="add-to-cart-message-success">{addToCartMessageSuccess}</div>}
+          </div>   
+         {currentUser && 
+          <div className="my-orders-list">
+              <div className="my-orders-list-header">
+                <div className="orders-list-header-id">Order ID</div>
+                <div className="orders-list-header-status">Status</div>
+                <div className="orders-list-header-status">Cancel</div>
+              </div>
+              <div className="my-orders-list-body">
+                {myOldOrders.map((order, orderIndex)=>{
+                  const content = (
+                    <div key={orderIndex} className="order-item-holder">
+                        <div className='my-order-id'>{order.orderId}</div>
+                        <div className='my-order-status'><OrderStatus status={order.status} /></div>
+                        {
+                          order.status === 0 && 
+                            <div >
+                               <img onClick={(e)=>onClickCanceledOrderButton(e)} id={order.orderId} className='cancel-order-button' src={Cancel}/>
+                            </div>
+                        }
+                    </div>
+                  );
+                  return content;
+                })}
+              </div>
+           </div>  } 
+           </div>
+        </div>
+      </div>
+  </>
   );
   return content;
 }
-export default CartPage;
+export default withTracker(()=>{
+  return {
+    currentUser: Meteor.user(),
+    myCart: Session.get('myCart'),
+    cartSize: Session.get('myCart').reduce((sumQuantity, productInCart)=>sumQuantity + productInCart.quantity, 0),
+    subtotal: Session.get('myCart').reduce((subtotalValue, productInCart)=>subtotalValue+(productInCart.price*productInCart.quantity), 0)
+  }
+})(CartPage);

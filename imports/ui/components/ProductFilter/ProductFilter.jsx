@@ -5,15 +5,10 @@ import InputRadio from '../../components/InputRadio/InputRadio.jsx';
 import CircleCheckBox from '../../components/CircleCheckBox/CircleCheckBox.jsx';
 import RangeSelector from '../../components/RangeSelector/RangeSelector.jsx';
 import './ProductFilter.css'
-const COLOR_LIST = [  
-                    {colorId:'wild-watermelon', colorValue: 'wild watermelon'}, 
-                    {colorId:'sunglow', colorValue:'sunglow'},
-                    {colorId:'neon-blue', colorValue:'neon blue'}, 
-                    {colorId:'payne-grey', colorValue: `payne's grey`}, 
-                    {colorId:'white-smoke', colorValue:'white smoke'},
-                  ];
-const SIZE_LIST = ['S', 'M', 'L'];
-const BRAND_LIST = ['Zara', 'Pull&Bear', 'Dior', 'Chanel', 'H&M'];
+import {BRAND_NAME, COLOR_LIST, SIZE_LIST} from '../../lib/Constant.js';
+import { element } from 'prop-types';
+
+const BRAND_NAME_LIST = [...BRAND_NAME.values()];
  
 
               
@@ -22,10 +17,10 @@ const ProductFilter = ({fetchProduct})=>{
 
   const filterSizeRef = createRef();
   const filterPriceRef = createRef();
-  const priceTextHolderRef = createRef();
   const filterBranchRef = createRef();
   const filterColorRef = createRef();
   const filterAvailableRef = createRef();
+  const categoryListRef = createRef();
 
 
   const arrowIconRefSize = createRef();
@@ -55,13 +50,6 @@ const ProductFilter = ({fetchProduct})=>{
     }
   })
 
-  const changeBranchNameColor = (ref)=>{
-    if (ref.current.style.color !== 'rgb(255, 161, 95)'){
-      ref.current.style.color = '#ffa15f'
-      return;
-    }
-    ref.current.style.color = '#4d4d4d';
-  }
   const rotateArrowIcon = (ref)=>{
      if (ref.current.style.transform === '' )
       {
@@ -79,7 +67,14 @@ const ProductFilter = ({fetchProduct})=>{
     ref.current.style.display=ref.current.style.display===''?'block':'';
   }
   
-
+  const unCheckAllCategoryFilter = ()=>{
+    Array.from(categoryListRef.current.children).forEach(element=>{
+      if (element.children[0].checked === true){
+        element.children[0].checked = false;
+      }
+    });
+    
+  }
   //========== filter logic implementation================
 
   const filterByAvailableItem = (e)=>{
@@ -148,7 +143,6 @@ const ProductFilter = ({fetchProduct})=>{
 
   const filterByCategory = (e)=>{
     const selectedCategory = e.target.value.toLowerCase();
-    console.log(selectedCategory);
     let currentFilterCondition = {...filterCondition};
     
     if (currentFilterCondition.category !== selectedCategory){
@@ -177,10 +171,14 @@ const ProductFilter = ({fetchProduct})=>{
     
       <div className="filter-title">Category</div>
         <div className="category-detail">
-          <button  onClick={({})=>fetchProduct({})}><span>All</span> Dresses</button>
+          <button  onClick={({})=>{
+            fetchProduct({});
+            unCheckAllCategoryFilter();
+            }}>
+              <span>All</span> Dresses</button>
         </div>
-        <form className="category-detail category-selector-form">
-           <label className="category-holder">
+        <form ref={categoryListRef} className="category-detail category-selector-form">
+           <label  className="category-holder">
               <input
                 name="category-selector"
                 value="rompers/jumpsuits"
@@ -315,7 +313,7 @@ const ProductFilter = ({fetchProduct})=>{
           </a>
           <div ref={filterBranchRef} className="checkbox-container brand-container">
           {
-            BRAND_LIST.map((brand, brandIndex)=>{
+            BRAND_NAME_LIST.map((brand, brandIndex)=>{
               const content = (
                   <Fragment key={brandIndex}>
                     <Checkbox  title={brand} value={brand} onClickFunction={filterByBranch} />

@@ -17,6 +17,7 @@
 	display: flex;
 	align-items: center;
 	margin-right: 134px;
+	position: relative;
 }
 .Logo {
 	width: 96px;
@@ -132,6 +133,7 @@
 	height: 20px;
 	-o-object-fit: contain;
 	object-fit: contain;
+	margin-right: 11%;
 }
 .Cart {
 	width: 70px;
@@ -224,8 +226,8 @@
 	letter-spacing: normal;
 	color: #4d4d4d;
 	position: absolute;
-	top: 48px;
-	right: 205px;
+	top: 90%;
+	right: 70%;
 	box-shadow: 0 14px 30px 0 rgba(0, 0, 0, 0.14);
 	border: solid 0.5px #eaeaea;
 	background-color: #fbfbfb;
@@ -255,4 +257,25 @@
 .type-of-product:focus {
 	cursor: pointer;
 	outline: none;
+}
+.show-cart-size {
+	position: absolute;
+	font-size: 12px;
+	font-weight: 500;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.83;
+	letter-spacing: normal;
+	background-color: #ffa15f;
+	height: 18px;
+	width: 18px;
+	border-radius: 50%;
+	text-align: center;
+	color: white;
+	padding-bottom: 2px;
+	right: 18px;
+	top: 0;
+}
+.cart-btn {
+	cursor: pointer;
 }

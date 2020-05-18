@@ -1,0 +1,118 @@
+.table-container {
+	width: 55%;
+	margin-left: 100px;
+}
+.cart-page-header {
+	margin-top: 40px;
+	margin-left: 100px;
+	margin-bottom: 20px;
+}
+.bill-holder {
+	position: absolute;
+	right: 10%;
+	top: 11%;
+}
+.bill-info {
+	width: 330px;
+	height: 148px;
+	background-color: #f9f9f9;
+}
+.cart-page-container {
+	position: relative;
+	min-height: 120%;
+}
+.bill-holder-header {
+	font-size: 14px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.57;
+	letter-spacing: normal;
+	color: #202124;
+	margin-bottom: 15px;
+}
+.bill-info-details {
+	width: 80%;
+	height: 80%;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	padding: 10px;
+}
+.subtotal {
+	border-top: solid 1px black;
+	padding-top: 10px;
+	font-size: 16px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.5;
+	letter-spacing: normal;
+	color: #202124;
+}
+.ship-handling,
+.total-product,
+.subtotal {
+	display: flex;
+	justify-content: space-between;
+}
+.check-out-btn {
+	width: 100%;
+	height: 49px;
+	background-color: #ff5f6d;
+	font-size: 14px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.57;
+	letter-spacing: normal;
+	color: white;
+	margin-top: 20px;
+}
+
+.add-to-cart-message {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.add-to-cart-message-error {
+	color: red;
+}
+.add-to-cart-message-success {
+	color: green;
+}
+.my-orders-list {
+	position: absolute;
+	right: 0%;
+	width: 90%;
+	background-color: #f9f9f9;
+	padding: 0 5% 0 5%;
+}
+.order-item-holder {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 10px;
+}
+
+.my-orders-list-header {
+	display: flex;
+	justify-content: space-between;
+	margin: 20px 0 20px 0;
+	border-bottom: solid 1px gray;
+	padding-bottom: 10px;
+}
+
+.my-order-status {
+	position: relative;
+}
+.my-order-status {
+	position: absolute;
+	right: 37%;
+}
+.cancel-order-button {
+	-o-object-fit: contain;
+	object-fit: contain;
+	height: 20px;
+	width: 20px;
+	cursor: pointer;
+}

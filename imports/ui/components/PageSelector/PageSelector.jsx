@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Arrow from '../../assets/image/arrow.svg'
+import './PageSelector.css';
 const PageSelector = ({textDisplay='', minValue=1, maxValue=100, onClickFunction = ()=>{}})=>{
   const [innerCurrentPage, setInnerCurrentPage] = useState(minValue);
   const onClickLeftButton = ()=>{

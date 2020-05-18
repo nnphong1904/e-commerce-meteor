@@ -1,4 +1,4 @@
-import React, {useState, useEffect, createRef} from 'react';
+import React, {useState, useEffect, createRef, useContext} from 'react';
 import './Navbar.css';
 import {Meteor} from 'meteor/meteor';
 import Logo from '../../assets/image/logo.svg';
@@ -6,11 +6,12 @@ import Cart from '../../assets/image/cart.svg';
 import Arrow from '../../assets/image/arrow.svg';
 import { withTracker } from 'meteor/react-meteor-data';
 import Avatar from 'react-avatar';
-
-
+import { Session } from 'meteor/session'
 const Navbar = (props)=>{
-
-  // const ref = React.createRef();
+ 
+  //const {myCart} = useContext(CartContext);
+  // const quantity = props.cartSize.reduce((sum, productInCart)=>sum+productInCart.quantity, 0);
+  // console.log(quantity);
   const [userProfile, setUserProfile] =useState({});
   const [whoShouldBuy, setWhoShouldBuy] = useState('');
   const [typeProduct, setTypeProduct] = useState('');
@@ -30,7 +31,9 @@ const Navbar = (props)=>{
     })
   }, [props.currentUser]);
   
-
+  const goToCartPage = ()=>{
+    FlowRouter.go('/cart');
+  }
   const toggleTypeProductSection = ()=>{
     console.log(didOpenTypeProductSection);
     if (didOpenTypeProductSection === false){
@@ -101,7 +104,10 @@ const Navbar = (props)=>{
             { props.currentUser !== null &&
               <button onClick={logoutBtnClick} className="logout-btn">Log Out</button>
             }
-        <img src={Cart} className="Cart"/>     
+        <div onClick={goToCartPage} className="cart-btn">
+          <img src={Cart}  className="Cart"/>     
+          {props.cartSize>0 && <div className="show-cart-size">{props.cartSize}</div>}
+        </div>
         </div>
       </div>
       {/* Lower-part of navbar */}
@@ -216,5 +222,6 @@ const Navbar = (props)=>{
 export default withTracker(()=>{
   return {
     currentUser: Meteor.user(),
+    cartSize: Session.get('myCart').reduce((sumQuantity, productInCart)=>sumQuantity + productInCart.quantity, 0)
   }
 })(Navbar);

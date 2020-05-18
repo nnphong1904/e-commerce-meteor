@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {mount} from 'react-mounter';
 import {App} from '../App';
 import Homepage from '../layouts/Homepage/Homepage.jsx';
 import ProductPage from '../layouts/ProductPage/ProductPage.jsx';
 import ProductInfo from '../layouts/ProductInfo/ProductInfo.jsx';
-import {Info} from '../layouts/Info/Info.jsx';
+import CartPage from '../layouts/CartPage/CartPage.jsx';
 
 FlowRouter.route('/',{
   name:'home',
@@ -14,12 +14,6 @@ FlowRouter.route('/',{
 })
 
 
-FlowRouter.route('/page',{
-  name:'home',
-  action(){
-    mount(({component})=><App component={component}/>,{component: <PageSelector/>});
-  }
-})
 
 FlowRouter.route('/products',{
   name:'products',
@@ -36,15 +30,15 @@ FlowRouter.route('/products/:productId',{
     
     Meteor.call('fetchProductById',productId, (err, docs)=>{
       if (docs){
-        mount(({component})=><App component={component}/>,{component: <ProductInfo product={docs.data[0]}/>});
+        mount(({component})=><App component={component}/>,{component: <ProductInfo  product={docs.data[0]}/>});
       }
     })
   }
 })
 
-FlowRouter.route('/info',{
+FlowRouter.route('/cart',{
   name:'info',
   action(){
-    mount(({component})=><App component={component}/>,{component: <Info/>});
+    mount(({component})=><App component={component}/>,{component: <CartPage/>});
   }
 })
