@@ -1,11 +1,15 @@
 /* for display products */
 .product-page-container {
-	display: flex;
 	width: 61%;
-	flex-wrap: wrap;
+
 	margin: 10px 0 0 31%;
 	font-family: Montserrat, sans-serif;
-	height: 1650px;
+	min-height: 1300px;
+}
+.list-of-product-in-page {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
 }
 .filter-value {
 	text-align: center;

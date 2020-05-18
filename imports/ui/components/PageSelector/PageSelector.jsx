@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Arrow from '../../assets/image/arrow.svg'
 import './PageSelector.css';
-const PageSelector = ({textDisplay='', minValue=1, maxValue=100, onClickFunction = ()=>{}})=>{
-  const [innerCurrentPage, setInnerCurrentPage] = useState(minValue);
+const PageSelector = ({currentPage=1, textDisplay='', minValue=1, maxValue=100, onClickFunction = ()=>{}})=>{
+  
+  // const [innerCurrentPage, setInnerCurrentPage] = useState(1);
+ 
   const onClickLeftButton = ()=>{
     if (innerCurrentPage > minValue)
     {
@@ -16,15 +18,15 @@ const PageSelector = ({textDisplay='', minValue=1, maxValue=100, onClickFunction
     }
   }
   const onChangeHandler = (e)=>{
-    setCurrentValue(parseInt(e.target.value));
+    onClickFunction(parseInt(e.target.value));
   }
   const content = (
     <div className="page-selector-holder">
       <img 
         onClick = {
           (e)=>{
-            onClickLeftButton();
-            onClickFunction(innerCurrentPage-1);
+            //onClickLeftButton();
+            onClickFunction(currentPage-1);
           }
         }
         id="increase-btn" 
@@ -37,15 +39,15 @@ const PageSelector = ({textDisplay='', minValue=1, maxValue=100, onClickFunction
             }
           }
           className="input-value" 
-          value={innerCurrentPage} 
+          value={currentPage} 
           type="number"/>
         <span className="display-text">{textDisplay}</span>
       </div>
       <img 
         onClick={
           (e)=>{
-            onClickRightValue();
-            onClickFunction(innerCurrentPage+1);
+         //  onClickRightValue();
+            onClickFunction(currentPage+1);
           }
         }
         id="decrease-btn" 

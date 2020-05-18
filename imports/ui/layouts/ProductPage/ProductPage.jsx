@@ -8,13 +8,20 @@ const ProductPage = ()=>{
  
   const [currentPage, setCurrentPage] = useState(1);
   const [products, setProducts] = useState([]);
-  const [numberOfPage, setNumberOfPage] = useState()
-  console.log('rendering');
-  const fetchProduct = async (condition)=>{
-      await Meteor.call('fetchProduct',condition,currentPage,(err,result)=>{
+  const [numberOfPage, setNumberOfPage] = useState(1)
+  const fetchProduct = async (condition, currentPageForFetching=1)=>{
+     
+      await Meteor.call('fetchProduct',condition,currentPageForFetching,(err,result)=>{
+        console.log(result.data);
         if (!err) {
           setProducts([...result.data]);
-          setNumberOfPage(Math.round(result.dataLength/NUMBER_ITEM_PER_PAGE));
+         
+          if (Math.round(result.dataLength/NUMBER_ITEM_PER_PAGE) === 0){
+            setNumberOfPage(1);
+          }
+          else{
+            setNumberOfPage(Math.round(result.dataLength/NUMBER_ITEM_PER_PAGE));
+          }
         }
         else {
           console.log(err);
@@ -26,26 +33,44 @@ const ProductPage = ()=>{
       if (nextPage >= 1 && nextPage <= numberOfPage)
       {
         setCurrentPage(nextPage);
+        Meteor.call('fetchProduct', {}, nextPage, (err,result)=>{
+          if (!err) {
+            setProducts([...result.data]);
+           
+            if (Math.round(result.dataLength/NUMBER_ITEM_PER_PAGE) === 0){
+              setNumberOfPage(1);
+            }
+            else{
+              setNumberOfPage(Math.round(result.dataLength/NUMBER_ITEM_PER_PAGE));
+            }
+          }
+          else {
+            console.log(err);
+          }
+        })
       }
     } 
+    
 
   useEffect(()=>{
     fetchProduct({});
-  },[currentPage]);
+  },[]);
   
 
   const content = (
 
       <>
         <div className="page-selector-container">
-          <PageSelector textDisplay={`/${numberOfPage}`} maxValue={numberOfPage} onClickFunction={changeCurrentPage}/>
+          <PageSelector currentPage={currentPage} minValue={currentPage} textDisplay={`/${numberOfPage}`} maxValue={numberOfPage} onClickFunction={changeCurrentPage}/>
         </div>
         <div className="product-page-container">
-          <ProductFilter fetchProduct={fetchProduct}/>
-            {products.length>0 &&
-              products.map(product => <ProductCard key={product.decId} product={product} />)
-            }
-            {products.length===0 && <div>No Results</div>}
+          <ProductFilter  changeCurrentPage={changeCurrentPage} fetchProduct={fetchProduct}/>
+            <div className="list-of-product-in-page">
+              {products.length>0 &&
+                products.map(product => <ProductCard key={product.decId} product={product} />)
+              }
+              {products.length===0 && <div>No Results</div>}
+            </div>
         </div>
       </> 
   );
