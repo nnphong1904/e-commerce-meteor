@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   }
 });
 
-const ProductsTable = ({onClickFunction=()=>{}, productList=[]})=>{
+const ProductsTable = ({onClickFunction=()=>{}, onChangeFunction=()=>{} ,productList=[]})=>{
  // console.log(onClickFunction);
   const classes = useStyles();
   const content = (
@@ -71,6 +71,7 @@ const ProductsTable = ({onClickFunction=()=>{}, productList=[]})=>{
                   <div id="test" className="wrapper wrapped-quantity-selector">
                     <QuantitySelector 
                         componentId={productIndex}
+                        onChangeFunction={onChangeFunction.changeQuantityInCartByTyping}
                         onClickLeftBtnFunction={onClickFunction.increaseQuantityInCart}
                         onClickRightBtnFunction={onClickFunction.decreaseQuantityInCart} 
                         quantityValue={product.quantity}/>

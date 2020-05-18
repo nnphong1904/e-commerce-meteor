@@ -13,13 +13,7 @@ FlowRouter.route('/',{
   }
 })
 
-{/* 
-FlowRouter.route('/page',{
-  name:'home',
-  action(){
-    mount(({component})=><App component={component}/>,{component: <PageSelector/>});
-  }
-}) */}
+
 
 FlowRouter.route('/products',{
   name:'products',

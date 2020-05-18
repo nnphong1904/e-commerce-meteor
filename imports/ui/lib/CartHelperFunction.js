@@ -1,4 +1,6 @@
+
 export const addToCart = (product, productColor, productQuantity, productSize)=>{
+  
   const productObjectInCart = {
     productId: product._id._str,
     name: product.name,
@@ -74,6 +76,26 @@ export const decreaseQuantityInCart = (ref)=>{
                 ]
   }
   Session.set('myCart', [...myNewCart]);
+}
+export const changeQuantityInCartByTyping = (e, ref)=>{
+  let quantityValue = e.target.value===''? 0 : parseInt(e.target.value);
+  console.log(quantityValue);
+  const indexOfProduct = parseInt(ref.current.id);
+  const myCart = [...Session.get('myCart')];
+  let myNewCart = [];
+  const updatingProduct = myCart[indexOfProduct];
+  
+    if (indexOfProduct === 0){
+      myNewCart = [{...updatingProduct, quantity: quantityValue},...myCart.slice(1)];
+    }
+    else {
+      myNewCart = [...myCart.slice(0, indexOfProduct),
+                   {...updatingProduct, quantity: quantityValue},
+                   ...myCart.slice(indexOfProduct+1)
+                  ]
+    }
+  
+  Session.set('myCart',[...myNewCart]);
 }
 
 export const removeItemFromCart = (productIndex)=>{

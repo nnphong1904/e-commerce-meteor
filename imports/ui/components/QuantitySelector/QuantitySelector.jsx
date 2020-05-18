@@ -10,7 +10,7 @@ const QuantitySelector = ({quantityValue=1, onChangeFunction = ()=>{}, onClickLe
             type="number" 
             className="quantity-selector" 
             value={quantityValue}
-            onChange={e=>onChangeFunction(e)}/>
+            onChange={e=>onChangeFunction(e, parentElementRef)}/>
       <button onClick={(e)=>onClickRightBtnFunction(parentElementRef)} className="decrease change-quantity-btn">-</button>
     </span>
   );

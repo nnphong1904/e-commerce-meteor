@@ -1,27 +1,36 @@
-import React  from 'react';
+import React, { useState }  from 'react';
 import ProductsTable from '../../components/ProductsTable/ProductsTable.jsx';
 import { withTracker } from 'meteor/react-meteor-data';
-import {increaseQuantityInCart, decreaseQuantityInCart, removeItemFromCart, clearCart} from '../../lib/CartHelperFunction.js';
+import {increaseQuantityInCart, decreaseQuantityInCart, removeItemFromCart, clearCart, changeQuantityInCartByTyping} from '../../lib/CartHelperFunction.js';
+import shortid from 'shortid';
 import './CartPage.css';
 
 
 
 const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
 
+  const [addToCartMessageError, setAddToCartMessageError] = useState('');
+  const [addToCartMessageSuccess, setAddToCartMessageSuccess] = useState('');
+  console.log(addToCartMessageError);
   const checkoutOrder = (order)=>{
     let newOrderObj = {};
     if (!currentUser){
       console.log('must login');
+      setAddToCartMessageError('You must login to check out order');
+      setAddToCartMessageSuccess('');
       return ;
     }
     if (myCart.length === 0){
       console.log('now item in cart');
+      setAddToCartMessageError('There is no items in cart');
+      setAddToCartMessageSuccess('');
       return;
-    }
+    }const orderId = shortid.generate();
     newOrderObj.userEmail = currentUser.emails[0].address;
     newOrderObj.orderDetails = JSON.stringify(myCart);
     newOrderObj.status = 0;
     newOrderObj.subtotal = subtotal;
+    newOrderObj.orderId = orderId;
     console.log(newOrderObj);
     Meteor.call('addOrder', newOrderObj,(err, docs)=>{
       if (!err){
@@ -29,6 +38,8 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
         console.log(docs);
       }
     })
+    setAddToCartMessageSuccess('You created an order');
+    setAddToCartMessageError('');
     clearCart();
   }
   
@@ -36,7 +47,7 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
   <div className="cart-page-container">
     <div className="cart-page-header">MY BAG</div>
     <div className="table-container">
-      <ProductsTable onClickFunction={{removeItemFromCart, increaseQuantityInCart, decreaseQuantityInCart}} productList={myCart} />
+      <ProductsTable onClickFunction={{removeItemFromCart, increaseQuantityInCart, decreaseQuantityInCart}} onChangeFunction={{changeQuantityInCartByTyping}} productList={myCart} />
     </div>
     <div className="bill-holder">
       <div className="bill-holder-header">Total</div>
@@ -51,6 +62,11 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
               checkoutOrder({})
               }} 
             className="check-out-btn">Check out</button>
+        <div className="add-to-cart-message">
+          {addToCartMessageError !== '' && <div className="add-to-cart-message-error">{addToCartMessageError}</div>}
+          {addToCartMessageSuccess !== '' && <div className="add-to-cart-message-success">{addToCartMessageSuccess}</div>}
+        </div>
+              
       </div>
     </div>
   </div>

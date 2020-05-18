@@ -70,3 +70,13 @@
 	color: white;
 	margin-top: 20px;
 }
+
+.add-to-cart-message {
+	margin-top: 20px;
+}
+.add-to-cart-message-error {
+	color: red;
+}
+.add-to-cart-message-success {
+	color: greenyellow;
+}

@@ -10,6 +10,7 @@ const OrderSchema = new SimpleSchema({
         },
   status: Number,
   subtotal: Number,
+  orderId: String
  
 })
 
