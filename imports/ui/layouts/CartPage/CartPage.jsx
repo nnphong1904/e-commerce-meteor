@@ -130,9 +130,12 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
                     <div key={orderIndex} className="order-item-holder">
                         <div className='my-order-id'>{order.orderId}</div>
                         <div className='my-order-status'><span>{order.status}</span></div>
-                        <div >
-                            <img onClick={(e)=>onClickCanceledOrderButton(e)} id={order.orderId} className='cancel-order-button' src={Cancel}/>
-                        </div>
+                        {
+                          order.status === 0 && 
+                            <div >
+                               <img onClick={(e)=>onClickCanceledOrderButton(e)} id={order.orderId} className='cancel-order-button' src={Cancel}/>
+                            </div>
+                        }
                     </div>
                   );
                   return content;
