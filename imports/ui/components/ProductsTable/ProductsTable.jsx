@@ -63,7 +63,7 @@ const ProductsTable = ({onClickFunction=()=>{}, onChangeFunction=()=>{} ,product
               </TableCell>
               <TableCell align="left">
                 <div className="product-in-cart-size">
-                  <div className="wrapper wrapped-product-size">S</div>
+                  <div className="wrapper wrapped-product-size">{product.size}</div>
                 </div>
               </TableCell>
               <TableCell align="left">
