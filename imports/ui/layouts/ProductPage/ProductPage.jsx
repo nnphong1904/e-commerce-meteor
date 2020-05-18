@@ -14,7 +14,14 @@ const ProductPage = ()=>{
       await Meteor.call('fetchProduct',condition,currentPage,(err,result)=>{
         if (!err) {
           setProducts([...result.data]);
-          setNumberOfPage(Math.round(result.dataLength/NUMBER_ITEM_PER_PAGE));
+        
+         
+          if (Math.round(result.dataLength/NUMBER_ITEM_PER_PAGE) === 0){
+           
+          }
+          else{
+            setNumberOfPage(Math.round(result.dataLength/NUMBER_ITEM_PER_PAGE));
+          }
         }
         else {
           console.log(err);
@@ -28,6 +35,9 @@ const ProductPage = ()=>{
         setCurrentPage(nextPage);
       }
     } 
+    const changeNumberOfPages  = (newNumberOfPages)=>{
+      setNumberOfPage(newNumberOfPages);
+    }
 
   useEffect(()=>{
     fetchProduct({});
@@ -38,14 +48,16 @@ const ProductPage = ()=>{
 
       <>
         <div className="page-selector-container">
-          <PageSelector textDisplay={`/${numberOfPage}`} maxValue={numberOfPage} onClickFunction={changeCurrentPage}/>
+          <PageSelector minValue={currentPage} textDisplay={`/${numberOfPage}`} maxValue={numberOfPage} onClickFunction={{changeCurrentPage}}/>
         </div>
         <div className="product-page-container">
-          <ProductFilter fetchProduct={fetchProduct}/>
-            {products.length>0 &&
-              products.map(product => <ProductCard key={product.decId} product={product} />)
-            }
-            {products.length===0 && <div>No Results</div>}
+          <ProductFilter  changeCurrentPage={changeCurrentPage} fetchProduct={fetchProduct}/>
+            <div className="list-of-product-in-page">
+              {products.length>0 &&
+                products.map(product => <ProductCard key={product.decId} product={product} />)
+              }
+              {products.length===0 && <div>No Results</div>}
+            </div>
         </div>
       </> 
   );
