@@ -5,32 +5,46 @@ import {increaseQuantityInCart, decreaseQuantityInCart, removeItemFromCart, clea
 import shortid from 'shortid';
 import './CartPage.css';
 import Cancel from '../../assets/image/cancel.svg';
-
+import Notification from '../../components/Notification/Notification.jsx';
+import { canceledOrder } from '../../../api/method/order.js';
 
 const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
-
   const [myOldOrders, setMyOldOrders] = useState([]);
+  const [orderIdBeingCancelled, setOrderIdBeingCancelled] = useState('');
+  const [showNotificationForConfirmCancelledOrder, setShowNotificationForConfirmCancelledOrder] = useState(false);
   const [addToCartMessageError, setAddToCartMessageError] = useState('');
   const [addToCartMessageSuccess, setAddToCartMessageSuccess] = useState('');
   useEffect(() => {
     if (!currentUser){
       return;
     }
-    
+    console.log('running effect')
     Meteor.call('fetchOrder', currentUser.emails[0].address, (err, docs)=>{
       setMyOldOrders([...docs.data]);
       console.log(docs.data);
     })
   }, [currentUser])
-  
-  const canceledOrder = (e)=>{
-    console.log(e.target.id);
-    const myNewOrdersList = myOldOrders.filter(order => order.orderId !== e.target.id);
+
+  const cancelOrder = (orderId)=>{
+    const myNewOrdersList = myOldOrders.filter(order => order.orderId !== orderId);
     setMyOldOrders([...myNewOrdersList]);
-    Meteor.call('canceledOrder', e.target.id,(err, docs)=>{
-      console.log(docs);
-    })
-    Meteor.call('sendEmailToSeller', {orderId:e.target.id});
+    
+    Meteor.call('canceledOrder', orderId);
+    Meteor.call('sendEmailToSeller', {orderId:orderId});
+  }
+
+  const confirmToCancelledOrderFunction = ()=>{
+    setShowNotificationForConfirmCancelledOrder(false);
+    cancelOrder(orderIdBeingCancelled);
+  }
+  
+
+  const onClickCanceledOrderButton = (e)=>{
+    if (showNotificationForConfirmCancelledOrder === false){
+      setShowNotificationForConfirmCancelledOrder(true);
+      setOrderIdBeingCancelled(e.target.id);
+      return;
+    }
   }
 
   const checkoutOrder = (order)=>{
@@ -46,7 +60,8 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
       setAddToCartMessageError('There is no items in cart');
       setAddToCartMessageSuccess('');
       return;
-    }const orderId = shortid.generate();
+    }
+    const orderId = shortid.generate();
     newOrderObj.userEmail = currentUser.emails[0].address;
     newOrderObj.orderDetails = JSON.stringify(myCart);
     newOrderObj.status = 0;
@@ -78,53 +93,56 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
   }
   
   const content = (
-  <div className="cart-page-container">
-    <div className="cart-page-header">MY BAG</div>
-    <div className="table-container">
-      <ProductsTable onClickFunction={{removeItemFromCart, increaseQuantityInCart, decreaseQuantityInCart}} onChangeFunction={{changeQuantityInCartByTyping}} productList={myCart} />
-    </div>
-    <div className="bill-holder">
-      <div className="bill-holder-header">Total</div>
-      <div className="bill-info">
-        <div className="bill-info-details">
-          <div className="ship-handling">Shipping & Handling: <span className="ship-handling-price">Free</span></div>
-          <div className="total-product">Total product: <span className="total-product-value">{cartSize}</span></div>
-          <div className="subtotal">Subtotal: <span className="subtotal-value">{`$${subtotal}`}</span></div>
-        </div>
-        <button 
-            onClick={(e)=>{
-              checkoutOrder({})
-              }} 
-            className="check-out-btn">Check out</button>
-        <div className="add-to-cart-message">
-          {addToCartMessageError !== '' && <div className="add-to-cart-message-error">{addToCartMessageError}</div>}
-          {addToCartMessageSuccess !== '' && <div className="add-to-cart-message-success">{addToCartMessageSuccess}</div>}
-        </div>   
-       {currentUser && 
-        <div className="my-orders-list">
-            <div className="my-orders-list-header">
-              <div className="orders-list-header-id">Order ID</div>
-              <div className="orders-list-header-status">Status</div>
-              <div className="orders-list-header-status">Cancel</div>
-            </div>
-            <div className="my-orders-list-body">
-              {myOldOrders.map((order, orderIndex)=>{
-                const content = (
-                  <div key={orderIndex} className="order-item-holder">
-                      <div className='my-order-id'>{order.orderId}</div>
-                      <div className='my-order-status'><span>{order.status}</span></div>
-                      <div >
-                          <img onClick={(e)=>canceledOrder(e)} id={order.orderId} className='cancel-order-button' src={Cancel}/>
-                      </div>
-                  </div>
-                );
-                return content;
-              })}
-            </div>
-         </div>  } 
-         </div>
+  <>
+    {showNotificationForConfirmCancelledOrder && <Notification onClickFunction={confirmToCancelledOrderFunction}/>}
+    <div className="cart-page-container">
+      <div className="cart-page-header">MY BAG</div>
+      <div className="table-container">
+        <ProductsTable onClickFunction={{removeItemFromCart, increaseQuantityInCart, decreaseQuantityInCart}} onChangeFunction={{changeQuantityInCartByTyping}} productList={myCart} />
       </div>
-    </div>
+      <div className="bill-holder">
+        <div className="bill-holder-header">Total</div>
+        <div className="bill-info">
+          <div className="bill-info-details">
+            <div className="ship-handling">Shipping & Handling: <span className="ship-handling-price">Free</span></div>
+            <div className="total-product">Total product: <span className="total-product-value">{cartSize}</span></div>
+            <div className="subtotal">Subtotal: <span className="subtotal-value">{`$${subtotal}`}</span></div>
+          </div>
+          <button 
+              onClick={(e)=>{
+                checkoutOrder({})
+                }} 
+              className="check-out-btn">Check out</button>
+          <div className="add-to-cart-message">
+            {addToCartMessageError !== '' && <div className="add-to-cart-message-error">{addToCartMessageError}</div>}
+            {addToCartMessageSuccess !== '' && <div className="add-to-cart-message-success">{addToCartMessageSuccess}</div>}
+          </div>   
+         {currentUser && 
+          <div className="my-orders-list">
+              <div className="my-orders-list-header">
+                <div className="orders-list-header-id">Order ID</div>
+                <div className="orders-list-header-status">Status</div>
+                <div className="orders-list-header-status">Cancel</div>
+              </div>
+              <div className="my-orders-list-body">
+                {myOldOrders.map((order, orderIndex)=>{
+                  const content = (
+                    <div key={orderIndex} className="order-item-holder">
+                        <div className='my-order-id'>{order.orderId}</div>
+                        <div className='my-order-status'><span>{order.status}</span></div>
+                        <div >
+                            <img onClick={(e)=>onClickCanceledOrderButton(e)} id={order.orderId} className='cancel-order-button' src={Cancel}/>
+                        </div>
+                    </div>
+                  );
+                  return content;
+                })}
+              </div>
+           </div>  } 
+           </div>
+        </div>
+      </div>
+  </>
   );
   return content;
 }
