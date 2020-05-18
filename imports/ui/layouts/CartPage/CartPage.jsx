@@ -1,17 +1,38 @@
-import React, { useState }  from 'react';
+import React, { useState, useEffect }  from 'react';
 import ProductsTable from '../../components/ProductsTable/ProductsTable.jsx';
 import { withTracker } from 'meteor/react-meteor-data';
-import { increaseQuantityInCart, decreaseQuantityInCart, removeItemFromCart, clearCart, changeQuantityInCartByTyping} from '../../lib/CartHelperFunction.js';
+import {increaseQuantityInCart, decreaseQuantityInCart, removeItemFromCart, clearCart, changeQuantityInCartByTyping} from '../../lib/CartHelperFunction.js';
 import shortid from 'shortid';
 import './CartPage.css';
-
+import Cancel from '../../assets/image/cancel.svg';
 
 
 const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
 
+  const [myOldOrders, setMyOldOrders] = useState([]);
   const [addToCartMessageError, setAddToCartMessageError] = useState('');
   const [addToCartMessageSuccess, setAddToCartMessageSuccess] = useState('');
-  console.log(addToCartMessageError);
+  useEffect(() => {
+    if (!currentUser){
+      return;
+    }
+    
+    Meteor.call('fetchOrder', currentUser.emails[0].address, (err, docs)=>{
+      setMyOldOrders([...docs.data]);
+      console.log(docs.data);
+    })
+  }, [currentUser])
+  
+  const canceledOrder = (e)=>{
+    console.log(e.target.id);
+    const myNewOrdersList = myOldOrders.filter(order => order.orderId !== e.target.id);
+    setMyOldOrders([...myNewOrdersList]);
+    Meteor.call('canceledOrder', e.target.id,(err, docs)=>{
+      console.log(docs);
+    })
+    Meteor.call('sendEmailToSeller', {orderId:e.target.id});
+  }
+
   const checkoutOrder = (order)=>{
     let newOrderObj = {};
     if (!currentUser){
@@ -78,11 +99,32 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
         <div className="add-to-cart-message">
           {addToCartMessageError !== '' && <div className="add-to-cart-message-error">{addToCartMessageError}</div>}
           {addToCartMessageSuccess !== '' && <div className="add-to-cart-message-success">{addToCartMessageSuccess}</div>}
-        </div>
-              
+        </div>   
+       {currentUser && 
+        <div className="my-orders-list">
+            <div className="my-orders-list-header">
+              <div className="orders-list-header-id">Order ID</div>
+              <div className="orders-list-header-status">Status</div>
+              <div className="orders-list-header-status">Cancel</div>
+            </div>
+            <div className="my-orders-list-body">
+              {myOldOrders.map((order, orderIndex)=>{
+                const content = (
+                  <div key={orderIndex} className="order-item-holder">
+                      <div className='my-order-id'>{order.orderId}</div>
+                      <div className='my-order-status'><span>{order.status}</span></div>
+                      <div >
+                          <img onClick={(e)=>canceledOrder(e)} id={order.orderId} className='cancel-order-button' src={Cancel}/>
+                      </div>
+                  </div>
+                );
+                return content;
+              })}
+            </div>
+         </div>  } 
+         </div>
       </div>
     </div>
-  </div>
   );
   return content;
 }

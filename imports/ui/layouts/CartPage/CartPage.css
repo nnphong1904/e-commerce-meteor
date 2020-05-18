@@ -19,7 +19,7 @@
 }
 .cart-page-container {
 	position: relative;
-	min-height: 50%;
+	min-height: 120%;
 }
 .bill-holder-header {
 	font-size: 14px;
@@ -79,4 +79,39 @@
 }
 .add-to-cart-message-success {
 	color: greenyellow;
+}
+.my-orders-list {
+	position: absolute;
+	right: 0%;
+	width: 90%;
+	background-color: #f9f9f9;
+	padding: 0 5% 0 5%;
+}
+.order-item-holder {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 10px;
+}
+
+.my-orders-list-header {
+	display: flex;
+	justify-content: space-between;
+	margin: 20px 0 20px 0;
+	border-bottom: solid 1px gray;
+	padding-bottom: 10px;
+}
+
+.my-order-status {
+	position: relative;
+}
+.my-order-status {
+	position: absolute;
+	right: 47%;
+}
+.cancel-order-button {
+	-o-object-fit: contain;
+	object-fit: contain;
+	height: 20px;
+	width: 20px;
+	cursor: pointer;
 }
