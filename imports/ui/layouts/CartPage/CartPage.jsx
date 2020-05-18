@@ -1,7 +1,7 @@
 import React, { useState }  from 'react';
 import ProductsTable from '../../components/ProductsTable/ProductsTable.jsx';
 import { withTracker } from 'meteor/react-meteor-data';
-import {increaseQuantityInCart, decreaseQuantityInCart, removeItemFromCart, clearCart, changeQuantityInCartByTyping} from '../../lib/CartHelperFunction.js';
+import { increaseQuantityInCart, decreaseQuantityInCart, removeItemFromCart, clearCart, changeQuantityInCartByTyping} from '../../lib/CartHelperFunction.js';
 import shortid from 'shortid';
 import './CartPage.css';
 
@@ -38,6 +38,19 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
         console.log(docs);
       }
     })
+    const orderDetailsForEmail = myCart.map((item)=>`
+        [ Product name: ${item.name}
+          Product color: ${item.color}
+          Product quantity: ${item.quantity}
+          Product size: ${item.size} ]
+          `)
+    const mailContent = `
+      Order ID: ${orderId};
+      Customer email:${newOrderObj.userEmail}
+      Order details: ${orderDetailsForEmail}
+      Subtotal: ${newOrderObj.subtotal}
+    `;
+    Meteor.call('sendEmailToSeller',{orderId: orderId, orderDetails: mailContent});
     setAddToCartMessageSuccess('You created an order');
     setAddToCartMessageError('');
     clearCart();

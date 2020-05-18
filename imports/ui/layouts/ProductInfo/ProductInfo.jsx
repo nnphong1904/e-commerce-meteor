@@ -36,7 +36,7 @@ const ProductInfo = ({product,  currentUser})=>{
   const [productQuantity, setProductQuantity] = useState(0);
   const [listProductSameBrand, setListProductSameBrand] = useState([]);
   const [productSize, setProductSize] = useState(getDefaultSize(product));
-  const [productColor, setProductColor] = useState();
+  const [productColor, setProductColor] = useState('');
   const [errorMessage, setErrorMessage]  = useState('');
 
   const [reviewTitle, setReviewTitle] = useState('');
