@@ -5,7 +5,7 @@ import Homepage from '../layouts/Homepage/Homepage.jsx';
 import ProductPage from '../layouts/ProductPage/ProductPage.jsx';
 import ProductInfo from '../layouts/ProductInfo/ProductInfo.jsx';
 import CartPage from '../layouts/CartPage/CartPage.jsx';
-
+import AdminPage from '../layouts/AdminPage/AdminPage.jsx';
 FlowRouter.route('/',{
   name:'home',
   action(){
@@ -40,5 +40,12 @@ FlowRouter.route('/cart',{
   name:'info',
   action(){
     mount(({component})=><App component={component}/>,{component: <CartPage/>});
+  }
+})
+
+FlowRouter.route('/admin',{
+  name:'admin',
+  action(){
+    mount(()=><AdminPage/>);
   }
 })
