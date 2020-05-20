@@ -8,10 +8,8 @@ import { withTracker } from 'meteor/react-meteor-data';
 import Avatar from 'react-avatar';
 import { Session } from 'meteor/session'
 const Navbar = (props)=>{
- 
-  //const {myCart} = useContext(CartContext);
-  // const quantity = props.cartSize.reduce((sum, productInCart)=>sum+productInCart.quantity, 0);
-  // console.log(quantity);
+  
+  
   const [userProfile, setUserProfile] =useState({});
   const [whoShouldBuy, setWhoShouldBuy] = useState('');
   const [typeProduct, setTypeProduct] = useState('');
@@ -23,10 +21,13 @@ const Navbar = (props)=>{
   const girlsRef = createRef();
 
   useEffect(() => {
+    
     Meteor.call('getCurrentUser', {}, (err,result)=>{
       if (result.data!==null) 
       {
+        console.log()
         setUserProfile({...result.data.profile});
+        
       }
     })
   }, [props.currentUser]);
@@ -220,6 +221,14 @@ const Navbar = (props)=>{
 }
 
 export default withTracker(()=>{
+  let currentUser = Meteor.user();
+  Meteor.call('isAdmin', currentUser, (err, result)=>{
+    console.log()
+    if (result === true){
+      Meteor.logout();
+    }
+    return;
+  })
   return {
     currentUser: Meteor.user(),
     cartSize: Session.get('myCart').reduce((sumQuantity, productInCart)=>sumQuantity + productInCart.quantity, 0)

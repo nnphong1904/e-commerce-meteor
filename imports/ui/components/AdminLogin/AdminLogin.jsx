@@ -5,27 +5,39 @@ const AdminLogin = ()=>{
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errMessage, setErrMessage] = useState('');
-
+  const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
     const interval = setInterval(() => {
       console.log('interval');
-      if (errMessage === ''){
+     
         setErrMessage('');
-      }
-    }, 1000);
+      
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 
   const loginHandler = (email, password)=>{
-    console.log(Meteor.user())
-    Meteor.loginWithPassword(email, password, (err)=>{
-      if (err){
-        setErrMessage('Your e-mail/password is invalid');
+
+    Meteor.call('isEmailAdmin', email, (err, docs)=>{
+      if (docs === true){
+        setIsAdmin(true);
+        Meteor.loginWithPassword(email, password, (err)=>{
+          if (err){
+            setErrMessage('Your password is invalid');
+          }
+          else {
+            console.log(Meteor.user());
+            Session.set('loginAsAdmin', true);
+          }
+        })
       }
       else {
-        console.log(Meteor.user());
+        setIsAdmin(false);
+        setErrMessage('Your email is invalid')
       }
     })
+    
+    
   }
 
   const onChangeHandler = (e, setState)=>{

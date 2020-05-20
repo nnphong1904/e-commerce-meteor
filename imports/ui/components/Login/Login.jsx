@@ -17,18 +17,38 @@ const LoginForm = (props)=>{
   const onSubmit = (e)=>{
     e.preventDefault();
     console.log({email,password});
-    Meteor.loginWithPassword(email,password,(err)=>{
-     if (err){
-       setErrorMsg('Your e-mail/password is invalid');
-       return;
-     }
-     else {
-       console.log(Meteor.user());
-       props.setDisplayLoginForm(false);
-     }
-    });
-    setEmail('');
-    setPassword('')
+    Meteor.call('isEmailAdmin', email, (err, result)=>{
+      if (result === true){
+        setErrorMsg('Your e-mail is invalid');
+        return;
+      }
+      Meteor.loginWithPassword(email,password,(err)=>{
+        if (err){
+          setErrorMsg('Your e-mail/password is invalid');
+          return;
+        }
+        else {
+          console.log(Meteor.user());
+          props.setDisplayLoginForm(false);
+        }
+       });
+       setEmail('');
+       setPassword('')
+       Session.set('loginAsAdmin', false);
+    })
+    // Meteor.loginWithPassword(email,password,(err)=>{
+    //  if (err){
+    //    setErrorMsg('Your e-mail/password is invalid');
+    //    return;
+    //  }
+    //  else {
+    //    console.log(Meteor.user());
+    //    props.setDisplayLoginForm(false);
+    //  }
+    // });
+    // setEmail('');
+    // setPassword('')
+    // Session.set('loginAsAdmin', false);
   }
 
   const content = (

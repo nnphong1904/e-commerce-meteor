@@ -15,6 +15,12 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
   const [addToCartMessageError, setAddToCartMessageError] = useState('');
   const [addToCartMessageSuccess, setAddToCartMessageSuccess] = useState('');
   useEffect(() => {
+    const interval = setInterval(() => {
+      console.log('interval');
+        setAddToCartMessageError('');
+        setAddToCartMessageSuccess('');
+    }, 3000);
+    
     if (!currentUser){
       return;
     }
@@ -23,6 +29,7 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
       setMyOldOrders([...docs.data]);
       console.log(docs.data);
     })
+    return () => clearInterval(interval);
   }, [currentUser])
 
   const cancelOrder = (orderId)=>{

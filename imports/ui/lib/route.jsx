@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import {mount} from 'react-mounter';
 import {App} from '../App';
+import {Meteor} from 'meteor/meteor';
 import Homepage from '../layouts/Homepage/Homepage.jsx';
 import ProductPage from '../layouts/ProductPage/ProductPage.jsx';
 import ProductInfo from '../layouts/ProductInfo/ProductInfo.jsx';
