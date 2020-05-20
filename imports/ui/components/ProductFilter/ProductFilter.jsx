@@ -31,8 +31,9 @@ const ProductFilter = ({changeCurrentPage, fetchProduct})=>{
 
   const [priceValue1, setPriceValue1] = useState(39);
   const [priceValue2, setPriceValue2] = useState(300);
+  const [didResetPriceFilter, setDidResetPriceFilter] = useState(false);
+  console.log({priceValue1,priceValue2});
 
- 
   const [filterCondition, setFilterCondition] = useState({
     category:'',
     price: {
@@ -49,6 +50,38 @@ const ProductFilter = ({changeCurrentPage, fetchProduct})=>{
       inStored: false
     }
   })
+
+  const turnOffAllFilterUX = ()=>{
+    const sizesFilter = Array.from(filterSizeRef.current.children[0].children);
+    sizesFilter.forEach(children => {
+      if (children.children[0].checked === true){
+        children.children[0].checked = false;
+      }
+    });
+   
+    const colorsFilter = Array.from(filterColorRef.current.children);
+    colorsFilter.forEach(children => {
+      if (children.children[0].checked === true){
+        children.children[0].checked = false;
+      }
+      })
+    const brandsFilter = Array.from(filterBranchRef.current.children);
+    brandsFilter.forEach(children => {
+      if (children.children[1].checked === true){
+        children.children[1].checked = false;
+      }
+    setDidResetPriceFilter(true);
+   //   console.log(children)
+    })
+    const availableFilter = Array.from(filterAvailableRef.current.children);
+    availableFilter.forEach(children => {
+      if (children.children[1].checked === true){
+        children.children[1].checked = false;
+      }
+      
+    })
+    
+  }
 
   const rotateArrowIcon = (ref)=>{
      if (ref.current.style.transform === '' )
@@ -124,9 +157,9 @@ const ProductFilter = ({changeCurrentPage, fetchProduct})=>{
   }
 
   const filterByBranch = (e)=>{
-    changeCurrentPage(1);
-    const selectedBranch = e.target.value.toLowerCase();
    
+    const selectedBranch = e.target.value.toLowerCase();
+    
     let currentFilterCondition = {...filterCondition};
     let currentBranchFilterCondition = [...filterCondition.branch];
     const indexOfSelectedBranch = currentBranchFilterCondition.indexOf(selectedBranch);
@@ -160,7 +193,7 @@ const ProductFilter = ({changeCurrentPage, fetchProduct})=>{
   const filterByPrice = (valuePrice1, valuePrice2)=>{
     let currentFilterCondition ={...filterCondition};
     let newPriceObj = {priceValue1: valuePrice1, priceValue2: valuePrice2, doPriceFilter: true};
-    console.log(newPriceObj);
+    
     // let newPriceObj = {...currentFilterCondition.price, doPriceFilter:true};
     currentFilterCondition = {...currentFilterCondition, price:{...newPriceObj}}
     fetchProduct(currentFilterCondition);
@@ -173,8 +206,25 @@ const ProductFilter = ({changeCurrentPage, fetchProduct})=>{
       <div className="filter-title">Category</div>
         <div className="category-detail">
           <button  onClick={({})=>{
+            setFilterCondition({
+                  category:'',
+                  price: {
+                    doPriceFilter: false,
+                    priceValue1:39,
+                    priceValue2:300
+                  },
+                  color: [],
+                  size:'',
+                  branch:[],
+                  outStockOrInStored:{
+                    doFilterByNumberOfItem: false,
+                    outOffStock: false,
+                    inStored: false
+                  }
+                });
             fetchProduct({});
             unCheckAllCategoryFilter();
+            turnOffAllFilterUX();
             }}>
               <span>All</span> Dresses</button>
         </div>
@@ -339,6 +389,7 @@ const ProductFilter = ({changeCurrentPage, fetchProduct})=>{
           <div ref={filterPriceRef} className="range-slider-container">
             <RangeSelector 
                 onMouseUpFnc={filterByPrice} 
+                resetRangeSelector={{didResetPriceFilter, setDidResetPriceFilter}}
                 value1={priceValue1} 
                 value2={priceValue2} />
           </div>

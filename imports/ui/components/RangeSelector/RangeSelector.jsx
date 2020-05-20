@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import './RangeSelector.css';
 import Slider from '@material-ui/core/Slider';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
@@ -36,13 +36,20 @@ const PrettySlider = withStyles({
 const RangeSelector = (
     {
       value1=0, value2=10, 
-      onMouseUpFnc=()=>{}
+      onMouseUpFnc=()=>{},
+      resetRangeSelector,
     })=>{
+      useEffect(()=>{
+        if (resetRangeSelector.didResetPriceFilter === true){
+          setValue([39,300]);
+          resetRangeSelector.setDidResetPriceFilter(false);
+        }
+      },[resetRangeSelector.didResetPriceFilter]);
+      console.log({value1, value2})
 
       const [value, setValue] = useState([value1, value2]);
 
       const handleChange = (event, newValue) => {
-        
         setValue(newValue);
       };
 
@@ -50,6 +57,7 @@ const RangeSelector = (
   const content = (
     <div className="range-slider-holder">
       <PrettySlider  
+          defaultValue={[39,300]}
           min={39}
           max={300}
           value={value} 
