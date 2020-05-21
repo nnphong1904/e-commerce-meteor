@@ -17,13 +17,12 @@ const AdminLogin = ()=>{
   }, []);
 
   const loginHandler = (email, password)=>{
-
     Meteor.call('isEmailAdmin', email, (err, docs)=>{
       if (docs === true){
         setIsAdmin(true);
         Meteor.loginWithPassword(email, password, (err)=>{
           if (err){
-            setErrMessage('Your password is invalid');
+            setErrMessage('Your email/password is invalid');
           }
           else {
             console.log(Meteor.user());
@@ -33,13 +32,33 @@ const AdminLogin = ()=>{
       }
       else {
         setIsAdmin(false);
-        setErrMessage('Your email is invalid')
+        setErrMessage('Your email/password is invalid')
       }
     })
-    
-    
   }
 
+  const onKeyUpHandler = (e)=>{
+    if (e.keyCode === 13){
+      Meteor.call('isEmailAdmin', email, (err, docs)=>{
+        if (docs === true){
+          setIsAdmin(true);
+          Meteor.loginWithPassword(email, password, (err)=>{
+            if (err){
+              setErrMessage('Your email/password is invalid');
+            }
+            else {
+              console.log(Meteor.user());
+              Session.set('loginAsAdmin', true);
+            }
+          })
+        }
+        else {
+          setIsAdmin(false);
+          setErrMessage('Your email/password is invalid')
+        }
+      })
+    }
+  }
   const onChangeHandler = (e, setState)=>{
     setState(e.target.value);
   }
@@ -62,12 +81,15 @@ const AdminLogin = ()=>{
               <div className="admin-password">
                 <div className="admin-login-input-title">Password</div>
                 <input 
+                  onKeyUp={(e)=>{onKeyUpHandler(e)}}
                   onChange={(e)=>onChangeHandler(e, setPassword)}
                   className="admin-login-input" 
                   placeholder='Enter password' 
                   type="password"/>
               </div>
-              <button onClick={()=>loginHandler(email, password)} className="admin-login-btn">Log in</button>
+              <button 
+                  onClick={()=>loginHandler(email, password)} 
+                  className="admin-login-btn">Log in</button>
           </div>
         </div>
       </div>

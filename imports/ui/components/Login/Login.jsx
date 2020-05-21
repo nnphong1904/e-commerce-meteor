@@ -36,19 +36,6 @@ const LoginForm = (props)=>{
        setPassword('')
        Session.set('loginAsAdmin', false);
     })
-    // Meteor.loginWithPassword(email,password,(err)=>{
-    //  if (err){
-    //    setErrorMsg('Your e-mail/password is invalid');
-    //    return;
-    //  }
-    //  else {
-    //    console.log(Meteor.user());
-    //    props.setDisplayLoginForm(false);
-    //  }
-    // });
-    // setEmail('');
-    // setPassword('')
-    // Session.set('loginAsAdmin', false);
   }
 
   const content = (
