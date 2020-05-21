@@ -4,7 +4,7 @@ import AdminSideBar from '../../components/AdminSidebar/AdminSidebar.jsx';
 import AdminNavbar from '../../components/AdminNavbar/AdminNavbar.jsx';
 import './AdminPage.css';
 import { withTracker } from 'meteor/react-meteor-data';
-const AdminPage = ({currentUser, loginAsAdmin})=>{
+const AdminPage = ({currentUser, loginAsAdmin, component})=>{
   useEffect(()=>{
     console.log(Meteor.user());
     if (Meteor.user() === null || Meteor.user() === undefined){
@@ -24,6 +24,7 @@ const AdminPage = ({currentUser, loginAsAdmin})=>{
           <div className="sidebar-holder"><AdminSideBar/></div>
           <div className="admin-page-content">
            <div className="admin-navbar-holder"><AdminNavbar title='Orders'/></div>
+           {component}
           </div>
         </div>
       }

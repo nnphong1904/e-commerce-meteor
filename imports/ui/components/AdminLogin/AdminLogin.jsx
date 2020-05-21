@@ -48,7 +48,7 @@ const AdminLogin = ()=>{
             }
             else {
               console.log(Meteor.user());
-              Session.set('loginAsAdmin', true);
+              FlowRouter.go('/admin/orders');
             }
           })
         }

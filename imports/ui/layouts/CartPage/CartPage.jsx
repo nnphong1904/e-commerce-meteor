@@ -74,6 +74,7 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
     newOrderObj.status = 0;
     newOrderObj.subtotal = subtotal;
     newOrderObj.orderId = orderId;
+    newOrderObj.createAt = Date.now();
     console.log(newOrderObj);
     Meteor.call('addOrder', newOrderObj,(err, docs)=>{
       if (!err){

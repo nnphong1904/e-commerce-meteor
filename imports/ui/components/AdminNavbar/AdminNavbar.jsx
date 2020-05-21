@@ -7,7 +7,9 @@ import Mail from '../../assets/image/mail.svg';
 import Notify from '../../assets/image/notification.svg';
 import Dropdown from '../../assets/image/dropdown.svg';
 const AdminNavbar = ({currentUser, title=''})=>{
-  
+  const logoutFunction = ()=>{
+    Meteor.logout();
+  }
   const content = (
     <div className="admin-navbar-container">
       <div className="admin-navbar-title">{title}</div>
@@ -18,7 +20,7 @@ const AdminNavbar = ({currentUser, title=''})=>{
           </span>
           <div className="admin-name">{currentUser.profile.name}</div>
           <img id="dropdown-icon" src={Dropdown}/>
-          <div className="logout-admin">Log out</div>
+          <div onClick={logoutFunction} className="logout-admin">Log out</div>
         </div>}
       <img src={Mail} className="icon"/>
       <img src={Notify} className="icon"/>

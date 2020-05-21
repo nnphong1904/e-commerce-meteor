@@ -9,20 +9,21 @@ import ProductLogoOrange from '../../assets/image/products-orange.svg';
 
 const AdminSidebar = (props)=>{
 
-  
+  const navigate = (url)=>{
+    FlowRouter.go(url);
+  }
   const siteSelectorRef = createRef();
   const [site, setSite] = useState('orders');
   useEffect(()=>{
     siteSelectorRef.current.children[0].children[0].checked = true;
-    // siteSelectorRef.current.children[0].children[1].src = CartOrange;
   },[])
 
   const content = (
     <div className="admin-sidebar-container">
         <img className="sidebar-logo" src={Logo} />
         <form ref={siteSelectorRef} className="select-site-container">
-            <AdminSiteSelector onClickFunction={setSite} checkedInitial={true} currentSite={site} title="Orders" checkedLogo={CartOrange} logo={Cart}/>
-            <AdminSiteSelector onClickFunction={setSite} currentSite={site}  title="Products" checkedLogo={ProductLogoOrange} logo={ProductLogo}/>
+            <AdminSiteSelector onClickFunction={{setSite, navigate}} checkedInitial={true} currentSite={site} title="Orders" checkedLogo={CartOrange} logo={Cart}/>
+            <AdminSiteSelector onClickFunction={{setSite, navigate}} currentSite={site}  title="Products" checkedLogo={ProductLogoOrange} logo={ProductLogo}/>
         </form>
     </div>
   );
