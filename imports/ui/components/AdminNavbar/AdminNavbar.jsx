@@ -8,8 +8,8 @@ import Notify from '../../assets/image/notification.svg';
 import Dropdown from '../../assets/image/dropdown.svg';
 const AdminNavbar = ({currentUser, title=''})=>{
   const logoutFunction = ()=>{
-    Meteor.logout();
     FlowRouter.go('/admin');
+    Meteor.logout();
   }
   const content = (
     <div className="admin-navbar-container">
@@ -19,9 +19,9 @@ const AdminNavbar = ({currentUser, title=''})=>{
           <span id="admin-avatar">
             <Avatar name={currentUser.profile.name} size={25} round={true}/>
           </span>
-          <div className="admin-name">{currentUser.profile.name}</div>
+          <button className="admin-name">{currentUser.profile.name}</button>
           <img id="dropdown-icon" src={Dropdown}/>
-          <div onClick={logoutFunction} className="logout-admin">Log out</div>
+          <button onClick={logoutFunction} className="logout-admin">Log out</button>
         </div>}
       <img src={Mail} className="icon"/>
       <img src={Notify} className="icon"/>

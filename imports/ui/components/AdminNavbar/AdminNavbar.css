@@ -41,7 +41,7 @@
 .logout-admin {
 	position: absolute;
 	background: white;
-	top: 9%;
+	top: 8%;
 	right: 13%;
 	text-align: center;
 	font-size: 12px;
@@ -55,9 +55,21 @@
 	border-radius: 5px;
 	display: none;
 	transition: all 0.5s;
+	border: none;
 }
 .logout-admin:hover {
 	background: #ffa15f;
 	color: white;
 	display: block;
+}
+.admin-name {
+	border: none;
+	font-size: 14px;
+	background: none;
+}
+.admin-name:hover ~ .logout-admin {
+	display: block;
+}
+.admin-name:focus {
+	outline: none;
 }

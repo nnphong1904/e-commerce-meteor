@@ -14,7 +14,7 @@ const AdminPage = ({currentUser, loginAsAdmin, component})=>{
         Meteor.logout();
       }
       else{
-        FlowRouter.go('/admin/orders');
+        // FlowRouter.go('/admin/orders');
       }
     })
   },[Meteor.user()]);
