@@ -44,11 +44,45 @@ const useStyles = makeStyles({
 });
 const OrdersTable = ({ordersList})=>{
   const [currentOrdersList, setCurrentOrdersList] = useState([]);
+  const [unSortedOrdersList, setUnSortedOrdersList] = useState([]);
+  const [doSortArray , setDoSortArray] = useState(false);
+
   const updateCurrentOrdersList = (newOrdersList)=>{
     setCurrentOrdersList([...newOrdersList]);
+    setUnSortedOrdersList([...newOrdersList]);
   }
+  console.log(currentOrdersList);
+  const shortOrdersAsPendingOrderFirst = ()=>{
+    console.log('sort')
+    if (doSortArray === false){
+      const newSortedOrders = [...currentOrdersList.sort((order1, order2)=>{
+          if (order1.status === 0 && (order2.status === 1 || order2.status === -1)){
+            return -1;
+          }
+          if ((order1.status === 1 || order1.status === -1) && order2.status === 0){
+            return 1;
+          }
+          if (order1.status === 1 && order2.status === -1){
+            return -1
+          }
+          if (order1.status === -1 && order2.status === 1){
+            return 1;
+          }
+      })];
+      // const newSortedOrders = [...currentOrdersList.sort()];
+      console.log(newSortedOrders);
+      setDoSortArray(true);
+      // setCurrentOrdersList([...unSortedOrdersList]);
+    }
+    else {
+      setDoSortArray(false);
+      setCurrentOrdersList([...unSortedOrdersList]);
+    }
+  }
+
   useEffect(()=>{
       setCurrentOrdersList([...ordersList]);
+      setUnSortedOrdersList([...ordersList])
   }, [ordersList])
   // console.log(ordersList);
   const classes = useStyles();
@@ -63,8 +97,8 @@ const OrdersTable = ({ordersList})=>{
             <StyledTableCell align="left">TOTAL($)</StyledTableCell>
             <StyledTableCell align="left">
               <div className="status-holder">
-                <div>STATUS</div> 
-                <img className="dropdown-btn" src={Dropdown}/>
+                <div onClick={shortOrdersAsPendingOrderFirst}>STATUS</div> 
+                <img onClick={shortOrdersAsPendingOrderFirst} className="dropdown-btn" src={Dropdown}/>
               </div>
             </StyledTableCell>
             <StyledTableCell align="left"></StyledTableCell>
