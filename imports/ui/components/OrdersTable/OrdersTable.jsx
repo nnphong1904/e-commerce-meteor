@@ -6,11 +6,13 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+
 import Paper from '@material-ui/core/Paper';
 import OrderStatus from '../OrderStatus/OrderStatus.jsx';
 import Dropdown from '../../assets/image/dropdown.svg';
 import './OrdersTable.css';
 import ChangeStatusAction from '../ChangeStatusAction/ChangeStatusAction.jsx';
+
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.white,
@@ -88,7 +90,7 @@ const OrdersTable = ({ordersList})=>{
   const classes = useStyles();
   const content = (
     <TableContainer className={classes.tableContainer} component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
+      <Table stickyHeader className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell align="left">ORDER ID</StyledTableCell>

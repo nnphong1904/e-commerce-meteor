@@ -3,3 +3,9 @@
 	margin-top: 50px;
 	height: 80%;
 }
+
+.table-pagination-container {
+	position: absolute;
+	right: 3%;
+	bottom: 5%;
+}
