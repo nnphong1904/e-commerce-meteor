@@ -62,3 +62,10 @@ export const canceledOrder = async (orderId)=>{
   const response = await OrderCollection.remove({orderId: orderId});
   console.log(response);
 }
+
+export const changeOrderStatus = async (orderId, newStatus)=>{
+  const oldOrder = await OrderCollection.findOne({orderId: orderId});
+  OrderCollection.update({orderId: orderId}, {$set: {status: newStatus}}, (err, countEffectedDocs)=>{
+    console.log(countEffectedDocs);
+  })
+}

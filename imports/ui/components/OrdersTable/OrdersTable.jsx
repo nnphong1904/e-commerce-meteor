@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -31,8 +31,11 @@ const StyledTableRow = withStyles((theme) => ({
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 700,
-    boxShadow: 'none'
+    // minWidth: '700',
+    width: '95%',
+    boxShadow: 'none',
+    marginLeft: 'auto',
+    marginRight: 'auto'
   },
   tableContainer: {
     boxShadow: 'none',
@@ -40,8 +43,14 @@ const useStyles = makeStyles({
   }
 });
 const OrdersTable = ({ordersList})=>{
- // console.log(onClickFunction);
-  console.log(ordersList);
+  const [currentOrdersList, setCurrentOrdersList] = useState([]);
+  const updateCurrentOrdersList = (newOrdersList)=>{
+    setCurrentOrdersList([...newOrdersList]);
+  }
+  useEffect(()=>{
+      setCurrentOrdersList([...ordersList]);
+  }, [ordersList])
+  // console.log(ordersList);
   const classes = useStyles();
   const content = (
     <TableContainer className={classes.tableContainer} component={Paper}>
@@ -63,7 +72,7 @@ const OrdersTable = ({ordersList})=>{
         </TableHead>
         <TableBody>
           {
-            ordersList.map((order, orderIndex)=>{
+            currentOrdersList.map((order, orderIndex)=>{
               const content = (
                 <StyledTableRow key={orderIndex}>
                   <StyledTableCell align="left">{order.orderId}</StyledTableCell>
@@ -81,7 +90,7 @@ const OrdersTable = ({ordersList})=>{
                         <button className="change-order-status">ACTION</button>
                         <img className="dropdown-btn change-status-dropdown" src={Dropdown}/>
                         <div className="change-status-action-container">
-                          <ChangeStatusAction/>
+                          <ChangeStatusAction currentOrdersList={currentOrdersList} updateOrdersList={updateCurrentOrdersList} orderIndex={orderIndex} orderId={order.orderId} />
                         </div>
                      </div>
                     </div>
@@ -91,14 +100,6 @@ const OrdersTable = ({ordersList})=>{
               return content;
             })
           }
-          {/* <TableRow>
-              <StyledTableCell align="left">AFBD112</StyledTableCell>
-              <StyledTableCell align="left">{`Today, 8th Aug, 2018`}</StyledTableCell>
-              <StyledTableCell align="left">Collete Stretch Linen Minidress (M) x 1</StyledTableCell>
-              <StyledTableCell align="left">60.00</StyledTableCell>
-              <StyledTableCell align="left"><OrderStatus status={0} /></StyledTableCell>
-              <StyledTableCell align="left"><button className="change-order-status">ACTION</button></StyledTableCell>
-          </TableRow> */}
         </TableBody>
       </Table>
     </TableContainer>

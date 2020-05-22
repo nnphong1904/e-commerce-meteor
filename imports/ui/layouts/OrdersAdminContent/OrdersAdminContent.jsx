@@ -9,6 +9,7 @@ const OrdersAdminContent = ()=>{
           setOrdersList([...result.data]);
       })
   },[])
+
   const content = (
     <div className="orders-admin-table-container">
       <OrdersTable ordersList={ordersList} />

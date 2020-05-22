@@ -33,3 +33,7 @@
 	+ .change-status-action-container {
 	display: block;
 }
+.change-order-status:hover
+	~ .change-status-action-container {
+	display: block;
+}

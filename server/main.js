@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import {addProduct, fetchProduct, fetchProductById} from '../imports/api/method/product'
 import {addUser, getCurrentUser, isEmailAdmin, isAdmin} from '../imports/api/method/user';
-import {fetchAllOrders ,canceledOrder, fetchOrder, addOrder, sendEmailToSeller} from '../imports/api/method/order';
+import {changeOrderStatus ,fetchAllOrders ,canceledOrder, fetchOrder, addOrder, sendEmailToSeller} from '../imports/api/method/order';
 import  UsersCollection  from '../imports/api/user';
 
 
@@ -24,7 +24,8 @@ Meteor.startup(() => {
     addOrder,
     fetchOrder,
     canceledOrder, 
-    fetchAllOrders
+    fetchAllOrders,
+    changeOrderStatus
   })
 });
  
