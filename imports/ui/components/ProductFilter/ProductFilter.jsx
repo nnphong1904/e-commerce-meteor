@@ -111,7 +111,7 @@ const ProductFilter = ({changeCurrentPage, fetchProduct})=>{
   //========== filter logic implementation================
 
   const filterByAvailableItem = (e)=>{
-
+    changeCurrentPage(1);
     const filterByNumberOfItemCondition = e.target.value;
     console.log(e.target.value);
     let currentFilterCondition = {...filterCondition};
@@ -125,7 +125,7 @@ const ProductFilter = ({changeCurrentPage, fetchProduct})=>{
     fetchProduct(currentFilterCondition);
   }
   const filterByColor = (e)=>{
-    
+    changeCurrentPage(1);
     const selectedColor = e.target.value;
     let currentFilterCondition = {...filterCondition};
     let currentColorFilterCondition = [...currentFilterCondition.color];
@@ -142,6 +142,7 @@ const ProductFilter = ({changeCurrentPage, fetchProduct})=>{
   }
   
   const filterBySize = (e)=>{
+    changeCurrentPage(1);
     const size = e.target.value;
     let currentFilterCondition = {...filterCondition};
     if (currentFilterCondition.size !== size)
@@ -157,7 +158,7 @@ const ProductFilter = ({changeCurrentPage, fetchProduct})=>{
   }
 
   const filterByBranch = (e)=>{
-   
+    changeCurrentPage(1);
     const selectedBranch = e.target.value.toLowerCase();
     
     let currentFilterCondition = {...filterCondition};
@@ -176,6 +177,7 @@ const ProductFilter = ({changeCurrentPage, fetchProduct})=>{
   }
  
   const filterByCategory = (e)=>{
+    changeCurrentPage(1);
     const selectedCategory = e.target.value.toLowerCase();
     let currentFilterCondition = {...filterCondition};
     
@@ -191,6 +193,7 @@ const ProductFilter = ({changeCurrentPage, fetchProduct})=>{
   } //need to check again
 
   const filterByPrice = (valuePrice1, valuePrice2)=>{
+    changeCurrentPage(1);
     let currentFilterCondition ={...filterCondition};
     let newPriceObj = {priceValue1: valuePrice1, priceValue2: valuePrice2, doPriceFilter: true};
     
