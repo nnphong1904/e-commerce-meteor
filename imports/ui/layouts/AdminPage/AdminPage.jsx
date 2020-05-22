@@ -6,13 +6,15 @@ import './AdminPage.css';
 import { withTracker } from 'meteor/react-meteor-data';
 const AdminPage = ({currentUser, loginAsAdmin, component})=>{
   useEffect(()=>{
-    console.log(Meteor.user());
     if (Meteor.user() === null || Meteor.user() === undefined){
       return;
     }
     Meteor.call('isAdmin', Meteor.user(),(err, result)=>{
       if (result === false){
         Meteor.logout();
+      }
+      else{
+        FlowRouter.go('/admin/orders');
       }
     })
   },[Meteor.user()]);

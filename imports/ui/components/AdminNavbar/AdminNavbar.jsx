@@ -9,6 +9,7 @@ import Dropdown from '../../assets/image/dropdown.svg';
 const AdminNavbar = ({currentUser, title=''})=>{
   const logoutFunction = ()=>{
     Meteor.logout();
+    FlowRouter.go('/admin');
   }
   const content = (
     <div className="admin-navbar-container">

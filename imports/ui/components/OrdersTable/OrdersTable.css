@@ -11,4 +11,25 @@
 	line-height: 1;
 	letter-spacing: normal;
 	color: #3d3d3f;
+	background: none;
+}
+.change-order-status:focus {
+	outline: none;
+}
+.action-holder {
+	display: flex;
+}
+.dropdown-btn {
+	cursor: pointer;
+}
+.change-status-action-container {
+	position: relative;
+	display: none;
+}
+.change-status-action-container:hover {
+	display: block;
+}
+.change-status-dropdown:hover
+	+ .change-status-action-container {
+	display: block;
 }
