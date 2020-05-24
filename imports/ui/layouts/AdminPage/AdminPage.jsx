@@ -4,6 +4,14 @@ import AdminSideBar from '../../components/AdminSidebar/AdminSidebar.jsx';
 import AdminNavbar from '../../components/AdminNavbar/AdminNavbar.jsx';
 import './AdminPage.css';
 import { withTracker } from 'meteor/react-meteor-data';
+Meteor.call('isAdmin', Meteor.user(), (err, result)=>{
+  if (result === true){
+    Session.set('loginAsAdmin', true);
+  }
+  else{
+    Session.set('loginAsAdmin', true);
+  }
+})
 const AdminPage = ({currentUser, loginAsAdmin, component})=>{
   // console.log(document.referrer)
   useEffect(()=>{
