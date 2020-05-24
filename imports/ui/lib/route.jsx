@@ -58,3 +58,10 @@ FlowRouter.route('/admin/orders', {
     mount(({component})=><AdminPage component={component} />, {component: <OrderAdminContent/>})
   }
 })
+
+FlowRouter.route('/admin/products', {
+  name:'admin product',
+  action(){
+    mount(({component})=><AdminPage component={component} />, {component: <div>THIS IS PRODUCT</div>})
+  }
+})

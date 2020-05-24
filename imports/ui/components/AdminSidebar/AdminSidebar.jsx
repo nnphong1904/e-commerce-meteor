@@ -15,7 +15,7 @@ const AdminSidebar = (props)=>{
   const siteSelectorRef = createRef();
   const [site, setSite] = useState('orders');
   useEffect(()=>{
-    siteSelectorRef.current.children[0].children[0].checked = true;
+  //  console.log(Array.from(siteSelectorRef).filter(child => child.children[0].value.toLowerCase() === site))
   },[])
 
   const content = (
