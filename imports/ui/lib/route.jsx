@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
 import {mount} from 'react-mounter';
 import {App} from '../App';
+import {Meteor} from 'meteor/meteor';
 import Homepage from '../layouts/Homepage/Homepage.jsx';
 import ProductPage from '../layouts/ProductPage/ProductPage.jsx';
 import ProductInfo from '../layouts/ProductInfo/ProductInfo.jsx';
 import CartPage from '../layouts/CartPage/CartPage.jsx';
-
+import AdminPage from '../layouts/AdminPage/AdminPage.jsx';
+import OrderAdminContent from '../layouts/OrdersAdminContent/OrdersAdminContent.jsx';
 FlowRouter.route('/',{
   name:'home',
   action(){
@@ -40,5 +42,19 @@ FlowRouter.route('/cart',{
   name:'info',
   action(){
     mount(({component})=><App component={component}/>,{component: <CartPage/>});
+  }
+})
+
+FlowRouter.route('/admin',{
+  name:'admin',
+  action(){
+    mount(()=><AdminPage/>);
+  }
+})
+
+FlowRouter.route('/admin/orders', {
+  name:'admin orders',
+  action(){
+    mount(({component})=><AdminPage component={component} />, {component: <OrderAdminContent/>})
   }
 })

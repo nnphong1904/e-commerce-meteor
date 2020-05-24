@@ -4,6 +4,7 @@ export const COLOR_LIST = [
   {colorId:'neon-blue', colorValue:'neon blue'}, 
   {colorId:'payne-grey', colorValue: `payne's grey`}, 
   {colorId:'white-smoke', colorValue:'white smoke'},
+  {colorId:'atomic-tangerine', colorValue:'atomic tangerine'}
 ];
 export const SIZE_LIST = ['S', 'M', 'L'];
 export const BRAND_NAME = new Map([

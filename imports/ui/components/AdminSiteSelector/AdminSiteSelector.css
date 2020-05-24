@@ -1,0 +1,10 @@
+.admin-site-selector-holder {
+	display: flex;
+	margin-left: 20px;
+	margin-bottom: 36px;
+	cursor: pointer;
+}
+
+.site-logo {
+	margin-right: 20px;
+}

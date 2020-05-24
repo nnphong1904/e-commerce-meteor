@@ -5,7 +5,7 @@ import PageSelector from '../../components/PageSelector/PageSelector.jsx';
 import './ProductPage.css';
 const NUMBER_ITEM_PER_PAGE = 20;
 const ProductPage = ()=>{
- 
+  
   const [currentPage, setCurrentPage] = useState(1);
   const [products, setProducts] = useState([]);
   const [numberOfPage, setNumberOfPage] = useState(1)

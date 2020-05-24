@@ -1,0 +1,19 @@
+.admin-page-container {
+	width: 100%;
+	min-height: 100%;
+	font-family: Montserrat;
+	background-color: #ededed;
+}
+
+.admin-page-content-container {
+	display: flex;
+}
+.sidebar-holder {
+	flex-basis: 16%;
+	padding-left: 30px;
+}
+.admin-page-content {
+	flex-basis: 84%;
+	padding-left: 30px;
+	min-width: 100%;
+}

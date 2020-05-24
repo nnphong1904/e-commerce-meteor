@@ -60,9 +60,11 @@ const RegisterForm = (props)=>{
         console.log('start register');
             Meteor.call('addUser',newUser,(err,result)=>{
               console.log(result);
+              
           if (!err){
             if (result.success === true) 
             {
+              
               Meteor.loginWithPassword(email, password,(err)=>{
                 props.setDisplayRegisterForm(false)
               })

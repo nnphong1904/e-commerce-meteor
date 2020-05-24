@@ -10,7 +10,11 @@ const OrderSchema = new SimpleSchema({
         },
   status: Number,
   subtotal: Number,
-  orderId: String
+  orderId: String,
+  createAt:{
+    type: Date, 
+    required: [true, 'when order made']
+  }
  
 })
 

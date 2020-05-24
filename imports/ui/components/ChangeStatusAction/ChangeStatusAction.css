@@ -1,0 +1,30 @@
+.complete-icon {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background-color: #82bf11;
+	margin-right: 12px;
+}
+.canceled-icon {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background-color: #f05d62;
+	margin-right: 12px;
+}
+.mark-status-holder {
+	display: flex;
+	align-items: center;
+}
+.change-order-status-holder {
+	position: absolute;
+	min-width: 150px;
+	left: -160px;
+	top: 20px;
+	border-radius: 2px;
+	box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.08);
+	background-color: white;
+	padding: 14px 10px;
+	z-index: 2;
+	cursor: pointer;
+}
