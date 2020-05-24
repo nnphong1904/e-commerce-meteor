@@ -4,18 +4,12 @@ import AdminSideBar from '../../components/AdminSidebar/AdminSidebar.jsx';
 import AdminNavbar from '../../components/AdminNavbar/AdminNavbar.jsx';
 import './AdminPage.css';
 import { withTracker } from 'meteor/react-meteor-data';
-Meteor.call('isAdmin', Meteor.user(), (err, result)=>{
-  if (result === true){
-    Session.set('loginAsAdmin', true);
-  }
-  else{
-    Session.set('loginAsAdmin', true);
-  }
-})
+
+
+
 const AdminPage = ({currentUser, loginAsAdmin, component})=>{
-  // console.log(document.referrer)
+  // console.log(Session.get('loginAsAdmin'));
   useEffect(()=>{
-    console.log( window.history.state.path.split('/')[2] === '')
     if (Meteor.user() === undefined){
       return;
     }
@@ -24,6 +18,7 @@ const AdminPage = ({currentUser, loginAsAdmin, component})=>{
       FlowRouter.go('/admin');
       return;
     }
+    if (Session.get('loginAsAdmin') === undefined){}
     Meteor.call('isAdmin', Meteor.user(),(err, result)=>{
       if (result === false){
         Meteor.logout();
@@ -32,6 +27,7 @@ const AdminPage = ({currentUser, loginAsAdmin, component})=>{
        if (window.history.state.path.split('/')[2] === '' || window.history.state.path.split('/')[2] === undefined){
          FlowRouter.go('/admin/orders');
        }
+   
       }
     })
   }
@@ -40,7 +36,7 @@ const AdminPage = ({currentUser, loginAsAdmin, component})=>{
   const content = (
     <div className="admin-page-container">
      
-      {currentUser !== null  && Session.get('loginAsAdmin') === true && 
+      {currentUser !== null && loginAsAdmin === true && 
         <div className="admin-page-content-container">
           <div className="sidebar-holder"><AdminSideBar/></div>
           <div className="admin-page-content">
@@ -56,8 +52,16 @@ const AdminPage = ({currentUser, loginAsAdmin, component})=>{
   return content;
 }
 export default withTracker(()=>{
-  
+  Meteor.call('isAdmin', Meteor.user(), (err, result)=>{
+    if (result === true){
+      Session.set('loginAsAdmin', true);
+    }
+    else{
+      Session.set('loginAsAdmin', false);
+    }
+  })
   return {
-    currentUser: Meteor.user()
+    currentUser: Meteor.user(),
+    loginAsAdmin: Session.get('loginAsAdmin')
   }
 })(AdminPage);

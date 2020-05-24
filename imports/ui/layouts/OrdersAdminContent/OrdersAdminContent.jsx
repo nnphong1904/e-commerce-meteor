@@ -7,11 +7,10 @@ import './OrdersAdminContent.css';
 
 
 const OrdersAdminContent = ({orders})=>{
-  console.log(orders);
+  // console.log(orders);
   const [ordersList, setOrdersList] = useState([]);
   const fetchOrders = async ()=>{
    await Meteor.call('fetchAllOrders', {}, (err, result)=>{
-     console.log('aaa')
       if (!err){
        setOrdersList([...result.data]);
       }     
@@ -21,10 +20,14 @@ const OrdersAdminContent = ({orders})=>{
    })
   }
   useEffect(()=>{
-     fetchOrders();
-    return ()=>{
-      console.log(' unmount order content');
-    };
+    Meteor.call('fetchAllOrders', {}, (err, result)=>{
+      if (!err){
+       setOrdersList([...result.data]);
+      }     
+      else {
+        console.log(err);
+      }     
+   });
   },[])
 
   const content = (

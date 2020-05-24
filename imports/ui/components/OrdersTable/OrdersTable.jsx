@@ -53,7 +53,7 @@ const OrdersTable = ({ordersList})=>{
     setCurrentOrdersList([...newOrdersList]);
     setUnSortedOrdersList([...newOrdersList]);
   }
-  console.log(currentOrdersList);
+  // console.log(currentOrdersList);
   const shortOrdersAsPendingOrderFirst = ()=>{
     console.log('sort')
     if (doSortArray === false){
@@ -72,7 +72,6 @@ const OrdersTable = ({ordersList})=>{
           }
       })];
       // const newSortedOrders = [...currentOrdersList.sort()];
-      console.log(newSortedOrders);
       setDoSortArray(true);
       // setCurrentOrdersList([...unSortedOrdersList]);
     }

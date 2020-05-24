@@ -26,6 +26,9 @@ export const isEmailAdmin = async (email='')=>{
   return Roles.userIsInRole(matchUserId, 'admin');
 }
 export const isAdmin = async (user)=>{
+  if (user === undefined){
+    return false;
+  }
   return  Roles.userIsInRole(user, 'admin')
 }
 export const getCurrentUser = async ()=>{

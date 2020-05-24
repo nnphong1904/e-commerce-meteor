@@ -8,15 +8,12 @@ import CartOrange from '../../assets/image/orders-orange.svg';
 import ProductLogoOrange from '../../assets/image/products-orange.svg';
 
 const AdminSidebar = (props)=>{
-
+  
   const navigate = (url)=>{
     FlowRouter.go(url);
   }
   const siteSelectorRef = createRef();
-  const [site, setSite] = useState('orders');
-  useEffect(()=>{
-  //  console.log(Array.from(siteSelectorRef).filter(child => child.children[0].value.toLowerCase() === site))
-  },[])
+  const [site, setSite] = useState(window.history.state.path.split('/')[2]);
 
   const content = (
     <div className="admin-sidebar-container">
@@ -30,4 +27,4 @@ const AdminSidebar = (props)=>{
   return content;
 }
 
-export default AdminSidebar;
+export default React.memo(AdminSidebar);
