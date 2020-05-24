@@ -8,6 +8,7 @@ import ProductInfo from '../layouts/ProductInfo/ProductInfo.jsx';
 import CartPage from '../layouts/CartPage/CartPage.jsx';
 import AdminPage from '../layouts/AdminPage/AdminPage.jsx';
 import OrderAdminContent from '../layouts/OrdersAdminContent/OrdersAdminContent.jsx';
+import ProductAdminContent from '../layouts/ProductAdminContent/ProductAdminContent.jsx';
 FlowRouter.route('/',{
   name:'home',
   action(){
@@ -62,6 +63,6 @@ FlowRouter.route('/admin/orders', {
 FlowRouter.route('/admin/products', {
   name:'admin product',
   action(){
-    mount(({component})=><AdminPage component={component} />, {component: <div>THIS IS PRODUCT</div>})
+    mount(({component})=><AdminPage component={component} />, {component: <ProductAdminContent/>})
   }
 })
