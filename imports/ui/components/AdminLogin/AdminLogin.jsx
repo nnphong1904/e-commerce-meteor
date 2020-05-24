@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createRef } from 'react';
 import { Meteor } from 'meteor/meteor';
 import './AdminLogin.css';
 const AdminLogin = ()=>{
@@ -6,7 +6,9 @@ const AdminLogin = ()=>{
   const [password, setPassword] = useState('');
   const [errMessage, setErrMessage] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
+  const refOverlay = createRef();
   useEffect(() => {
+    refOverlay.current.style['background-image'] = `url('static/imports/ui/assets/image/background-admin-login.jpg')`;
     const interval = setInterval(() => {
       console.log('interval');
      
@@ -48,6 +50,7 @@ const AdminLogin = ()=>{
             }
             else {
               console.log(Meteor.user());
+              Session.set('loginAsAdmin', true);
               FlowRouter.go('/admin/orders');
             }
           })
@@ -65,7 +68,7 @@ const AdminLogin = ()=>{
 
   const content = (
     <div className="admin-login-form-container">
-      <div className="admin-login-form-overlay">
+      <div ref={refOverlay} className="admin-login-form-overlay">
         <div className="admin-login-form-holder">
           <div className="admin-login-form-header">Log in</div>
           <div className="admin-login-form-err-message">{errMessage}</div>
