@@ -82,7 +82,7 @@ const AddProductForm = ({product={}})=>{
             className="category-input-field" 
             name="brand"
             options={options}
-            placeholder="category"
+            placeholder="brand"
             id="category-input"
             />
           </label> 
@@ -104,14 +104,14 @@ const AddProductForm = ({product={}})=>{
             className="category-input-field" 
             name="sizesName"
             options={options}
-            placeholder="category"
+            placeholder="sizes"
             id="category-input"
             isMulti
             />
           </label> 
         </div>
       </div>
-      <div className="product-field-holder input-text-field-holder">
+      <div className="product-field-holder">
         <span className="field-title ">QUANTITY</span>
         <div className='field-container'>
           <QuantityInput/>

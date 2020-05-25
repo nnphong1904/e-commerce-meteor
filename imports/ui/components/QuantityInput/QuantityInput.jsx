@@ -1,5 +1,6 @@
 import React, { useState, createRef } from 'react';
 import './QuantityInput.css';
+import CircleCancel from '../../assets/image/circle-cancel.svg';
 
 const QuantityInput = ()=>{
   const [listQuantity, setListQuantity] = useState([])
@@ -7,6 +8,16 @@ const QuantityInput = ()=>{
 
   const quantityListRef = createRef();
   const inputQuantityRef = createRef();
+
+  const cancelQuantityValue = (e)=>{
+    const quantityValueIndex = parseInt(e.target.id);
+    const newListQuantity = [...listQuantity.slice(0, quantityValueIndex),
+                             ...listQuantity.slice(quantityValueIndex+1)
+                            ];
+    setListQuantity([...newListQuantity]);
+                          
+  }
+
   const onChangeHandler = (e)=>{
     setInputtingValue(e.target.value);
   }
@@ -22,23 +33,29 @@ const QuantityInput = ()=>{
   }
   const content = (
     <label className="quantity-input-holder">
-      <div ref={quantityListRef} className="quantity-value-holder" >
-        {
-          listQuantity.map((quantity, quantityIndex)=>{
-          const content = (<div key={quantityIndex} className="quantity-value">{`${quantity}`}</div>);
-          return content;
-          })
-        }
-     </div>
       <input 
         ref={inputQuantityRef}
         onKeyUp={e=>{
           onKeyUpHandler(e);
         }}
-        type="text" 
+        type="number" 
         className="quantity-input" 
         onChange={(e)=>{onChangeHandler(e)}} 
         value={inputtingValue}/>
+      <div ref={quantityListRef} className="quantity-value-holder" >
+        {
+          listQuantity.map((quantity, quantityIndex)=>{
+          const content = (
+            <div key={quantityIndex} className="quantity-value">
+              <span>{`${quantity}`}</span>
+              <img onClick={e=>{cancelQuantityValue(e)}} id={quantityIndex} className="circle-cancel-icon" src={CircleCancel}/>
+            </div>
+            );
+          return content;
+          })
+        }
+     </div>
+      
     </label>
   );
   return content;
