@@ -6,10 +6,11 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-
+import ProductAdminAction from '../ProductAdminAction/ProductAdminAction.jsx';
 import Paper from '@material-ui/core/Paper';
 import ProductProfile from '../ProductProfile/ProductProfile.jsx';
 import Dropdown from '../../assets/image/dropdown.svg';
+import './ProductsTableAdmin.css';
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.white,
@@ -47,7 +48,10 @@ const useStyles = makeStyles({
   }
 });
 const ProductsTableAdmin = ({productsList=[]})=>{
-  console.log(productsList)
+  const [currentProductsList, setCurrentProductsList] = useState([]);
+  useEffect(()=>{
+    setCurrentProductsList([...productsList]);
+  }, [productsList])
   const classes = useStyles();
   const content = (
     <TableContainer className={classes.tableContainer} component={Paper}>
@@ -63,7 +67,7 @@ const ProductsTableAdmin = ({productsList=[]})=>{
         </TableHead>
         <TableBody>
           {
-            productsList.map((product, productIndex)=>{
+            currentProductsList.map((product, productIndex)=>{
               const content = (
                 <StyledTableRow key={productIndex} align="left">
                   <StyledTableCell align="left">
@@ -83,8 +87,11 @@ const ProductsTableAdmin = ({productsList=[]})=>{
                   <StyledTableCell className={classes.noPadding}  align="center">
                     <div className="action-container">
                       <div className="action-holder">
-                          <button className="change-order-status">ACTION</button>
-                          <img className="dropdown-btn change-status-dropdown" src={Dropdown}/>
+                          <button className="product-action-btn">ACTION</button>
+                          <img className="dropdown-btn product-action-dropdown" src={Dropdown}/>
+                          <div className="product-admin-action-container">
+                             <ProductAdminAction currentList={currentProductsList} updateProductsList={setCurrentProductsList} productIndex={productIndex} productId={product._id._str}/>
+                          </div>
                       </div>
                       </div>
                   </StyledTableCell>

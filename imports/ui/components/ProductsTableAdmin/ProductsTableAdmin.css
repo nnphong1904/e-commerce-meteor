@@ -1,0 +1,29 @@
+.product-admin-action-container {
+	position: absolute;
+	left: -5px;
+	top: 20px;
+	width: 115px;
+	border-radius: 2px;
+	box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.08);
+	background-color: white;
+	padding: 5px 0 5px 0;
+	display: none;
+}
+.action-container {
+	position: relative;
+}
+.product-action-btn:hover
+	~ .product-admin-action-container {
+	display: block;
+}
+.product-action-dropdown:hover
+	~ .product-admin-action-container {
+	display: block;
+}
+.product-action-btn {
+	border: none;
+	background: none;
+}
+.product-admin-action-container:hover {
+	display: block;
+}

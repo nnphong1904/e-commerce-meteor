@@ -40,3 +40,6 @@ export const getCurrentUser = async ()=>{
     return {success: false, err: err};
   }
 }
+export const getHashedToken = ()=>{
+  return Meteor.user().services.resume.loginTokens[0].hashedToken;
+}

@@ -4,17 +4,11 @@ import './ProductAdminContent.css';
 const ProductAdminContent = ()=>{
   const fetchProduct = async (condition, currentPageForFetching=1)=>{
      
-    await Meteor.call('fetchProduct',condition,currentPageForFetching,10,(err,result)=>{
+    await Meteor.call('fetchProduct',condition,currentPageForFetching,6,(err,result)=>{
       console.log(result.data);
       if (!err) {
         setProducts([...result.data]);
        
-        // if (Math.round(result.dataLength/NUMBER_ITEM_PER_PAGE) === 0){
-        //   setNumberOfPage(1);
-        // }
-        // else{
-        //   setNumberOfPage(Math.round(result.dataLength/NUMBER_ITEM_PER_PAGE));
-        // }
       }
       else {
         console.log(err);
