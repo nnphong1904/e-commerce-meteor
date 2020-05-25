@@ -91,3 +91,36 @@
 .category-input-field {
 	width: 87.4%;
 }
+.submit-form-btn {
+	width: 180px;
+	height: 48px;
+	border-radius: 2px;
+	background-color: #ffa15f;
+	font-size: 14px;
+	font-weight: 600;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.71;
+	letter-spacing: normal;
+	color: white;
+}
+.turn-off-form {
+	width: 180px;
+	height: 48px;
+	border-radius: 2px;
+	border: solid 1px #ededed;
+	background-color: white;
+	font-size: 14px;
+	font-weight: 600;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.71;
+	letter-spacing: normal;
+	color: #ffa15f;
+	margin-right: 20px;
+}
+.form-btn {
+	display: flex;
+	justify-content: flex-end;
+	width: 72.5%;
+}

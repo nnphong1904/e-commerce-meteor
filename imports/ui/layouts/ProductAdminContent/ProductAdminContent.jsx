@@ -3,6 +3,7 @@ import ProductTableAdmin from '../../components/ProductsTableAdmin/ProductsTable
 import './ProductAdminContent.css';
 import PlusIcon from '../../assets/image/plus-white.svg';
 import AddProductForm from '../../components/AddProductForm/AddProductForm.jsx';
+import AddProduct from '../../components/AddProduct/AddProduct.jsx';
 const ProductAdminContent = ()=>{
   const fetchProduct = async (condition, currentPageForFetching=1)=>{
     await Meteor.call('fetchProduct',condition,currentPageForFetching,6,(err,result)=>{
@@ -30,7 +31,7 @@ const ProductAdminContent = ()=>{
   
   const content = (
     <>{
-        showAddProductForm === true && <AddProductForm/>
+        showAddProductForm === true && <AddProduct turnOffForm={setShowAddProductFrom}/>
       }
       {showAddProductForm === false && <div className="products-admin-table-container">
         <button onClick={showFormForAddProduct} className="add-new-product-admin">

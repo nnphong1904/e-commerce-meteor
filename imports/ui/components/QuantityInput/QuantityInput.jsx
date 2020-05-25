@@ -2,7 +2,7 @@ import React, { useState, createRef } from 'react';
 import './QuantityInput.css';
 import CircleCancel from '../../assets/image/circle-cancel.svg';
 
-const QuantityInput = ()=>{
+const QuantityInput = ({updateQuantityList = ()=>{}})=>{
   const [listQuantity, setListQuantity] = useState([])
   const [inputtingValue, setInputtingValue] = useState('');
 
@@ -15,6 +15,7 @@ const QuantityInput = ()=>{
                              ...listQuantity.slice(quantityValueIndex+1)
                             ];
     setListQuantity([...newListQuantity]);
+    updateQuantityList([...newListQuantity]);
                           
   }
 
@@ -24,7 +25,11 @@ const QuantityInput = ()=>{
 
   const onKeyUpHandler = (e)=>{
     if (e.keyCode === 13){
+      if (e.target.value === ''){
+        return;
+      }
       setListQuantity([...listQuantity, inputtingValue]);
+      updateQuantityList([...listQuantity, inputtingValue])
       setInputtingValue('');
       console.log(quantityListRef.current.offsetWidth);
       inputQuantityRef.current.style['padding-left'] = quantityListRef.current.offsetWidth + 44;
