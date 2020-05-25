@@ -1,0 +1,93 @@
+.image-preview {
+	width: 180px;
+	height: 270px;
+	/* border: solid 1px #ededed; */
+}
+.image-preview-holder {
+	width: 180px;
+	height: 270px;
+	border: solid 1px #ededed;
+	background: rgba(255, 255, 255, 0.5);
+	position: relative;
+	cursor: pointer;
+}
+.product-field-holder {
+	display: flex;
+	align-items: center;
+	margin-left: 10%;
+	margin-bottom: 30px;
+}
+.field-title {
+	font-size: 12px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.17;
+	letter-spacing: normal;
+	text-align: right;
+	color: #202124;
+	margin-right: 25px;
+	width: 80px;
+}
+.input-image-file {
+	display: none;
+}
+.add-circle-icon {
+	width: 24px;
+	height: 24px;
+	-o-object-fit: contain;
+	object-fit: contain;
+}
+.add-image-notify {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+.add-image-notify span {
+	font-size: 12px;
+	font-weight: 500;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.83;
+	letter-spacing: normal;
+	color: #acacac;
+}
+.cancel-image {
+	position: absolute;
+	right: 8px;
+	top: 8px;
+	z-index: 2;
+	cursor: pointer;
+}
+.image-field {
+	position: relative;
+	z-index: 0;
+	width: 180px;
+	height: 270px;
+}
+.field-container {
+	position: relative;
+	width: 70%;
+}
+.add-product-form {
+	margin-top: 50px;
+}
+.input-text-field {
+	width: 780px;
+	height: 40px;
+	border-radius: 2px;
+	border: solid 1px #ededed;
+	background-color: white;
+	padding-left: 10px;
+}
+
+.input-text-field:focus {
+	outline: none;
+}
+.category-input-field {
+	width: 87.5%;
+}

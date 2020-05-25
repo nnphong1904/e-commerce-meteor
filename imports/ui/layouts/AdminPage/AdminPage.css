@@ -7,6 +7,7 @@
 
 .admin-page-content-container {
 	display: flex;
+	height: 100vh;
 }
 .sidebar-holder {
 	flex-basis: 16%;
@@ -16,4 +17,5 @@
 	flex-basis: 84%;
 	padding-left: 30px;
 	min-width: 100%;
+	margin-bottom: 80px;
 }
