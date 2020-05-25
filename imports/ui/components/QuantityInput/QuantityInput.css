@@ -1,0 +1,26 @@
+.quantity-input {
+	width: 780px;
+	height: 40px;
+	border-radius: 2px;
+	border: solid 1px #ededed;
+	background-color: white;
+	padding-left: 10px;
+}
+.quantity-input-holder {
+	position: relative;
+}
+.quantity-value {
+	font-size: 12px;
+	padding: 5px 7px 5px 7px;
+	border-radius: 4px;
+	background-color: #f6f6f6;
+	text-align: center;
+
+	margin-left: 10px;
+}
+.quantity-value-holder {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	display: flex;
+}

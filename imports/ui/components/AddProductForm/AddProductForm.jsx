@@ -3,6 +3,7 @@ import './AddProductForm.css';
 import AddCircle from '../../assets/image/add-circle.svg';
 import CancelImage from '../../assets/image/cancel-image.svg';
 import Select from 'react-select'
+import QuantityInput from '../QuantityInput/QuantityInput.jsx';
 const options = [
   { value: 'chocolate', label: 'Chocolate' },
   { value: 'strawberry', label: 'Strawberry' },
@@ -92,6 +93,42 @@ const AddProductForm = ({product={}})=>{
         <div className='field-container'>
           <label>
             <input className="input-text-field" type='text' name='price'/>
+          </label> 
+        </div>
+      </div>
+      <div className="product-field-holder">
+        <span className="field-title ">SIZES</span>
+        <div className='field-container'>
+          <label className='category-input-field'>
+           <Select
+            className="category-input-field" 
+            name="sizesName"
+            options={options}
+            placeholder="category"
+            id="category-input"
+            isMulti
+            />
+          </label> 
+        </div>
+      </div>
+      <div className="product-field-holder input-text-field-holder">
+        <span className="field-title ">QUANTITY</span>
+        <div className='field-container'>
+          <QuantityInput/>
+        </div>
+      </div>
+      <div className="product-field-holder">
+        <span className="field-title ">COLOR</span>
+        <div className='field-container'>
+          <label className='category-input-field'>
+           <Select
+            className="category-input-field" 
+            name="color"
+            options={options}
+            placeholder="category"
+            id="category-input"
+            isMulti
+            />
           </label> 
         </div>
       </div>

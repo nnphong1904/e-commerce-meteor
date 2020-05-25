@@ -7,7 +7,7 @@
 
 .admin-page-content-container {
 	display: flex;
-	height: 100vh;
+	height: 100%;
 }
 .sidebar-holder {
 	flex-basis: 16%;
