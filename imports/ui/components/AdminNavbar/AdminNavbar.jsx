@@ -6,11 +6,18 @@ import { withTracker } from 'meteor/react-meteor-data';
 import Mail from '../../assets/image/mail.svg';
 import Notify from '../../assets/image/notification.svg';
 import Dropdown from '../../assets/image/dropdown.svg';
-const AdminNavbar = ({currentUser, title=''})=>{
+const AdminNavbar = ({currentUser})=>{
   const logoutFunction = ()=>{
     FlowRouter.go('/admin');
     Meteor.logout();
   }
+  const [title, setTitle] = useState('Orders');
+  useEffect(()=>{
+    if (window.history.state.path.split('/')[2])
+    {
+      setTitle(window.history.state.path.split('/')[2].charAt(0).toUpperCase() + window.history.state.path.split('/')[2].slice(1));
+    }
+  }, [])
   const content = (
     <div className="admin-navbar-container">
       <div className="admin-navbar-title">{title}</div>

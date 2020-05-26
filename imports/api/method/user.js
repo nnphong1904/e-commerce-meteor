@@ -26,6 +26,9 @@ export const isEmailAdmin = async (email='')=>{
   return Roles.userIsInRole(matchUserId, 'admin');
 }
 export const isAdmin = async (user)=>{
+  if (user === undefined){
+    return false;
+  }
   return  Roles.userIsInRole(user, 'admin')
 }
 export const getCurrentUser = async ()=>{
@@ -36,4 +39,7 @@ export const getCurrentUser = async ()=>{
   catch(err){
     return {success: false, err: err};
   }
+}
+export const getHashedToken = ()=>{
+  return Meteor.user().services.resume.loginTokens[0].hashedToken;
 }

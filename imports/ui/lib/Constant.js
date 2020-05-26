@@ -12,7 +12,7 @@ export const BRAND_NAME = new Map([
   ['zara','Zara'],
   ['pull&bear','Pull&bear'],
   ['dior','Dior'],
-  ['chanel','chanel']
+  ['chanel','Chanel']
 ]);
 export const MONTH = [
   'Jan', 'Feb', 'Mar', 
@@ -20,3 +20,12 @@ export const MONTH = [
   'Jul', 'Aug', 'Sep', 
   'Oct', 'Nov', 'Dec'
 ];
+export const CATEGORY = new Map([
+  [`rompers/jumpsuits`,`Rompers/Jumpsuits`],
+  [`casual dresses`, `Casual dresses`],
+  [`going out dresses`, `Going out dresses`],
+  [`party/ocassion dresses`, `Party/Ocassion dresses`],
+  [`mini dresses`, `Mini dresses`],
+  [`maxi/midi dresses`, `Maxi/Midi dresses`],
+  [`sets`,`Sets`]
+])

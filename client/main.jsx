@@ -5,7 +5,18 @@ import { App } from '/imports/ui/App';
 import { Session } from 'meteor/session';
 import '../imports/ui/lib/route';
 Session.set('myCart', []);
-Session.set('loginAsAdmin', false);
+console.log('start')
+// if (window.history.state !== null){
+//   if (window.history.state.path.split('/')[1] === 'admin'){
+//     Session.set('loginAsAdmin', true);
+//   }
+//   else {
+//     Session.set('loginAsAdmin', false);
+//   }
+// }
+// else {
+//   Session.set('loginAsAdmin', true);
+// }
 // Meteor.startup(() => {
 //   render(<App/>, document.getElementById('react-root'));
 // });

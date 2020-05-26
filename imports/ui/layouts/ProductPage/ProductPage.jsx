@@ -20,7 +20,7 @@ const ProductPage = ()=>{
             setNumberOfPage(1);
           }
           else{
-            setNumberOfPage(Math.round(result.dataLength/NUMBER_ITEM_PER_PAGE));
+            setNumberOfPage(Math.round(result.dataLength/NUMBER_ITEM_PER_PAGE)+1);
           }
         }
         else {
@@ -28,8 +28,11 @@ const ProductPage = ()=>{
         }
       })
     }
+    const resetCurrentPageValueWithoutFetchingData = ()=>{
+      setCurrentPage(1);
+    }
     const changeCurrentPage = (nextPage)=>{
-      console.log(nextPage);
+      
       if (nextPage >= 1 && nextPage <= numberOfPage)
       {
         setCurrentPage(nextPage);
@@ -41,7 +44,7 @@ const ProductPage = ()=>{
               setNumberOfPage(1);
             }
             else{
-              setNumberOfPage(Math.round(result.dataLength/NUMBER_ITEM_PER_PAGE));
+              setNumberOfPage(Math.round(result.dataLength/NUMBER_ITEM_PER_PAGE)+1);
             }
           }
           else {
@@ -64,7 +67,10 @@ const ProductPage = ()=>{
           <PageSelector currentPage={currentPage} minValue={currentPage} textDisplay={`/${numberOfPage}`} maxValue={numberOfPage} onClickFunction={changeCurrentPage}/>
         </div>
         <div className="product-page-container">
-          <ProductFilter  changeCurrentPage={changeCurrentPage} fetchProduct={fetchProduct}/>
+          <ProductFilter
+              resetCurrentPageValue={resetCurrentPageValueWithoutFetchingData}
+              changeCurrentPage={changeCurrentPage} 
+              fetchProduct={fetchProduct}/>
             <div className="list-of-product-in-page">
               {products.length>0 &&
                 products.map(product => <ProductCard key={product.decId} product={product} />)
