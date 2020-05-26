@@ -13,7 +13,7 @@ const BRAND_NAME_LIST = [...BRAND_NAME.values()];
 
               
 
-const ProductFilter = ({changeCurrentPage, fetchProduct})=>{
+const ProductFilter = ({changeCurrentPage, fetchProduct, resetCurrentPageValue})=>{
 
   const filterSizeRef = createRef();
   const filterPriceRef = createRef();
@@ -111,7 +111,7 @@ const ProductFilter = ({changeCurrentPage, fetchProduct})=>{
   //========== filter logic implementation================
 
   const filterByAvailableItem = (e)=>{
-    changeCurrentPage(1);
+    // changeCurrentPage(1);
     const filterByNumberOfItemCondition = e.target.value;
     console.log(e.target.value);
     let currentFilterCondition = {...filterCondition};
@@ -122,10 +122,11 @@ const ProductFilter = ({changeCurrentPage, fetchProduct})=>{
       currentFilterCondition.outStockOrInStored.outOffStock = !currentFilterCondition.outStockOrInStored.outOffStock;
     }
     currentFilterCondition.outStockOrInStored.doFilterByNumberOfItem = true;
+    resetCurrentPageValue();
     fetchProduct(currentFilterCondition);
   }
   const filterByColor = (e)=>{
-    changeCurrentPage(1);
+    // changeCurrentPage(1);
     const selectedColor = e.target.value;
     let currentFilterCondition = {...filterCondition};
     let currentColorFilterCondition = [...currentFilterCondition.color];
@@ -137,12 +138,13 @@ const ProductFilter = ({changeCurrentPage, fetchProduct})=>{
       currentColorFilterCondition = [...currentColorFilterCondition.slice(0,indexOfSelectedColor), ...currentColorFilterCondition.slice(indexOfSelectedColor+1)];
     }
     currentFilterCondition = {...currentFilterCondition, color: [...currentColorFilterCondition]};
+    resetCurrentPageValue();
     fetchProduct(currentFilterCondition);
     setFilterCondition(currentFilterCondition);
   }
   
   const filterBySize = (e)=>{
-    changeCurrentPage(1);
+    // changeCurrentPage(1);
     const size = e.target.value;
     let currentFilterCondition = {...filterCondition};
     if (currentFilterCondition.size !== size)
@@ -153,12 +155,13 @@ const ProductFilter = ({changeCurrentPage, fetchProduct})=>{
       currentFilterCondition = {...currentFilterCondition, size:''};
       e.target.checked = false;
     }
+    resetCurrentPageValue();
     fetchProduct(currentFilterCondition);
     setFilterCondition({...currentFilterCondition})
   }
 
   const filterByBranch = (e)=>{
-    changeCurrentPage(1);
+    // changeCurrentPage(1);
     const selectedBranch = e.target.value.toLowerCase();
     
     let currentFilterCondition = {...filterCondition};
@@ -171,13 +174,12 @@ const ProductFilter = ({changeCurrentPage, fetchProduct})=>{
       currentBranchFilterCondition = [...currentBranchFilterCondition.slice(0, indexOfSelectedBranch), ...currentBranchFilterCondition.slice(indexOfSelectedBranch+1)];
     } 
     currentFilterCondition = {...currentFilterCondition, branch: [...currentBranchFilterCondition]};
-    console.log(currentFilterCondition);
+    resetCurrentPageValue();
     fetchProduct(currentFilterCondition);
     setFilterCondition(currentFilterCondition);
   }
  
   const filterByCategory = (e)=>{
-    changeCurrentPage(1);
     const selectedCategory = e.target.value.toLowerCase();
     let currentFilterCondition = {...filterCondition};
     
@@ -188,17 +190,21 @@ const ProductFilter = ({changeCurrentPage, fetchProduct})=>{
       e.target.checked = false;
       currentFilterCondition.category='';
     }
+
+    resetCurrentPageValue();
     fetchProduct(currentFilterCondition);
     setFilterCondition({...currentFilterCondition});
+    
   } //need to check again
 
   const filterByPrice = (valuePrice1, valuePrice2)=>{
-    changeCurrentPage(1);
+    // changeCurrentPage(1);
     let currentFilterCondition ={...filterCondition};
     let newPriceObj = {priceValue1: valuePrice1, priceValue2: valuePrice2, doPriceFilter: true};
     
     // let newPriceObj = {...currentFilterCondition.price, doPriceFilter:true};
     currentFilterCondition = {...currentFilterCondition, price:{...newPriceObj}}
+    resetCurrentPageValue();
     fetchProduct(currentFilterCondition);
 
   }
