@@ -21,7 +21,6 @@ const AddProduct = ({turnOffForm = ()=>{}})=>{
       return ;
     }
     if (sizesName.map(size=>size.value).length !== quantity.length){
-      console.log('err1');
       setNotifyMessage('You have not input quantity for each sizes');
       setHasError(true);
       return;

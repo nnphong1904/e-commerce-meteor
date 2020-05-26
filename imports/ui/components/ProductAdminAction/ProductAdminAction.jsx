@@ -3,7 +3,7 @@ import './ProductAdminAction.css';
 import Edit from '../../assets/image/edit.svg';
 import Remove from '../../assets/image/remove.svg';
 import axios from 'axios';
-const ProductAdminAction = ({updateProductsList=()=>{}, currentList=[], productIndex=0 ,productId=''})=>{
+const ProductAdminAction = ({updateProductsList=()=>{}, turnOnEditForm = ()=>{} ,currentList=[], productIndex=0 ,productId=''})=>{
   const removeProduct = (id, index)=>{
     const newProductsList = [...currentList.slice(0, index),
                              ...currentList.slice(index+1)  
@@ -29,8 +29,9 @@ const ProductAdminAction = ({updateProductsList=()=>{}, currentList=[], productI
   const content = (
     <div className="product-admin-action-holder">
        <div 
-            onClick={()=>{
-              // removeProduct(productId, productIndex);
+            onClick={(e)=>{
+              turnOnEditForm(true);
+              Session.set('editedProductId', productId);
             }}
             id={productId} className="product-action">
          <img className="product-action-icon" src={Edit}/>

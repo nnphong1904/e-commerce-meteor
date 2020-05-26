@@ -47,7 +47,7 @@ const useStyles = makeStyles({
     paddingRight: 0
   }
 });
-const ProductsTableAdmin = ({productsList=[]})=>{
+const ProductsTableAdmin = ({turnOnEditProductForm, productsList=[]})=>{
   const [currentProductsList, setCurrentProductsList] = useState([]);
   useEffect(()=>{
     setCurrentProductsList([...productsList]);
@@ -90,7 +90,7 @@ const ProductsTableAdmin = ({productsList=[]})=>{
                           <button className="product-action-btn">ACTION</button>
                           <img className="dropdown-btn product-action-dropdown" src={Dropdown}/>
                           <div className="product-admin-action-container">
-                             <ProductAdminAction currentList={currentProductsList} updateProductsList={setCurrentProductsList} productIndex={productIndex} productId={product._id._str}/>
+                             <ProductAdminAction turnOnEditForm={turnOnEditProductForm}  currentList={currentProductsList} updateProductsList={setCurrentProductsList} productIndex={productIndex} productId={product._id._str}/>
                           </div>
                       </div>
                       </div>

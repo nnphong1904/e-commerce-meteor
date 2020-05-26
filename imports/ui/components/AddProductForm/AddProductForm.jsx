@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AddProductForm.css';
 import AddCircle from '../../assets/image/add-circle.svg';
 import CancelImage from '../../assets/image/cancel-image.svg';
 import Select from 'react-select'
 import QuantityInput from '../QuantityInput/QuantityInput.jsx';
 import classNames from 'classnames';
+import { withTracker } from 'meteor/react-meteor-data';
 import {CATEGORY, BRAND_NAME, SIZE_LIST, COLOR_LIST} from '../../lib/Constant.js';
 
 
@@ -41,7 +42,8 @@ const categoryOption = [
   {value: `sets`, label: CATEGORY.get(`sets`)},
 ];
 
-const AddProductForm = ({product={}, hasError=false ,onSubmitHandler= ()=>{}, message='' ,turnOffForm=()=>{}})=>{
+const AddProductForm = ({product={}, isDisabled=false ,hasError=false ,onSubmitHandler= ()=>{}, message='' ,turnOffForm=()=>{}})=>{
+ 
   const [file, setFile] = useState('');
   const [imagePreviewUrl, setImagePreviewUrl] = useState('');
   const [name, setName] = useState('');
@@ -51,7 +53,26 @@ const AddProductForm = ({product={}, hasError=false ,onSubmitHandler= ()=>{}, me
   const [sizesQuantity, setSizesQuantity] = useState([]);
   const [color, setColor] = useState('');
   const [brand, setBrand] = useState();
-  const onChangeHandler = (e, setState)=>{
+  useEffect(()=>{
+    if (Object.entries(product).length !== 0){
+     
+      setImagePreviewUrl(product.avt);
+      onChangeHandler(null, setName, product.name);
+      onChangeHandler(null, setPrice, product.price);
+      setCategory({value: product.category, label: CATEGORY.get(product.category)});
+      setBrand({value: product.branch, label: BRAND_NAME.get(product.branch)});
+      setColor({value: product.color, label: product.color});
+      setSizesName(product.sizes.map(size =>{return {value: size.size, label: size.size}}));
+     
+    }
+
+  }, [product])
+  
+  const onChangeHandler = (e, setState, newValue = '')=>{
+    if (newValue !== ''){
+      setState(newValue);
+      return;
+    }
     setState(e.target.value);
   }
   // console.log(category);
@@ -84,9 +105,9 @@ const AddProductForm = ({product={}, hasError=false ,onSubmitHandler= ()=>{}, me
           <span className="field-title ">PHOTOS</span>
           <div>
             <div className="field-container">
-            {imagePreviewUrl !=='' && <img onClick={cancelImage} className="cancel-image" src={CancelImage}/>}
+            {imagePreviewUrl !=='' && isDisabled === false && <img onClick={cancelImage} className="cancel-image" src={CancelImage}/>}
               <label className="image-field">  
-                <input className="input-image-file" type='file' name='avt' onChange={(e)=>{handleImageChange(e)}} />
+                <input disabled={isDisabled} className="input-image-file" type='file' name='avt' onChange={(e)=>{handleImageChange(e)}} />
                 <div className="image-preview-holder">
                   <img className="image-preview" alt='' src={imagePreviewUrl}/>
                   {imagePreviewUrl === '' && <div className="add-image-notify">
@@ -102,7 +123,7 @@ const AddProductForm = ({product={}, hasError=false ,onSubmitHandler= ()=>{}, me
           <span className="field-title ">NAME</span>
           <div className='field-container'>
             <label>
-              <input value={name} onChange={e=>{onChangeHandler(e, setName)}} className="input-text-field" type='text' name='name'/>
+              <input disabled={isDisabled} value={name} onChange={e=>{onChangeHandler(e, setName)}} className="input-text-field" type='text' name='name'/>
             </label> 
           </div>
         </div>
@@ -111,6 +132,7 @@ const AddProductForm = ({product={}, hasError=false ,onSubmitHandler= ()=>{}, me
           <div className='field-container'>
             <label className='category-input-field'>
              <Select
+              isDisabled={isDisabled}
               value={category}
               onChange={setCategory}
               className="category-input-field" 
@@ -127,6 +149,7 @@ const AddProductForm = ({product={}, hasError=false ,onSubmitHandler= ()=>{}, me
           <div className='field-container'>
             <label className='category-input-field'>
              <Select
+              isDisabled={isDisabled}
               value={brand}
               onChange={setBrand}
               className="category-input-field" 
@@ -142,7 +165,7 @@ const AddProductForm = ({product={}, hasError=false ,onSubmitHandler= ()=>{}, me
           <span className="field-title ">{`PRICE($)`}</span>
           <div className='field-container'>
             <label>
-              <input value={price} onChange={(e)=>onChangeHandler(e, setPrice)} className="input-text-field" type='text' name='price'/>
+              <input disabled={isDisabled} value={price} onChange={(e)=>onChangeHandler(e, setPrice)} className="input-text-field" type='text' name='price'/>
             </label> 
           </div>
         </div>
@@ -151,6 +174,7 @@ const AddProductForm = ({product={}, hasError=false ,onSubmitHandler= ()=>{}, me
           <div className='field-container'>
             <label className='category-input-field'>
              <Select
+               
               value={sizesName}
               onChange={setSizesName}
               className="category-input-field" 
@@ -174,6 +198,7 @@ const AddProductForm = ({product={}, hasError=false ,onSubmitHandler= ()=>{}, me
           <div className='field-container'>
             <label className='category-input-field'>
              <Select
+              isDisabled={isDisabled}
               value={color}
               onChange={setColor}
               className="category-input-field" 
@@ -202,4 +227,9 @@ const AddProductForm = ({product={}, hasError=false ,onSubmitHandler= ()=>{}, me
 
   return content;
 }
+// export default withTracker(()=>{
+//   return {
+//     product: Session.get('editedProduct')
+//   }
+// })(AddProductForm);
 export default AddProductForm;
