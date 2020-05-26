@@ -11,9 +11,12 @@ const AdminNavbar = ({currentUser})=>{
     FlowRouter.go('/admin');
     Meteor.logout();
   }
-  const [title, setTitle] = useState('orders');
+  const [title, setTitle] = useState('Orders');
   useEffect(()=>{
-    setTitle(window.history.state.path.split('/')[2].charAt(0).toUpperCase() + window.history.state.path.split('/')[2].slice(1));
+    if (window.history.state.path.split('/')[2])
+    {
+      setTitle(window.history.state.path.split('/')[2].charAt(0).toUpperCase() + window.history.state.path.split('/')[2].slice(1));
+    }
   }, [])
   const content = (
     <div className="admin-navbar-container">
