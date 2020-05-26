@@ -1,14 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import AddProductForm from '../AddProductForm/AddProductForm.jsx';
 import axios from 'axios';
 const AddProduct = ({turnOffForm = ()=>{}})=>{
+  const [notifyMessage, setNotifyMessage] = useState('');
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(()=>{
+    const notifyIntervalId = setInterval(()=>{
+       setNotifyMessage('');
+    },4000)
+    return ()=>{
+      clearInterval(notifyIntervalId);
+    }
+  }, [])
+
   const addProduct = (file, name, category, brand, price, sizesName, quantity, color)=>{
     if (!file || name === '' || price === '' || !category || !brand || !sizesName || !quantity || !color){
-      console.log('error');
+      setNotifyMessage('Missing some fields');
+      setHasError(true);
       return ;
     }
     if (sizesName.map(size=>size.value).length !== quantity.length){
-      console.log('error1');
+      console.log('err1');
+      setNotifyMessage('You have not input quantity for each sizes');
+      setHasError(true);
       return;
     }
     
@@ -30,7 +45,14 @@ const AddProduct = ({turnOffForm = ()=>{}})=>{
         }
       })
       .then(res=>{
-        console.log(res);
+        if (res.status === 201){
+          setNotifyMessage('Add new product success');
+          setHasError(false);
+        }
+        else {
+          setNotifyMessage('Add new product failed');
+          setHasError(true);
+        }
       })
     });
    
@@ -38,7 +60,7 @@ const AddProduct = ({turnOffForm = ()=>{}})=>{
   }
   const content = (
     <div>
-      <AddProductForm onSubmitHandler={addProduct} turnOffForm={turnOffForm}/>
+      <AddProductForm onSubmitHandler={addProduct} hasError={hasError} message={notifyMessage} turnOffForm={turnOffForm}/>
     </div>
   );
   return content;

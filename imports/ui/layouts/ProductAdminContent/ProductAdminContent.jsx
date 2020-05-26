@@ -19,7 +19,7 @@ const ProductAdminContent = ()=>{
   }
 
   const [products, setProducts] = useState([]);
-  const [showAddProductForm, setShowAddProductFrom] = useState(true);
+  const [showAddProductForm, setShowAddProductFrom] = useState(false);
 
   const showFormForAddProduct = ()=>{
     setShowAddProductFrom(true);

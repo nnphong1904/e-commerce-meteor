@@ -4,6 +4,7 @@ import AddCircle from '../../assets/image/add-circle.svg';
 import CancelImage from '../../assets/image/cancel-image.svg';
 import Select from 'react-select'
 import QuantityInput from '../QuantityInput/QuantityInput.jsx';
+import classNames from 'classnames';
 import {CATEGORY, BRAND_NAME, SIZE_LIST, COLOR_LIST} from '../../lib/Constant.js';
 
 
@@ -40,7 +41,7 @@ const categoryOption = [
   {value: `sets`, label: CATEGORY.get(`sets`)},
 ];
 
-const AddProductForm = ({product={}, onSubmitHandler= ()=>{}, turnOffForm=()=>{}})=>{
+const AddProductForm = ({product={}, hasError=false ,onSubmitHandler= ()=>{}, message='' ,turnOffForm=()=>{}})=>{
   const [file, setFile] = useState('');
   const [imagePreviewUrl, setImagePreviewUrl] = useState('');
   const [name, setName] = useState('');
@@ -73,7 +74,12 @@ const AddProductForm = ({product={}, onSubmitHandler= ()=>{}, turnOffForm=()=>{}
   // console.log(file);
   const content = (
     <>
-      <form className="add-product-form" encType="multipart/form-data">
+      <form
+          onSubmit={(e)=>{
+            e.preventDefault();
+          }}
+         className="add-product-form" 
+         encType="multipart/form-data">
         <div className='product-field-holder'>
           <span className="field-title ">PHOTOS</span>
           <div>
@@ -179,11 +185,18 @@ const AddProductForm = ({product={}, onSubmitHandler= ()=>{}, turnOffForm=()=>{}
             </label> 
           </div>
         </div>
+       
       </form>
-      <div className="form-btn">
-          <button onClick={()=>{turnOffForm(false)}} className="turn-off-form">Cancel</button>
-          <input onClick={()=>{onSubmitHandler(file, name, category, brand, price, sizesName, sizesQuantity, color)}} className="submit-form-btn" type="submit" />
+      <div className="form-btn">       
+          <input onClick={()=>{
+             onSubmitHandler(file, name, category, brand, price, sizesName, sizesQuantity, color)
+          }} className="submit-form-btn" type="submit" />
       </div>
+      <button onClick={()=>{turnOffForm(false)}} className="turn-off-form">Cancel</button>
+      <div className={
+          classNames("notify-for-submit-form", 
+                   {'error-notify':hasError === true}, 
+                   {'success-notify': hasError === false})}>{message}</div>
     </>
   );
 
