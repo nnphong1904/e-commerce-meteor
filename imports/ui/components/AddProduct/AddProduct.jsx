@@ -6,12 +6,15 @@ const AddProduct = ({turnOffForm = ()=>{}})=>{
   const [hasError, setHasError] = useState(false);
 
   useEffect(()=>{
-    const notifyIntervalId = setInterval(()=>{
-       setNotifyMessage('');
-    },4000)
-    return ()=>{
-      clearInterval(notifyIntervalId);
-    }
+    // const notifyIntervalId = setInterval(()=>{
+    //   if (notifyMessage !== '') 
+    //     {
+    //       setNotifyMessage('');
+    //     }
+    // },4000)
+    // return ()=>{
+    //   clearInterval(notifyIntervalId);
+    // }
   }, [])
 
   const addProduct = (file, name, category, brand, price, sizesName, quantity, color)=>{
@@ -47,10 +50,19 @@ const AddProduct = ({turnOffForm = ()=>{}})=>{
         if (res.status === 201){
           setNotifyMessage('Add new product success');
           setHasError(false);
+          const timeoutId = setTimeout(()=>{
+            setNotifyMessage('');
+            clearTimeout(timeoutId);
+          }, 3000)
         }
         else {
           setNotifyMessage('Add new product failed');
           setHasError(true);
+          const timeoutId = setTimeout(()=>{
+            setNotifyMessage('');
+            setHasError(false);
+            clearTimeout(timeoutId);
+          }, 3000)
         }
       })
     });
