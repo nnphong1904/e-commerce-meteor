@@ -24,6 +24,7 @@
 	height: 20px;
 	-o-object-fit: contain;
 	object-fit: contain;
+	margin-right: 11%;
 }
 .search-box {
 	width: 181px;

@@ -7,6 +7,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 
 
+
 const AdminPage = ({currentUser, loginAsAdmin, component})=>{
   // console.log(Session.get('loginAsAdmin'));
   console.log('admin page');
@@ -43,6 +44,7 @@ const AdminPage = ({currentUser, loginAsAdmin, component})=>{
           <div className="admin-page-content">
            <div className="admin-navbar-holder"><AdminNavbar title='Orders'/></div>
            {component}
+
           </div>
         </div>
       }

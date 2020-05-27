@@ -11,6 +11,8 @@ import Paper from '@material-ui/core/Paper';
 import ProductProfile from '../ProductProfile/ProductProfile.jsx';
 import Dropdown from '../../assets/image/dropdown.svg';
 import './ProductsTableAdmin.css';
+import { TableFooter } from '@material-ui/core';
+import PageSelector from '../PageSelector/PageSelector.jsx';
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.white,
@@ -22,6 +24,7 @@ const StyledTableCell = withStyles((theme) => ({
     width: 600,
     paddingRight: 50
   },
+ 
 }))(TableCell);
 const StyledTableRow = withStyles((theme) => ({
   root: {
@@ -45,12 +48,32 @@ const useStyles = makeStyles({
   },
   noPadding: {
     paddingRight: 0
+  },
+  paginationFooter: {
+  }
+  ,
+  firstColumn: {
+    width: '30%'
   }
 });
 const ProductsTableAdmin = ({turnOnEditProductForm, productsList=[]})=>{
   const [currentProductsList, setCurrentProductsList] = useState([]);
+  const [numberOfPage, setNumberOfPage] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const updateCurrentPage = (newPage)=>{
+    if (newPage >=1 && newPage <=numberOfPage){
+      setCurrentPage(newPage);
+      setCurrentProductsList([...productsList.slice((newPage - 1)*6, (newPage - 1)*6+6)]);
+    }
+  }
   useEffect(()=>{
-    setCurrentProductsList([...productsList]);
+    setCurrentProductsList([...productsList.slice(0,6)]);
+    if (productsList.length%6 === 0){
+      setNumberOfPage(productsList.length/6);
+    }
+    else {
+      setNumberOfPage(parseInt(productsList.length/6)+1);
+    }
   }, [productsList])
   const classes = useStyles();
   const content = (
@@ -58,7 +81,7 @@ const ProductsTableAdmin = ({turnOnEditProductForm, productsList=[]})=>{
       <Table stickyHeader className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell align="left">PRODUCTS</StyledTableCell>
+            <StyledTableCell className={classes.firstColumn} align="left">PRODUCTS</StyledTableCell>
             <StyledTableCell align="left">SOLD</StyledTableCell>
             <StyledTableCell align="left">DATE ADDED</StyledTableCell>
             <StyledTableCell align="left">PROFIT($)</StyledTableCell>
@@ -98,10 +121,26 @@ const ProductsTableAdmin = ({turnOnEditProductForm, productsList=[]})=>{
                   
                 </StyledTableRow>
               );
-              return content;P
+              return content;
             })
           }
         </TableBody>
+        <TableFooter>
+          <TableRow>
+          <StyledTableCell></StyledTableCell>
+          <StyledTableCell></StyledTableCell>
+          <StyledTableCell></StyledTableCell>
+          <StyledTableCell></StyledTableCell>
+          <StyledTableCell className={classes.noPadding}  align="center">
+            <div className="action-container pagination-table-holder">
+              <div className="action-holder">
+                <PageSelector onClickFunction={updateCurrentPage} currentPage={currentPage} textDisplay={` /${numberOfPage}`}/>
+              </div>
+            </div>
+          </StyledTableCell>
+               
+          </TableRow>
+        </TableFooter>
       </Table>
     </TableContainer>
 

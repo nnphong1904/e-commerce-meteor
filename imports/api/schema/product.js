@@ -22,6 +22,10 @@ const ProductSchema = new SimpleSchema({
   },
   'availableSize.$.noItems':{
     type: String
+  },
+  'sold': {
+    type: Number,
+    required: true
   }
  
 })

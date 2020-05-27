@@ -3,8 +3,8 @@ import Arrow from '../../assets/image/arrow.svg'
 import './PageSelector.css';
 const PageSelector = ({currentPage=1, textDisplay='', minValue=1, maxValue=100, onClickFunction = ()=>{}})=>{
   
-  // const [innerCurrentPage, setInnerCurrentPage] = useState(1);
- 
+  const [innerCurrentPage, setInnerCurrentPage] = useState(1);
+  
   const onClickLeftButton = ()=>{
     if (innerCurrentPage > minValue)
     {
@@ -18,6 +18,11 @@ const PageSelector = ({currentPage=1, textDisplay='', minValue=1, maxValue=100, 
     }
   }
   const onChangeHandler = (e)=>{
+    if (e.target.value === ''){
+      // setInnerCurrentPage(1);
+      onClickFunction(1);
+    }
+    setInnerCurrentPage(parseInt(e.target.value));
     onClickFunction(parseInt(e.target.value));
   }
   const content = (
@@ -26,6 +31,7 @@ const PageSelector = ({currentPage=1, textDisplay='', minValue=1, maxValue=100, 
         onClick = {
           (e)=>{
             //onClickLeftButton();
+            setInnerCurrentPage(old => old-1);
             onClickFunction(currentPage-1);
           }
         }
@@ -39,7 +45,7 @@ const PageSelector = ({currentPage=1, textDisplay='', minValue=1, maxValue=100, 
             }
           }
           className="input-value" 
-          value={currentPage} 
+          value={innerCurrentPage} 
           type="number"/>
         <span className="display-text">{textDisplay}</span>
       </div>
@@ -47,6 +53,7 @@ const PageSelector = ({currentPage=1, textDisplay='', minValue=1, maxValue=100, 
         onClick={
           (e)=>{
          //  onClickRightValue();
+            setInnerCurrentPage(old => old+1);
             onClickFunction(currentPage+1);
           }
         }

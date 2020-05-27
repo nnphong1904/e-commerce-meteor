@@ -27,3 +27,7 @@
 .product-admin-action-container:hover {
 	display: block;
 }
+.pagination-table-holder {
+	margin-top: 15px;
+	color: black;
+}

@@ -15,21 +15,22 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
   const [addToCartMessageError, setAddToCartMessageError] = useState('');
   const [addToCartMessageSuccess, setAddToCartMessageSuccess] = useState('');
   useEffect(() => {
-    const interval = setInterval(() => {
-      console.log('interval');
-        setAddToCartMessageError('');
-        setAddToCartMessageSuccess('');
-    }, 3000);
+    // const timeout = setTimeout(() => {
+    //   console.log('interval');
+    //     setAddToCartMessageError('');
+    //     setAddToCartMessageSuccess('');
+    //     clearTimeout(timeout);
+    // }, 3000);
     
     if (!currentUser){
       return;
     }
-    console.log('running effect')
+   
     Meteor.call('fetchOrder', currentUser.emails[0].address, (err, docs)=>{
       setMyOldOrders([...docs.data]);
       console.log(docs.data);
     })
-    return () => clearInterval(interval);
+    // return () => clearInterval(interval);
   }, [currentUser])
 
   const cancelOrder = (orderId)=>{
@@ -69,13 +70,20 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
       return;
     }
     const orderId = shortid.generate();
+    myCart.forEach(
+      item =>{
+        Meteor.call('updateSoldValue', item.productId, item.quantity, (err, result)=>{
+          console.log(result);
+        })
+      }
+    );
     newOrderObj.userEmail = currentUser.emails[0].address;
     newOrderObj.orderDetails = JSON.stringify(myCart);
     newOrderObj.status = 0;
     newOrderObj.subtotal = subtotal;
     newOrderObj.orderId = orderId;
     newOrderObj.createAt = Date.now();
-    console.log(newOrderObj);
+   
     Meteor.call('addOrder', newOrderObj,(err, docs)=>{
       if (!err){
         console.log('add order success');
@@ -98,6 +106,12 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
     setAddToCartMessageSuccess('You created an order');
     setAddToCartMessageError('');
     clearCart();
+    // const timeout = setTimeout(() => {
+    //     console.log('interval');
+    //       setAddToCartMessageError('');
+    //       setAddToCartMessageSuccess('');
+    //       clearTimeout(timeout);
+    //   }, 3000);
   }
   
   const content = (

@@ -6,7 +6,7 @@ import EditProduct from '../../components/EditProduct/EditProduct.jsx';
 import AddProduct from '../../components/AddProduct/AddProduct.jsx';
 const ProductAdminContent = ()=>{
   const fetchProduct = async (condition, currentPageForFetching=1)=>{
-    await Meteor.call('fetchProduct',condition,currentPageForFetching,6,(err,result)=>{
+    await Meteor.call('fetchAllProduct',(err,result)=>{
       if (!err) {
         setProducts([...result.data]);
        

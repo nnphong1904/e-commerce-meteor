@@ -109,3 +109,27 @@ export const fetchProductById = async (id)=>{
   
 }
 
+export const fetchAllProduct = async ()=>{
+  try{
+    const result = await ProductCollection.find({}).fetch();
+    return {success: true, data: result};
+  }
+  catch(err){
+    return {success: false, err};
+  }
+  
+}
+
+export const updateSoldValue = async(productId, quantity)=>{
+  try{
+    const newObjectId = new Mongo.ObjectID(productId);
+    // console.log(typeof quantity);
+    const oldProduct = await ProductCollection.find({_id: newObjectId}).fetch();
+    // console.log(oldProduct)
+    ProductCollection.update({_id:newObjectId}, {$set: {sold: oldProduct[0].sold + quantity }}, (err, doc)=>{
+    })
+  }
+  catch(err){
+    return {success: false, err};
+  }
+}
