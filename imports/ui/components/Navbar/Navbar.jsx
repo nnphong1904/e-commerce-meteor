@@ -221,10 +221,11 @@ const Navbar = (props)=>{
       {
         ((whoShouldBuy!=='' && typeProduct!=='') || (Session.get('whoShouldBuy') && Session.get('typeOfProduct')))  && `${whoShouldBuy || Session.get('whoShouldBuy')}/${typeProduct || Session.get('typeOfProduct')}`
       }
-      </div>}
+      </div>
     </div>
   );
   return content;
+    
 }
 
 export default withTracker(()=>{

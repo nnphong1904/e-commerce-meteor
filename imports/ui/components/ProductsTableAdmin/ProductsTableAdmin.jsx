@@ -94,6 +94,11 @@ const ProductsTableAdmin = ({turnOnEditProductForm, productsList=[]})=>{
         <TableBody>
           {
             currentProductsList.map((product, productIndex)=>{
+              if (product.createAt !== undefined)
+              {
+               console.log(new Date(parseInt(product.createAt)).toString().split(' ').slice(0,4).join(', '));
+              }
+              
               const content = (
                 <StyledTableRow key={productIndex} align="left">
                   <StyledTableCell align="left">
@@ -105,7 +110,9 @@ const ProductsTableAdmin = ({turnOnEditProductForm, productsList=[]})=>{
                     {`${product.sold}`}
                   </StyledTableCell>
                   <StyledTableCell align="left">
-                     {`Today, 8th Aug, 2018`}
+                      {
+                        product.createAt === undefined ? `Today, 8th Aug, 2018` : new Date(parseInt(product.createAt)).toString().split(' ').slice(0,4).join(', ')
+                      }
                   </StyledTableCell>
                   <StyledTableCell align="left">
                     {`${product.price.toFixed(2)}`}
@@ -137,7 +144,7 @@ const ProductsTableAdmin = ({turnOnEditProductForm, productsList=[]})=>{
           <StyledTableCell className={classes.noPadding}  align="center">
             <div className="action-container pagination-table-holder">
               <div className="action-holder">
-                <PageSelector onClickFunction={updateCurrentPage} currentPage={currentPage} textDisplay={` /${numberOfPage}`}/>
+                <PageSelector maxValue={numberOfPage} onClickFunction={updateCurrentPage} currentPage={currentPage} textDisplay={` /${numberOfPage}`}/>
               </div>
             </div>
           </StyledTableCell>

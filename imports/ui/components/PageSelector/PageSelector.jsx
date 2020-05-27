@@ -19,11 +19,15 @@ const PageSelector = ({currentPage=1, textDisplay='', minValue=1, maxValue=100, 
   }
   const onChangeHandler = (e)=>{
     if (e.target.value === ''){
-      // setInnerCurrentPage(1);
+      setInnerCurrentPage('');
       onClickFunction(1);
+     
     }
-    setInnerCurrentPage(parseInt(e.target.value));
-    onClickFunction(parseInt(e.target.value));
+    else{
+      setInnerCurrentPage(parseInt(e.target.value));
+      onClickFunction(parseInt(e.target.value));
+    }
+    
   }
   const content = (
     <div className="page-selector-holder">
@@ -31,8 +35,10 @@ const PageSelector = ({currentPage=1, textDisplay='', minValue=1, maxValue=100, 
         onClick = {
           (e)=>{
             //onClickLeftButton();
-            setInnerCurrentPage(old => old-1);
-            onClickFunction(currentPage-1);
+            if (innerCurrentPage >1){
+              setInnerCurrentPage(old => old-1);
+              onClickFunction(currentPage-1);
+            }
           }
         }
         id="increase-btn" 
@@ -53,8 +59,12 @@ const PageSelector = ({currentPage=1, textDisplay='', minValue=1, maxValue=100, 
         onClick={
           (e)=>{
          //  onClickRightValue();
-            setInnerCurrentPage(old => old+1);
-            onClickFunction(currentPage+1);
+            if (innerCurrentPage < maxValue)
+            {
+              setInnerCurrentPage(old => old+1);
+              onClickFunction(currentPage+1);
+            }
+            
           }
         }
         id="decrease-btn" 
