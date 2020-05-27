@@ -46,12 +46,14 @@ const Navbar = (props)=>{
     setDidOpenTypeProductSection(!didOpenTypeProductSection);
   }
   const selectWhoShouldBuy = (ref, setState)=>{
+    Session.set('whoShouldBuy', ref.current.innerText);
     setState(ref.current.innerText);
   }
   const selectTypeOfProduct = (e)=>{
     setTypeProduct(e.target.innerText);
     setDidOpenTypeProductSection(false);
     productTypeRef.current.style.transform = 'scaleY(0) translateX(-50%)';
+    Session.set('typeOfProduct', e.target.innerText);
     FlowRouter.go('/products');
   }
   const hideTypeProductSection = ()=>{
@@ -214,7 +216,12 @@ const Navbar = (props)=>{
                   </ul>
             </div>
       </div>
-      { whoShouldBuy!=='' && typeProduct!=='' && <div className="filter-value">{`${whoShouldBuy}/${typeProduct}`}</div>}
+      {/* { whoShouldBuy!=='' && typeProduct!=='' && <div className="filter-value">{`${whoShouldBuy}/${typeProduct}`}</div>} */}
+      <div className="filter-value">
+      {
+        ((whoShouldBuy!=='' && typeProduct!=='') || (Session.get('whoShouldBuy') && Session.get('typeOfProduct')))  && `${whoShouldBuy || Session.get('whoShouldBuy')}/${typeProduct || Session.get('typeOfProduct')}`
+      }
+      </div>}
     </div>
   );
   return content;

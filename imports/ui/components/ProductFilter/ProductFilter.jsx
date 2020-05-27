@@ -235,7 +235,7 @@ const ProductFilter = ({changeCurrentPage, fetchProduct, resetCurrentPageValue})
             unCheckAllCategoryFilter();
             turnOffAllFilterUX();
             }}>
-              <span>All</span> Dresses</button>
+              <span>All</span> <>Dresses</></button>
         </div>
         <form ref={categoryListRef} className="category-detail category-selector-form">
            <label  className="category-holder">
