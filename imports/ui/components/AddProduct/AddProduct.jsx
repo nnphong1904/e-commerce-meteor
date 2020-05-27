@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AddProductForm from '../AddProductForm/AddProductForm.jsx';
 import axios from 'axios';
+
 const AddProduct = ({turnOffForm = ()=>{}})=>{
   const [notifyMessage, setNotifyMessage] = useState('');
   const [hasError, setHasError] = useState(false);
@@ -8,6 +9,7 @@ const AddProduct = ({turnOffForm = ()=>{}})=>{
 
   const addProduct = (file, name, category, brand, price, sizesName, quantity, color)=>{
     if (!file || name === '' || price === '' || !category || !brand || !sizesName || !quantity || !color){
+    
       setNotifyMessage('Missing some fields');
       setHasError(true);
       const timeoutId = setTimeout(()=>{
@@ -27,7 +29,8 @@ const AddProduct = ({turnOffForm = ()=>{}})=>{
     }
     
     const newProduct = new FormData();
-    newProduct.append('avt', file, file.name);
+    // newProduct.append('avt', file, file.name);
+    newProduct.append('avt', file);
     newProduct.append('name', name);
     newProduct.append('price', price);
     newProduct.append('category', category.value);

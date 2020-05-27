@@ -29,3 +29,7 @@ export const CATEGORY = new Map([
   [`maxi/midi dresses`, `Maxi/Midi dresses`],
   [`sets`,`Sets`]
 ])
+
+export const CLOUD_NAME = 'dj7dcimvm';
+export const API_KEY = '427717985498139';
+export const API_SECRET = 'SfOwMCtOUfkDEGKMZej2dmI1-14';

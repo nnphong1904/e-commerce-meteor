@@ -6,8 +6,8 @@ import Select from 'react-select'
 import QuantityInput from '../QuantityInput/QuantityInput.jsx';
 import classNames from 'classnames';
 import { withTracker } from 'meteor/react-meteor-data';
-import {CATEGORY, BRAND_NAME, SIZE_LIST, COLOR_LIST} from '../../lib/Constant.js';
-
+import {CATEGORY, BRAND_NAME, SIZE_LIST, COLOR_LIST, CLOUD_NAME} from '../../lib/Constant.js';
+import axios from 'axios';
 
 const colorOptions = COLOR_LIST.map(
   color => {
@@ -76,17 +76,22 @@ const AddProductForm = ({product={}, isDisabled=false ,hasError=false ,onSubmitH
     setState(e.target.value);
   }
   // console.log(category);
-  const handleImageChange = (e)=>{
+  const handleImageChange = async (e)=>{
     e.preventDefault();
     let reader = new FileReader();
     let file = e.target.files[0];
-
-    reader.onload = ()=>{
-      setFile(file);
+    
+    reader.onload =  ()=>{
+      // setFile(file);
       setImagePreviewUrl(reader.result);
     }
-
     reader.readAsDataURL(file);
+    const image = new FormData();
+    image.append('file', e.target.files[0]);
+    image.append('upload_preset', 'phong_dsv');
+    const res = await axios.post(`https://api.cloudinary.com/v1_1/dj7dcimvm/image/upload`, image)
+     
+    setFile(res.data.secure_url);
   }
   const cancelImage = ()=>{
     setFile('');
