@@ -11,12 +11,12 @@ const EditProduct = ({turnOffForm=()=>{}, editedProductId})=>{
       setEditedProduct({...result.data[0]});
       // Session.set('editedProduct', {...result.data[0]})
     })
-    const notifyIntervalId = setInterval(()=>{
-      setNotifyMessage('');
-   },4000)
-   return ()=>{
-     clearInterval(notifyIntervalId);
-   }
+  //   const notifyIntervalId = setInterval(()=>{
+  //     setNotifyMessage('');
+  //  },4000)
+  //  return ()=>{
+  //    clearInterval(notifyIntervalId);
+  //  }
   }, []);
   const updateProduct = (file, name, category, brand, price, sizesName, sizesQuantity, color)=>{
     if ( sizesName.length === 0 || sizesQuantity.length === 0 ){
@@ -35,10 +35,8 @@ const EditProduct = ({turnOffForm=()=>{}, editedProductId})=>{
     console.log(UPDATE_URL);
     newProduct.append('sizesName',sizesName.map(size=>size.value).join(','));
     newProduct.append('sizesQuantity', sizesQuantity.join(','));
-    
+    newProduct.append('category', category.value);
     Meteor.call('getHashedToken', (err, result)=>{
-      // console.log(result);
-      console.log(newProduct.get('avt'))
       axios.put(UPDATE_URL, newProduct, {
         headers: {
           'Authorization': result
@@ -48,10 +46,19 @@ const EditProduct = ({turnOffForm=()=>{}, editedProductId})=>{
           if (res.status === 200){
             setNotifyMessage('Update product success');
             setHasError(false);
+            const timeoutId = setTimeout(()=>{
+              setNotifyMessage('');
+              clearTimeout(timeoutId);
+            },3000); 
           }
           else {
             setNotifyMessage('Update product failed');
             setHasError(true);
+            const timeoutId = setTimeout(()=>{
+              setNotifyMessage('');
+              setHasError(false);
+              clearTimeout(timeoutId);
+            },3000); 
           }
         })
     });

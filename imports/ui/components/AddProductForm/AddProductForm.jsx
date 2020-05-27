@@ -132,7 +132,7 @@ const AddProductForm = ({product={}, isDisabled=false ,hasError=false ,onSubmitH
           <div className='field-container'>
             <label className='category-input-field'>
              <Select
-              isDisabled={isDisabled}
+             
               value={category}
               onChange={setCategory}
               className="category-input-field" 
