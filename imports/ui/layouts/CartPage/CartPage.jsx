@@ -61,12 +61,24 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
       console.log('must login');
       setAddToCartMessageError('You must login to check out order');
       setAddToCartMessageSuccess('');
+      const timeout = setTimeout(() => {
+        console.log('interval');
+          setAddToCartMessageError('');
+          setAddToCartMessageSuccess('');
+          clearTimeout(timeout);
+      }, 2000);
       return ;
     }
     if (myCart.length === 0){
       console.log('now item in cart');
       setAddToCartMessageError('There is no items in cart');
       setAddToCartMessageSuccess('');
+      const timeout = setTimeout(() => {
+        console.log('interval');
+          setAddToCartMessageError('');
+          setAddToCartMessageSuccess('');
+          clearTimeout(timeout);
+      }, 2000);
       return;
     }
     const orderId = shortid.generate();
@@ -106,12 +118,12 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
     setAddToCartMessageSuccess('You created an order');
     setAddToCartMessageError('');
     clearCart();
-    // const timeout = setTimeout(() => {
-    //     console.log('interval');
-    //       setAddToCartMessageError('');
-    //       setAddToCartMessageSuccess('');
-    //       clearTimeout(timeout);
-    //   }, 3000);
+    const timeout = setTimeout(() => {
+        console.log('interval');
+          setAddToCartMessageError('');
+          setAddToCartMessageSuccess('');
+          clearTimeout(timeout);
+      }, 2000);
   }
   
   const content = (
@@ -139,33 +151,45 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
             {addToCartMessageError !== '' && <div className="add-to-cart-message-error">{addToCartMessageError}</div>}
             {addToCartMessageSuccess !== '' && <div className="add-to-cart-message-success">{addToCartMessageSuccess}</div>}
           </div>   
-         {currentUser && 
-          <div className="my-orders-list">
-              <div className="my-orders-list-header">
-                <div className="orders-list-header-id">Order ID</div>
-                <div className="orders-list-header-status">Status</div>
-                <div className="orders-list-header-status">Cancel</div>
-              </div>
-              <div className="my-orders-list-body">
-                {myOldOrders.map((order, orderIndex)=>{
-                  const content = (
-                    <div key={orderIndex} className="order-item-holder">
-                        <div className='my-order-id'>{order.orderId}</div>
-                        <div className='my-order-status'><OrderStatus status={order.status} /></div>
-                        {
-                          order.status === 0 && 
-                            <div >
-                               <img onClick={(e)=>onClickCanceledOrderButton(e)} id={order.orderId} className='cancel-order-button' src={Cancel}/>
-                            </div>
-                        }
-                    </div>
-                  );
-                  return content;
-                })}
-              </div>
-           </div>  } 
+         
            </div>
         </div>
+        {currentUser && 
+         
+            <div className="my-orders-list">
+                <div className="my-orders-list-header">
+                  <div className="orders-list-header-id">Order ID</div>
+                  <div className="orders-list-header-status">Status</div>
+                  <div className="orders-list-header-status">Cancel</div>
+                </div>
+                <div className="my-orders-list-body">
+                  {myOldOrders.map((order, orderIndex)=>{
+                    const content = (
+                      <div key={orderIndex} className="order-item-holder">
+                          <div className='my-order-id'>{order.orderId}</div>
+                          <div className='my-order-status'>
+                            <div className="order-status-wrapper">
+                              <OrderStatus status={order.status} />
+                            </div>
+                          </div>
+                          {
+                            order.status === 0 && 
+                              <div >
+                                 <img onClick={(e)=>onClickCanceledOrderButton(e)} id={order.orderId} className='cancel-order-button' src={Cancel}/>
+                              </div>
+                          }
+                          {
+                            order.status !== 0 && 
+                              <div >
+                                 
+                              </div>
+                          }
+                      </div>
+                    );
+                    return content;
+                  })}
+                </div>
+         </div>  } 
       </div>
   </>
   );
