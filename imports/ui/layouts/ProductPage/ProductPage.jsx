@@ -20,7 +20,12 @@ const ProductPage = ()=>{
             setNumberOfPage(1);
           }
           else{
-            setNumberOfPage(Math.round(result.dataLength/NUMBER_ITEM_PER_PAGE)+1);
+            if (result.dataLength%NUMBER_ITEM_PER_PAGE === 0){
+              setNumberOfPage(result.dataLength/NUMBER_ITEM_PER_PAGE);
+            }
+            else {
+              setNumberOfPage(parseInt(result.dataLength/NUMBER_ITEM_PER_PAGE)+1);
+            }
           }
         }
         else {
