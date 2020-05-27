@@ -10,7 +10,6 @@ const ProductPage = ()=>{
   const [products, setProducts] = useState([]);
   const [numberOfPage, setNumberOfPage] = useState(1)
   const fetchProduct = async (condition, currentPageForFetching=1)=>{
-     
       await Meteor.call('fetchProduct',condition,currentPageForFetching,(err,result)=>{
         console.log(result.data);
         if (!err) {
@@ -37,20 +36,14 @@ const ProductPage = ()=>{
       setCurrentPage(1);
     }
     const changeCurrentPage = (nextPage)=>{
-      
+      console.log('change page')
       if (nextPage >= 1 && nextPage <= numberOfPage)
       {
         setCurrentPage(nextPage);
         Meteor.call('fetchProduct', {}, nextPage, (err,result)=>{
           if (!err) {
-            setProducts([...result.data]);
-           
-            if (Math.round(result.dataLength/NUMBER_ITEM_PER_PAGE) === 0){
-              setNumberOfPage(1);
-            }
-            else{
-              setNumberOfPage(Math.round(result.dataLength/NUMBER_ITEM_PER_PAGE)+1);
-            }
+            console.log(nextPage)
+            setProducts([...result.data]);  
           }
           else {
             console.log(err);

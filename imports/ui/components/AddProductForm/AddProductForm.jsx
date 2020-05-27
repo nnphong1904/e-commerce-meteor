@@ -215,7 +215,7 @@ const AddProductForm = ({product={}, isDisabled=false ,hasError=false ,onSubmitH
       <div className="form-btn">       
           <input onClick={()=>{
              onSubmitHandler(file, name, category, brand, price, sizesName, sizesQuantity, color)
-          }} className="submit-form-btn" type="submit" />
+          }} className="submit-form-btn" type="submit" value="Submit" />
       </div>
       <button onClick={()=>{turnOffForm(false)}} className="turn-off-form">Cancel</button>
       <div className={

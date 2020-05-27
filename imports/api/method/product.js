@@ -89,6 +89,7 @@ export const fetchProduct = async (condition, currentPage, numberItemPerPage = 2
     const startIndex = (currentPage - 1) * numberItemPerPage;
     const endIndex = result.length > numberItemPerPage ? (startIndex + numberItemPerPage) : result.length;
     result = [...result.slice(startIndex, endIndex)];
+    console.log(dataLength)
     return {success: true, data: [...result], dataLength};
   }
   catch(err){
