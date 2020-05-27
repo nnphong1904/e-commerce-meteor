@@ -4,28 +4,25 @@ import axios from 'axios';
 const AddProduct = ({turnOffForm = ()=>{}})=>{
   const [notifyMessage, setNotifyMessage] = useState('');
   const [hasError, setHasError] = useState(false);
-
-  useEffect(()=>{
-    // const notifyIntervalId = setInterval(()=>{
-    //   if (notifyMessage !== '') 
-    //     {
-    //       setNotifyMessage('');
-    //     }
-    // },4000)
-    // return ()=>{
-    //   clearInterval(notifyIntervalId);
-    // }
-  }, [])
+  const [isLoading, setIsLoading] = useState(false);
 
   const addProduct = (file, name, category, brand, price, sizesName, quantity, color)=>{
     if (!file || name === '' || price === '' || !category || !brand || !sizesName || !quantity || !color){
       setNotifyMessage('Missing some fields');
       setHasError(true);
+      const timeoutId = setTimeout(()=>{
+        setNotifyMessage('');
+        clearTimeout(timeoutId);
+      }, 3000)
       return ;
     }
     if (sizesName.map(size=>size.value).length !== quantity.length){
       setNotifyMessage('You have not input quantity for each sizes');
       setHasError(true);
+      const timeoutId = setTimeout(()=>{
+        setNotifyMessage('');
+        clearTimeout(timeoutId);
+      }, 3000)
       return;
     }
     
