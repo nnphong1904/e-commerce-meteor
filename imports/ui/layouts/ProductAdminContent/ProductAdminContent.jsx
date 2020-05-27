@@ -7,7 +7,6 @@ import AddProduct from '../../components/AddProduct/AddProduct.jsx';
 const ProductAdminContent = ()=>{
   const fetchProduct = async (condition, currentPageForFetching=1)=>{
     await Meteor.call('fetchProduct',condition,currentPageForFetching,6,(err,result)=>{
-      console.log(result.data);
       if (!err) {
         setProducts([...result.data]);
        
@@ -26,7 +25,6 @@ const ProductAdminContent = ()=>{
   }
   useEffect(()=>{
     fetchProduct({});
-    console.log(products);
   },[]);
   
   const content = (

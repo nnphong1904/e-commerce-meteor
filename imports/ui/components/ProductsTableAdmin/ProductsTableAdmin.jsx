@@ -76,7 +76,7 @@ const ProductsTableAdmin = ({turnOnEditProductForm, productsList=[]})=>{
                     </div>
                   </StyledTableCell>
                   <StyledTableCell align="left">
-                    {`${product.numberOfItem}`}
+                    {`${product.sold}`}
                   </StyledTableCell>
                   <StyledTableCell align="left">
                      {`Today, 8th Aug, 2018`}

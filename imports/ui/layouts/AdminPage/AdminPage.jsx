@@ -9,6 +9,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 const AdminPage = ({currentUser, loginAsAdmin, component})=>{
   // console.log(Session.get('loginAsAdmin'));
+  console.log('admin page');
   useEffect(()=>{
     if (Meteor.user() === undefined){
       return;
