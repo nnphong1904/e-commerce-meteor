@@ -180,6 +180,7 @@ const ProductFilter = ({changeCurrentPage, fetchProduct, resetCurrentPageValue})
   }
  
   const filterByCategory = (e)=>{
+    // resetCurrentPageValue()
     const selectedCategory = e.target.value.toLowerCase();
     let currentFilterCondition = {...filterCondition};
     

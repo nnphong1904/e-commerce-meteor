@@ -113,7 +113,12 @@ const OrdersTable = ({ordersList})=>{
               const content = (
                 <StyledTableRow key={orderIndex}>
                   <StyledTableCell align="left">{order.orderId}</StyledTableCell>
-                  <StyledTableCell align="left">{`Today, 8th Aug, 2018`}</StyledTableCell>
+                  <StyledTableCell align="left">
+                    {
+                        
+                          order.createAt === undefined ? `Today, 8th Aug, 2018` : new Date((order.createAt)).toString().split(' ').slice(0,4).join(', ')
+                    }
+                  </StyledTableCell>
                   <StyledTableCell align="left">
                     {
                       `${JSON.parse(order.orderDetails)[0].name}(${JSON.parse(order.orderDetails)[0].size}) X ${JSON.parse(order.orderDetails)[0].quantity}`

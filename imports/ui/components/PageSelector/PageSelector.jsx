@@ -51,7 +51,7 @@ const PageSelector = ({currentPage=1, textDisplay='', minValue=1, maxValue=100, 
             }
           }
           className="input-value" 
-          value={innerCurrentPage} 
+          value={currentPage} 
           type="number"/>
         <span className="display-text">{textDisplay}</span>
       </div>

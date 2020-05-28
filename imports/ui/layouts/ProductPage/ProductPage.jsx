@@ -33,6 +33,7 @@ const ProductPage = ()=>{
       })
     }
     const resetCurrentPageValueWithoutFetchingData = ()=>{
+      console.log('aaa');
       setCurrentPage(1);
     }
     const changeCurrentPage = (nextPage)=>{
