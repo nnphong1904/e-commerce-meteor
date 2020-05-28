@@ -30,7 +30,7 @@ const ProductAdminContent = ()=>{
   const content = (
     <>
       {
-        showAddProductForm === true  && <AddProduct turnOffForm={setShowAddProductFrom}/>
+        showAddProductForm === true  && <AddProduct productsList={products} updateProductList={setProducts} turnOffForm={setShowAddProductFrom}/>
       }
       {
         showEditProductForm === true && <EditProduct turnOffForm={setShowEditProductForm} />

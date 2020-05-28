@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AddProductForm from '../AddProductForm/AddProductForm.jsx';
 import axios from 'axios';
 
-const AddProduct = ({turnOffForm = ()=>{}})=>{
+const AddProduct = ({updateProductList=()=>{}, turnOffForm = ()=>{}, productsList=[]})=>{
   const [notifyMessage, setNotifyMessage] = useState('');
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -52,10 +52,12 @@ const AddProduct = ({turnOffForm = ()=>{}})=>{
         }
       })
       .then(res=>{
-       
+        
         if (res.status === 201){
           // setNotifyMessage('Add new product success');
           // setHasError(false);
+          console.log(res.data.product)
+          updateProductList([...productsList, {...res.data.product}]);
           const timeoutId = setTimeout(()=>{
             setNotifyMessage('Add new product success');
             setHasError(false);

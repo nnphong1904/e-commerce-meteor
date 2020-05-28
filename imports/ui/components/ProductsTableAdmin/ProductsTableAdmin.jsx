@@ -63,7 +63,9 @@ const ProductsTableAdmin = ({turnOnEditProductForm, productsList=[]})=>{
   const [currentPage, setCurrentPage] = useState(1);
  
   const updateCurrentPage = (newPage)=>{
-    if (newPage >=1 && newPage <=numberOfPage){    
+    console.log('aa');
+    if (newPage >=1 && newPage <=numberOfPage){  
+      console.log([...oldProductsList.slice((newPage - 1)*6, (newPage - 1)*6+6)])  
       setCurrentPage(newPage);
       setCurrentProductsList([...oldProductsList.slice((newPage - 1)*6, (newPage - 1)*6+6)]);
     }
@@ -96,7 +98,8 @@ const ProductsTableAdmin = ({turnOnEditProductForm, productsList=[]})=>{
         </TableHead>
         <TableBody>
           {
-            currentProductsList.map((product, productIndex)=>{    
+            currentProductsList.map((product, productIndex)=>{   
+               
               const content = (
                 <StyledTableRow key={productIndex} align="left">
                   <StyledTableCell align="left">
@@ -121,7 +124,7 @@ const ProductsTableAdmin = ({turnOnEditProductForm, productsList=[]})=>{
                           <button className="product-action-btn">ACTION</button>
                           <img className="dropdown-btn product-action-dropdown" src={Dropdown}/>
                           <div className="product-admin-action-container">
-                             <ProductAdminAction turnOnEditForm={turnOnEditProductForm}  currentList={currentProductsList} updateProductsList={{setCurrentProductsList, setOldProductsList}} oldList={oldProductsList} productIndex={productIndex} updateCurrentPage={updateCurrentPage} updateNumberOfPage={setNumberOfPage} productId={product._id._str}/>
+                             <ProductAdminAction turnOnEditForm={turnOnEditProductForm}  currentList={currentProductsList} updateProductsList={{setCurrentProductsList, setOldProductsList}} oldList={oldProductsList} productIndex={productIndex} updateCurrentPage={updateCurrentPage} updateNumberOfPage={setNumberOfPage} currentPage={currentPage} productId={product._id._str ||product._id}/>
                           </div>
                       </div>
                       </div>
