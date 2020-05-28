@@ -93,12 +93,7 @@ const ProductsTableAdmin = ({turnOnEditProductForm, productsList=[]})=>{
         </TableHead>
         <TableBody>
           {
-            currentProductsList.map((product, productIndex)=>{
-              if (product.createAt !== undefined)
-              {
-               console.log(new Date(parseInt(product.createAt)).toString().split(' ').slice(0,4).join(', '));
-              }
-              
+            currentProductsList.map((product, productIndex)=>{    
               const content = (
                 <StyledTableRow key={productIndex} align="left">
                   <StyledTableCell align="left">
@@ -107,7 +102,7 @@ const ProductsTableAdmin = ({turnOnEditProductForm, productsList=[]})=>{
                     </div>
                   </StyledTableCell>
                   <StyledTableCell align="left">
-                    {`${product.sold}`}
+                    {`${product.sold}/${product.sizes.reduce(((sum, sizeObj)=> sum + sizeObj.noItems),0)}`}
                   </StyledTableCell>
                   <StyledTableCell align="left">
                       {

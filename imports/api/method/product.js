@@ -134,3 +134,4 @@ export const updateSoldValue = async(productId, quantity)=>{
     return {success: false, err};
   }
 }
+

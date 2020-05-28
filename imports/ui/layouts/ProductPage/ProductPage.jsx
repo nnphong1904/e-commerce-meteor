@@ -71,7 +71,7 @@ const ProductPage = ()=>{
               fetchProduct={fetchProduct}/>
             <div className="list-of-product-in-page">
               {products.length>0 &&
-                products.map(product => <ProductCard key={product.decId} product={product} />)
+                products.map((product, productIndex) => <ProductCard key={productIndex} product={product} />)
               }
               {products.length===0 && <div>No Results</div>}
             </div>

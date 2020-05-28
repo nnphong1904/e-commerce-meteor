@@ -24,6 +24,9 @@ const QuantityInput = ({updateQuantityList = ()=>{}, isDisabled = false, quantit
 
 
   const onChangeHandler = (e)=>{
+    if (e.target.value <0){
+      return;
+    }
     setInputtingValue(e.target.value);
   }
 
