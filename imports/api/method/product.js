@@ -38,9 +38,9 @@ export const fetchProduct = async (condition, currentPage, numberItemPerPage = 2
         }
         
 
-        if (condition.branch !== undefined && condition.branch.length > 0  )
+        if (condition.brand !== undefined && condition.brand.length > 0  )
         {
-          matchingFilterCondition.branch = {$in: condition.branch};
+          matchingFilterCondition.brand = {$in: condition.brand};
         }
         
         
@@ -71,7 +71,7 @@ export const fetchProduct = async (condition, currentPage, numberItemPerPage = 2
             avt:1, 
             decId:1, 
             sizes:1, 
-            branch:1, 
+            brand:1, 
             color: 1,
             numberOfItem: {$sum:'$sizes.noItems'},
             category:1
@@ -89,6 +89,7 @@ export const fetchProduct = async (condition, currentPage, numberItemPerPage = 2
     const startIndex = (currentPage - 1) * numberItemPerPage;
     const endIndex = result.length > numberItemPerPage ? (startIndex + numberItemPerPage) : result.length;
     result = [...result.slice(startIndex, endIndex)];
+    console.log(dataLength)
     return {success: true, data: [...result], dataLength};
   }
   catch(err){
@@ -107,5 +108,30 @@ export const fetchProductById = async (id)=>{
     return {success: false, err};
   }
   
+}
+
+export const fetchAllProduct = async ()=>{
+  try{
+    const result = await ProductCollection.find({}).fetch();
+    return {success: true, data: result};
+  }
+  catch(err){
+    return {success: false, err};
+  }
+  
+}
+
+export const updateSoldValue = async(productId, quantity)=>{
+  try{
+    const newObjectId = new Mongo.ObjectID(productId);
+    // console.log(typeof quantity);
+    const oldProduct = await ProductCollection.find({_id: newObjectId}).fetch();
+    // console.log(oldProduct)
+    ProductCollection.update({_id:newObjectId}, {$set: {sold: oldProduct[0].sold + quantity }}, (err, doc)=>{
+    })
+  }
+  catch(err){
+    return {success: false, err};
+  }
 }
 

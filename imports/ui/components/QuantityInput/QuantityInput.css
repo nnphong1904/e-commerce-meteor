@@ -8,6 +8,7 @@
 }
 .quantity-input-holder {
 	display: flex;
+	width: 101.6%;
 	/* height: 40px;
 	border: solid 1px #ededed;
 	background-color: white;
@@ -31,7 +32,7 @@
 	background-color: white;
 	border-radius: 4px;
 	align-items: center;
-	width: 79.58%;
+	width: 100%;
 	margin-left: 5px;
 }
 .quantity-input::-webkit-inner-spin-button {
@@ -45,4 +46,7 @@
 	object-fit: contain;
 	margin-left: 5px;
 	cursor: pointer;
+}
+.disabled-background {
+	background-color: hsl(0, 0%, 95%);
 }

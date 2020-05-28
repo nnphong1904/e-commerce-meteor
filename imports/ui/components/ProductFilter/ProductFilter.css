@@ -18,6 +18,7 @@
 .category-holder {
 	display: block;
 	margin-top: 15px;
+	cursor: pointer;
 }
 
 .category-selector-form.category-detail {
@@ -50,6 +51,7 @@
 	font-style: normal;
 	line-height: 1.57;
 	letter-spacing: normal;
+	background-color: white;
 }
 
 .product-filter-container .filter-title {
@@ -69,7 +71,6 @@
 	.category-content-container
 	.category-detail
 	button {
-	background: none;
 	border: none;
 	font-size: 14px;
 	font-weight: normal;

@@ -1,11 +1,14 @@
-import React, { useState, createRef } from 'react';
+import React, { useState, createRef, useEffect } from 'react';
 import './QuantityInput.css';
 import CircleCancel from '../../assets/image/circle-cancel.svg';
-
-const QuantityInput = ({updateQuantityList = ()=>{}})=>{
-  const [listQuantity, setListQuantity] = useState([])
+import classNames from 'classnames';
+const QuantityInput = ({updateQuantityList = ()=>{}, isDisabled = false, quantityValue=[]})=>{
+  const [listQuantity, setListQuantity] = useState([]);
   const [inputtingValue, setInputtingValue] = useState('');
-
+  useEffect(()=>{
+    //  console.log(quantityValue)
+    setListQuantity([...quantityValue]);
+  },[quantityValue]);
   const quantityListRef = createRef();
   const inputQuantityRef = createRef();
 
@@ -19,7 +22,11 @@ const QuantityInput = ({updateQuantityList = ()=>{}})=>{
                           
   }
 
+
   const onChangeHandler = (e)=>{
+    if (e.target.value <0){
+      return;
+    }
     setInputtingValue(e.target.value);
   }
 
@@ -39,12 +46,13 @@ const QuantityInput = ({updateQuantityList = ()=>{}})=>{
   const content = (
     <label className="quantity-input-holder">
       <input 
+        disabled={isDisabled}
         ref={inputQuantityRef}
         onKeyUp={e=>{
           onKeyUpHandler(e);
         }}
         type="number" 
-        className="quantity-input" 
+        className={classNames("quantity-input", {'disabled-background': isDisabled})} 
         onChange={(e)=>{onChangeHandler(e)}} 
         value={inputtingValue}/>
       <div ref={quantityListRef} className="quantity-value-holder" >

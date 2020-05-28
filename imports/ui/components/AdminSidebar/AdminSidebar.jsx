@@ -9,6 +9,7 @@ import ProductLogoOrange from '../../assets/image/products-orange.svg';
 
 const AdminSidebar = (props)=>{
   
+  console.log('sidebar');
   const navigate = (url)=>{
     FlowRouter.go(url);
   }

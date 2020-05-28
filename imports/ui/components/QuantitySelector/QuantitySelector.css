@@ -9,6 +9,7 @@
 .increase {
 	left: 10px;
 	top: 10px;
+	background-color: white;
 }
 .increase:focus {
 	outline: none;
@@ -16,6 +17,7 @@
 .decrease {
 	right: 10px;
 	top: 10px;
+	background-color: white;
 }
 .decrease:focus {
 	outline: none;

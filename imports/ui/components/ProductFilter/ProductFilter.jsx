@@ -43,7 +43,7 @@ const ProductFilter = ({changeCurrentPage, fetchProduct, resetCurrentPageValue})
     },
     color: [],
     size:'',
-    branch:[],
+    brand:[],
     outStockOrInStored:{
       doFilterByNumberOfItem: false,
       outOffStock: false,
@@ -165,7 +165,7 @@ const ProductFilter = ({changeCurrentPage, fetchProduct, resetCurrentPageValue})
     const selectedBranch = e.target.value.toLowerCase();
     
     let currentFilterCondition = {...filterCondition};
-    let currentBranchFilterCondition = [...filterCondition.branch];
+    let currentBranchFilterCondition = [...filterCondition.brand];
     const indexOfSelectedBranch = currentBranchFilterCondition.indexOf(selectedBranch);
     if (indexOfSelectedBranch === -1 ){
       currentBranchFilterCondition.push(selectedBranch);
@@ -173,7 +173,7 @@ const ProductFilter = ({changeCurrentPage, fetchProduct, resetCurrentPageValue})
     else {
       currentBranchFilterCondition = [...currentBranchFilterCondition.slice(0, indexOfSelectedBranch), ...currentBranchFilterCondition.slice(indexOfSelectedBranch+1)];
     } 
-    currentFilterCondition = {...currentFilterCondition, branch: [...currentBranchFilterCondition]};
+    currentFilterCondition = {...currentFilterCondition, brand: [...currentBranchFilterCondition]};
     resetCurrentPageValue();
     fetchProduct(currentFilterCondition);
     setFilterCondition(currentFilterCondition);
@@ -224,7 +224,7 @@ const ProductFilter = ({changeCurrentPage, fetchProduct, resetCurrentPageValue})
                   },
                   color: [],
                   size:'',
-                  branch:[],
+                  brand:[],
                   outStockOrInStored:{
                     doFilterByNumberOfItem: false,
                     outOffStock: false,
@@ -235,7 +235,7 @@ const ProductFilter = ({changeCurrentPage, fetchProduct, resetCurrentPageValue})
             unCheckAllCategoryFilter();
             turnOffAllFilterUX();
             }}>
-              <span>All</span> Dresses</button>
+              <span>All</span> <>Dresses</></button>
         </div>
         <form ref={categoryListRef} className="category-detail category-selector-form">
            <label  className="category-holder">
@@ -304,7 +304,7 @@ const ProductFilter = ({changeCurrentPage, fetchProduct, resetCurrentPageValue})
         </form>
         <div className="horizontal-line"></div>
     
-      {/* ========filter by size, branch, price...============= */}
+      {/* ========filter by size, brand, price...============= */}
       {/* ===============filter by size======================== */}
       <div className="filter-title">Filter</div>
       <ul className="filter-content-container">

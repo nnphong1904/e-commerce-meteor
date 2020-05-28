@@ -68,7 +68,7 @@ const ProductInfo = ({product,  currentUser})=>{
 
   useEffect(() => {
    
-    Meteor.call('fetchProduct', {branch: [product.branch]}, (err, docs)=>{
+    Meteor.call('fetchProduct', {brand: [product.brand]}, (err, docs)=>{
       setListProductSameBrand([...docs.data.slice(0,4)]);
     });
 
@@ -252,7 +252,7 @@ const ProductInfo = ({product,  currentUser})=>{
         <div className="product-view same-brand-list ">
           <div className="same-brand">
             <div>More from</div>
-            <div className="brand">{BRAND_NAME.get(product.branch)}</div>
+            <div className="brand">{BRAND_NAME.get(product.brand)}</div>
           </div>
           {
             listProductSameBrand.map((product, productIndex) => <img 

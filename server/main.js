@@ -1,8 +1,9 @@
 import { Meteor } from 'meteor/meteor';
-import {addProduct, fetchProduct, fetchProductById} from '../imports/api/method/product'
+import {updateSoldValue ,fetchAllProduct ,addProduct, fetchProduct, fetchProductById} from '../imports/api/method/product'
 import {getHashedToken ,addUser, getCurrentUser, isEmailAdmin, isAdmin} from '../imports/api/method/user';
 import {changeOrderStatus ,fetchAllOrders ,canceledOrder, fetchOrder, addOrder, sendEmailToSeller} from '../imports/api/method/order';
 import  UsersCollection  from '../imports/api/user';
+
 
 
 Meteor.startup(() => {
@@ -13,6 +14,8 @@ Meteor.startup(() => {
       const result = await UsersCollection.find(condition).fetch();
       return result;
     },
+    updateSoldValue,
+    fetchAllProduct,
     getHashedToken,
     isAdmin,
     sendEmailToSeller,

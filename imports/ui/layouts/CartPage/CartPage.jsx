@@ -15,21 +15,22 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
   const [addToCartMessageError, setAddToCartMessageError] = useState('');
   const [addToCartMessageSuccess, setAddToCartMessageSuccess] = useState('');
   useEffect(() => {
-    const interval = setInterval(() => {
-      console.log('interval');
-        setAddToCartMessageError('');
-        setAddToCartMessageSuccess('');
-    }, 3000);
+    // const timeout = setTimeout(() => {
+    //   console.log('interval');
+    //     setAddToCartMessageError('');
+    //     setAddToCartMessageSuccess('');
+    //     clearTimeout(timeout);
+    // }, 3000);
     
     if (!currentUser){
       return;
     }
-    console.log('running effect')
+   
     Meteor.call('fetchOrder', currentUser.emails[0].address, (err, docs)=>{
       setMyOldOrders([...docs.data]);
       console.log(docs.data);
     })
-    return () => clearInterval(interval);
+    // return () => clearInterval(interval);
   }, [currentUser])
 
   const cancelOrder = (orderId)=>{
@@ -60,22 +61,41 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
       console.log('must login');
       setAddToCartMessageError('You must login to check out order');
       setAddToCartMessageSuccess('');
+      const timeout = setTimeout(() => {
+        console.log('interval');
+          setAddToCartMessageError('');
+          setAddToCartMessageSuccess('');
+          clearTimeout(timeout);
+      }, 2000);
       return ;
     }
     if (myCart.length === 0){
       console.log('now item in cart');
       setAddToCartMessageError('There is no items in cart');
       setAddToCartMessageSuccess('');
+      const timeout = setTimeout(() => {
+        console.log('interval');
+          setAddToCartMessageError('');
+          setAddToCartMessageSuccess('');
+          clearTimeout(timeout);
+      }, 2000);
       return;
     }
     const orderId = shortid.generate();
+    myCart.forEach(
+      item =>{
+        Meteor.call('updateSoldValue', item.productId, item.quantity, (err, result)=>{
+          console.log(result);
+        })
+      }
+    );
     newOrderObj.userEmail = currentUser.emails[0].address;
     newOrderObj.orderDetails = JSON.stringify(myCart);
     newOrderObj.status = 0;
     newOrderObj.subtotal = subtotal;
     newOrderObj.orderId = orderId;
     newOrderObj.createAt = Date.now();
-    console.log(newOrderObj);
+   
     Meteor.call('addOrder', newOrderObj,(err, docs)=>{
       if (!err){
         console.log('add order success');
@@ -98,6 +118,12 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
     setAddToCartMessageSuccess('You created an order');
     setAddToCartMessageError('');
     clearCart();
+    const timeout = setTimeout(() => {
+        console.log('interval');
+          setAddToCartMessageError('');
+          setAddToCartMessageSuccess('');
+          clearTimeout(timeout);
+      }, 2000);
   }
   
   const content = (
@@ -125,33 +151,45 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
             {addToCartMessageError !== '' && <div className="add-to-cart-message-error">{addToCartMessageError}</div>}
             {addToCartMessageSuccess !== '' && <div className="add-to-cart-message-success">{addToCartMessageSuccess}</div>}
           </div>   
-         {currentUser && 
-          <div className="my-orders-list">
-              <div className="my-orders-list-header">
-                <div className="orders-list-header-id">Order ID</div>
-                <div className="orders-list-header-status">Status</div>
-                <div className="orders-list-header-status">Cancel</div>
-              </div>
-              <div className="my-orders-list-body">
-                {myOldOrders.map((order, orderIndex)=>{
-                  const content = (
-                    <div key={orderIndex} className="order-item-holder">
-                        <div className='my-order-id'>{order.orderId}</div>
-                        <div className='my-order-status'><OrderStatus status={order.status} /></div>
-                        {
-                          order.status === 0 && 
-                            <div >
-                               <img onClick={(e)=>onClickCanceledOrderButton(e)} id={order.orderId} className='cancel-order-button' src={Cancel}/>
-                            </div>
-                        }
-                    </div>
-                  );
-                  return content;
-                })}
-              </div>
-           </div>  } 
+         
            </div>
         </div>
+        {currentUser && 
+         
+            <div className="my-orders-list">
+                <div className="my-orders-list-header">
+                  <div className="orders-list-header-id">Order ID</div>
+                  <div className="orders-list-header-status">Status</div>
+                  <div className="orders-list-header-status">Cancel</div>
+                </div>
+                <div className="my-orders-list-body">
+                  {myOldOrders.map((order, orderIndex)=>{
+                    const content = (
+                      <div key={orderIndex} className="order-item-holder">
+                          <div className='my-order-id'>{order.orderId}</div>
+                          <div className='my-order-status'>
+                            <div className="order-status-wrapper">
+                              <OrderStatus status={order.status} />
+                            </div>
+                          </div>
+                          {
+                            order.status === 0 && 
+                              <div >
+                                 <img onClick={(e)=>onClickCanceledOrderButton(e)} id={order.orderId} className='cancel-order-button' src={Cancel}/>
+                              </div>
+                          }
+                          {
+                            order.status !== 0 && 
+                              <div >
+                                 
+                              </div>
+                          }
+                      </div>
+                    );
+                    return content;
+                  })}
+                </div>
+         </div>  } 
       </div>
   </>
   );

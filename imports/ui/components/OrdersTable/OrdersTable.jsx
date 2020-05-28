@@ -37,11 +37,13 @@ const useStyles = makeStyles({
     width: '95%',
     boxShadow: 'none',
     marginLeft: 'auto',
-    marginRight: 'auto'
+    marginRight: 'auto',
+    
   },
   tableContainer: {
     boxShadow: 'none',
-    height: '100%'
+    minHeight: '180px',
+    paddingBottom: 10
   }
 });
 const OrdersTable = ({ordersList})=>{
