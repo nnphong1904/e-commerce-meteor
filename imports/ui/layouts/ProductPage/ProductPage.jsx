@@ -63,7 +63,7 @@ const ProductPage = ()=>{
 
       <>
         <div className="page-selector-container">
-          <PageSelector currentPage={currentPage} minValue={currentPage} textDisplay={`/${numberOfPage}`} maxValue={numberOfPage} onClickFunction={changeCurrentPage}/>
+          <PageSelector currentPage={currentPage} textDisplay={`/${numberOfPage}`} maxValue={numberOfPage} onChangeHandler={setCurrentPage} onClickFunction={changeCurrentPage}/>
         </div>
         <div className="product-page-container">
           <ProductFilter

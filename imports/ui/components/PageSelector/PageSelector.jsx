@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Arrow from '../../assets/image/arrow.svg'
 import './PageSelector.css';
-const PageSelector = ({currentPage=1, textDisplay='', minValue=1, maxValue=100, onClickFunction = ()=>{}})=>{
+const PageSelector = ({currentPage=1, textDisplay='', minValue=1, maxValue=100, onClickFunction = ()=>{}, onChangeHandler=()=>{}})=>{
   
   const [innerCurrentPage, setInnerCurrentPage] = useState(1);
   
@@ -17,17 +17,13 @@ const PageSelector = ({currentPage=1, textDisplay='', minValue=1, maxValue=100, 
       setInnerCurrentPage(oldValue => oldValue+1);
     }
   }
-  const onChangeHandler = (e)=>{
-    if (e.target.value === ''){
-      setInnerCurrentPage('');
-      onClickFunction(1);
-     
+  const onChangeFunction = (e)=>{
+    if ((e.target.value<minValue || e.target.value >maxValue) && (e.target.value !== '')){
+      return;
     }
-    else{
-      setInnerCurrentPage(parseInt(e.target.value));
-      onClickFunction(parseInt(e.target.value));
-    }
-    
+    // console.log(e.target.value === NaN)
+    onChangeHandler(e.target.value);
+    onClickFunction(e.target.value);
   }
   const content = (
     <div className="page-selector-holder">
@@ -35,10 +31,8 @@ const PageSelector = ({currentPage=1, textDisplay='', minValue=1, maxValue=100, 
         onClick = {
           (e)=>{
             //onClickLeftButton();
-            if (innerCurrentPage >1){
-              setInnerCurrentPage(old => old-1);
-              onClickFunction(currentPage-1);
-            }
+              onClickFunction(parseInt(currentPage-1));
+            
           }
         }
         id="increase-btn" 
@@ -47,7 +41,8 @@ const PageSelector = ({currentPage=1, textDisplay='', minValue=1, maxValue=100, 
         <input 
           onChange={
             (e)=>{
-              onChangeHandler(e)
+           
+              onChangeFunction(e)
             }
           }
           className="input-value" 
@@ -59,11 +54,8 @@ const PageSelector = ({currentPage=1, textDisplay='', minValue=1, maxValue=100, 
         onClick={
           (e)=>{
          //  onClickRightValue();
-            if (innerCurrentPage < maxValue)
-            {
-              setInnerCurrentPage(old => old+1);
-              onClickFunction(currentPage+1);
-            }
+          
+           onClickFunction(parseInt(currentPage+1));
             
           }
         }

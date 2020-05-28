@@ -58,16 +58,19 @@ const useStyles = makeStyles({
 });
 const ProductsTableAdmin = ({turnOnEditProductForm, productsList=[]})=>{
   const [currentProductsList, setCurrentProductsList] = useState([]);
+  const [oldProductsList, setOldProductsList] = useState([]);
   const [numberOfPage, setNumberOfPage] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+ 
   const updateCurrentPage = (newPage)=>{
-    if (newPage >=1 && newPage <=numberOfPage){
+    if (newPage >=1 && newPage <=numberOfPage){    
       setCurrentPage(newPage);
-      setCurrentProductsList([...currentPage.slice((newPage - 1)*6, (newPage - 1)*6+6)]);
+      setCurrentProductsList([...oldProductsList.slice((newPage - 1)*6, (newPage - 1)*6+6)]);
     }
   }
   useEffect(()=>{
     setCurrentProductsList([...productsList.slice(0,6)]);
+    setOldProductsList([...productsList]);
     if (productsList.length/6 < 1){
       setNumberOfPage(1);
     }
@@ -118,7 +121,7 @@ const ProductsTableAdmin = ({turnOnEditProductForm, productsList=[]})=>{
                           <button className="product-action-btn">ACTION</button>
                           <img className="dropdown-btn product-action-dropdown" src={Dropdown}/>
                           <div className="product-admin-action-container">
-                             <ProductAdminAction turnOnEditForm={turnOnEditProductForm}  currentList={currentProductsList} updateProductsList={setCurrentProductsList} productIndex={productIndex} productId={product._id._str}/>
+                             <ProductAdminAction turnOnEditForm={turnOnEditProductForm}  currentList={currentProductsList} updateProductsList={{setCurrentProductsList, setOldProductsList}} oldList={oldProductsList} productIndex={productIndex} updateCurrentPage={updateCurrentPage} updateNumberOfPage={setNumberOfPage} productId={product._id._str}/>
                           </div>
                       </div>
                       </div>
@@ -139,7 +142,7 @@ const ProductsTableAdmin = ({turnOnEditProductForm, productsList=[]})=>{
           <StyledTableCell className={classes.noPadding}  align="center">
             <div className="action-container pagination-table-holder">
               <div className="action-holder">
-                <PageSelector maxValue={numberOfPage} onClickFunction={updateCurrentPage} currentPage={currentPage} textDisplay={` /${numberOfPage}`}/>
+                <PageSelector maxValue={numberOfPage} onClickFunction={updateCurrentPage} currentPage={currentPage} onChangeHandler={setCurrentPage} textDisplay={` /${numberOfPage}`}/>
               </div>
             </div>
           </StyledTableCell>
