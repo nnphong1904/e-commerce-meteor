@@ -1,0 +1,25 @@
+.page-not-found-background {
+	height: 300px;
+}
+.page-not-found-container {
+	position: absolute;
+	left: 50%;
+	top: 10%;
+	transform: translateX(-50%);
+}
+.backward-btn {
+	background: #ffa15f;
+	height: 30px;
+	font-size: 20px;
+	margin-left: 40%;
+	transition: all 0.3s;
+	color: white;
+	padding: 3px 6px 8px 6px;
+	border-radius: 5px;
+}
+.backward-btn:hover {
+	background: #ffa15f;
+}
+.backward-btn:focus {
+	outline: none;
+}

@@ -212,7 +212,7 @@ const AddProductForm = ({product={}, isLoading=false ,isDisabled=false ,hasError
                 className="category-input-field" 
                 name="color"
                 options={colorOptions}
-                placeholder="category"
+                placeholder="color"
                 id="category-input"
                 />
               </label> 
