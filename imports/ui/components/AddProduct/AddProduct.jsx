@@ -50,26 +50,32 @@ const AddProduct = ({turnOffForm = ()=>{}})=>{
         }
       })
       .then(res=>{
-        // setIsLoading(false);
+       
         if (res.status === 201){
-          setNotifyMessage('Add new product success');
-          setHasError(false);
-          setIsLoading(false);
+          // setNotifyMessage('Add new product success');
+          // setHasError(false);
           const timeoutId = setTimeout(()=>{
-            setNotifyMessage('');
+            setNotifyMessage('Add new product success');
+            setHasError(false);
+            setIsLoading(false)
             clearTimeout(timeoutId);
           }, 3000)
         }
         else {
-          setNotifyMessage('Add new product failed');
-          setHasError(true);
-          setIsLoading(false);
+          // setNotifyMessage('Add new product failed');
+          // setHasError(true);
           const timeoutId = setTimeout(()=>{
-            setNotifyMessage('');
-            setHasError(false);
+            setNotifyMessage('Add new product failed');
+            setHasError(true);
+            setIsLoading(false);
             clearTimeout(timeoutId);
           }, 3000)
         }
+        const timeoutId = setTimeout(()=>{
+          setNotifyMessage('');
+          setHasError(false);
+          clearTimeout(timeoutId);
+        }, 5000)
       })
     });
    

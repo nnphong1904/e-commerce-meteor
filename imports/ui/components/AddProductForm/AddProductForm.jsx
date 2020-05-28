@@ -43,7 +43,7 @@ const categoryOption = [
 ];
 
 const AddProductForm = ({product={}, isLoading=false ,isDisabled=false ,hasError=false ,onSubmitHandler= ()=>{}, message='' ,turnOffForm=()=>{}})=>{
- 
+  
   const [file, setFile] = useState('');
   const [imagePreviewUrl, setImagePreviewUrl] = useState('');
   const [name, setName] = useState('');
@@ -227,8 +227,8 @@ const AddProductForm = ({product={}, isLoading=false ,isDisabled=false ,hasError
                    {'error-notify':hasError === true}, 
                    {'success-notify': hasError === false})}><span>{message}</span>
            </div>  
-        <button onClick={()=>{turnOffForm(false)}} className="turn-off-form">Cancel</button>
-          <input onClick={()=>{
+        <button disabled={isLoading} onClick={()=>{turnOffForm(false)}} className="turn-off-form">Cancel</button>
+          <input disabled={isLoading} onClick={()=>{
              onSubmitHandler(file, name, category, brand, price, sizesName, sizesQuantity, color)
           }} className="submit-form-btn" type="submit" value="Submit" />
       </div>
