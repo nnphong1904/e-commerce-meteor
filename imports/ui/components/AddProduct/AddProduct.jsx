@@ -8,16 +8,15 @@ const AddProduct = ({turnOffForm = ()=>{}})=>{
   const [isLoading, setIsLoading] = useState(false);
 
   const addProduct = (file, name, category, brand, price, sizesName, quantity, color)=>{
-    setIsLoading(true);
-    setNotifyMessage('Loading....');
     if (!file || name === '' || price === '' || !category || !brand || !sizesName || !quantity || !color){
       setNotifyMessage('Missing some fields');
       setHasError(true);
       setIsLoading(false);
       const timeoutId = setTimeout(()=>{
         setNotifyMessage('');
+        setHasError(false);
         clearTimeout(timeoutId);
-      }, 3000)
+      }, 2000)
       return ;
     }
     if (sizesName.map(size=>size.value).length !== quantity.length){
@@ -26,10 +25,13 @@ const AddProduct = ({turnOffForm = ()=>{}})=>{
       setIsLoading(false);
       const timeoutId = setTimeout(()=>{
         setNotifyMessage('');
+        setHasError(false);
         clearTimeout(timeoutId);
-      }, 3000)
+      }, 2000)
       return;
     }
+    setIsLoading(true);
+    setNotifyMessage('Loading....');
     
     const newProduct = new FormData();
     // newProduct.append('avt', file, file.name);
@@ -59,7 +61,7 @@ const AddProduct = ({turnOffForm = ()=>{}})=>{
             setHasError(false);
             setIsLoading(false)
             clearTimeout(timeoutId);
-          }, 3000)
+          }, 1000)
         }
         else {
           // setNotifyMessage('Add new product failed');
@@ -69,13 +71,13 @@ const AddProduct = ({turnOffForm = ()=>{}})=>{
             setHasError(true);
             setIsLoading(false);
             clearTimeout(timeoutId);
-          }, 3000)
+          }, 1000)
         }
         const timeoutId = setTimeout(()=>{
           setNotifyMessage('');
           setHasError(false);
           clearTimeout(timeoutId);
-        }, 5000)
+        }, 2000)
       })
     });
    

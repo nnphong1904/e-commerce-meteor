@@ -115,7 +115,11 @@ const AddProductForm = ({product={}, isLoading=false ,isDisabled=false ,hasError
               <div className="field-container">
               {imagePreviewUrl !=='' && isLoading === false && isDisabled === false && <img onClick={cancelImage} className="cancel-image" src={CancelImage}/>}
                 <label className="image-field">  
-                  <input disabled={isDisabled || isLoading} className="input-image-file" type='file' name='avt' onChange={(e)=>{handleImageChange(e)}} />
+                  <input disabled={isDisabled || isLoading} 
+                         className={classNames("input-image-file",
+                          {'disabled-background':isDisabled || isLoading})}
+                         type='file' name='avt' 
+                         onChange={(e)=>{handleImageChange(e)}} />
                   <div className="image-preview-holder">
                     <img className="image-preview" alt='' src={imagePreviewUrl}/>
                     {imagePreviewUrl === '' && <div className="add-image-notify">
@@ -131,7 +135,8 @@ const AddProductForm = ({product={}, isLoading=false ,isDisabled=false ,hasError
             <span className="field-title ">NAME</span>
             <div className='field-container'>
               <label>
-                <input disabled={isDisabled || isLoading} value={name} onChange={e=>{onChangeHandler(e, setName)}} className="input-text-field" type='text' name='name'/>
+                <input disabled={isDisabled || isLoading} value={name} onChange={e=>{onChangeHandler(e, setName)}}
+                   className={classNames("input-text-field", {'disabled-background':isDisabled || isLoading})} type='text' name='name'/>
               </label> 
             </div>
           </div>
@@ -173,7 +178,7 @@ const AddProductForm = ({product={}, isLoading=false ,isDisabled=false ,hasError
             <span className="field-title ">{`PRICE($)`}</span>
             <div className='field-container'>
               <label>
-                <input disabled={isDisabled || isLoading} value={price} onChange={(e)=>onChangeHandler(e, setPrice)} className="input-text-field" type='text' name='price'/>
+                <input disabled={isDisabled || isLoading} value={price} onChange={(e)=>onChangeHandler(e, setPrice)} className={classNames("input-text-field", {'disabled-background':isDisabled || isLoading})} type='text' name='price'/>
               </label> 
             </div>
           </div>
@@ -225,7 +230,8 @@ const AddProductForm = ({product={}, isLoading=false ,isDisabled=false ,hasError
       <div className={
                 classNames("notify-for-submit-form", 
                    {'error-notify':hasError === true}, 
-                   {'success-notify': hasError === false})}><span>{message}</span>
+                   {'success-notify': hasError === false},
+                   {'loading-notify': isLoading === true && hasError === false})}><span>{message}</span>
            </div>  
         <button disabled={isLoading} onClick={()=>{turnOffForm(false)}} className="turn-off-form">Cancel</button>
           <input disabled={isLoading} onClick={()=>{

@@ -144,3 +144,9 @@
 .success-notify {
 	color: green;
 }
+.loading-notify {
+	color: #ffa15e;
+}
+.disabled-background {
+	background-color: hsl(0, 0%, 95%);
+}

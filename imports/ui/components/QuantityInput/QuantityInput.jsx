@@ -1,7 +1,7 @@
 import React, { useState, createRef, useEffect } from 'react';
 import './QuantityInput.css';
 import CircleCancel from '../../assets/image/circle-cancel.svg';
-
+import classNames from 'classnames';
 const QuantityInput = ({updateQuantityList = ()=>{}, isDisabled = false, quantityValue=[]})=>{
   const [listQuantity, setListQuantity] = useState([]);
   const [inputtingValue, setInputtingValue] = useState('');
@@ -52,7 +52,7 @@ const QuantityInput = ({updateQuantityList = ()=>{}, isDisabled = false, quantit
           onKeyUpHandler(e);
         }}
         type="number" 
-        className="quantity-input" 
+        className={classNames("quantity-input", {'disabled-background': isDisabled})} 
         onChange={(e)=>{onChangeHandler(e)}} 
         value={inputtingValue}/>
       <div ref={quantityListRef} className="quantity-value-holder" >

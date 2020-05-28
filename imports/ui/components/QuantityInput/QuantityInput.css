@@ -47,3 +47,6 @@
 	margin-left: 5px;
 	cursor: pointer;
 }
+.disabled-background {
+	background-color: hsl(0, 0%, 95%);
+}
