@@ -8,10 +8,12 @@ const AddProduct = ({turnOffForm = ()=>{}})=>{
   const [isLoading, setIsLoading] = useState(false);
 
   const addProduct = (file, name, category, brand, price, sizesName, quantity, color)=>{
+    setIsLoading(true);
+    setNotifyMessage('Loading....');
     if (!file || name === '' || price === '' || !category || !brand || !sizesName || !quantity || !color){
-    
       setNotifyMessage('Missing some fields');
       setHasError(true);
+      setIsLoading(false);
       const timeoutId = setTimeout(()=>{
         setNotifyMessage('');
         clearTimeout(timeoutId);
@@ -21,6 +23,7 @@ const AddProduct = ({turnOffForm = ()=>{}})=>{
     if (sizesName.map(size=>size.value).length !== quantity.length){
       setNotifyMessage('You have not input quantity for each sizes');
       setHasError(true);
+      setIsLoading(false);
       const timeoutId = setTimeout(()=>{
         setNotifyMessage('');
         clearTimeout(timeoutId);
@@ -47,9 +50,11 @@ const AddProduct = ({turnOffForm = ()=>{}})=>{
         }
       })
       .then(res=>{
+        // setIsLoading(false);
         if (res.status === 201){
           setNotifyMessage('Add new product success');
           setHasError(false);
+          setIsLoading(false);
           const timeoutId = setTimeout(()=>{
             setNotifyMessage('');
             clearTimeout(timeoutId);
@@ -58,6 +63,7 @@ const AddProduct = ({turnOffForm = ()=>{}})=>{
         else {
           setNotifyMessage('Add new product failed');
           setHasError(true);
+          setIsLoading(false);
           const timeoutId = setTimeout(()=>{
             setNotifyMessage('');
             setHasError(false);
@@ -71,7 +77,7 @@ const AddProduct = ({turnOffForm = ()=>{}})=>{
   }
   const content = (
     <div>
-      <AddProductForm onSubmitHandler={addProduct} hasError={hasError} message={notifyMessage} turnOffForm={turnOffForm}/>
+      <AddProductForm isLoading={isLoading} onSubmitHandler={addProduct} hasError={hasError} message={notifyMessage} turnOffForm={turnOffForm}/>
     </div>
   );
   return content;

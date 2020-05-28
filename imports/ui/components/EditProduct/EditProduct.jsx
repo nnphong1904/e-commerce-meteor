@@ -23,11 +23,21 @@ const EditProduct = ({turnOffForm=()=>{}, editedProductId})=>{
       console.log('err')
       setNotifyMessage('Missing some fields');
       setHasError(true);
+      const timeoutId = setTimeout(()=>{
+        setNotifyMessage('');
+        setHasError(false);
+        clearTimeout(timeoutId);
+      },3000);
       return ;
     }
     if (sizesName.map(size=>size.value).length !== sizesQuantity.length){
       setNotifyMessage('You have not input quantity for each sizes');
       setHasError(true);
+      const timeoutId = setTimeout(()=>{
+        setNotifyMessage('');
+        setHasError(false);
+        clearTimeout(timeoutId);
+      },3000);
       return;
     }
     const newProduct = new FormData();

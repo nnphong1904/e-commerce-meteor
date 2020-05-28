@@ -16,7 +16,6 @@ const LoginForm = (props)=>{
 
   const onSubmit = (e)=>{
     e.preventDefault();
-    console.log({email,password});
     Meteor.call('isEmailAdmin', email, (err, result)=>{
       if (result === true){
         setErrorMsg('Your e-mail is invalid');
@@ -32,8 +31,8 @@ const LoginForm = (props)=>{
           props.setDisplayLoginForm(false);
         }
        });
-       setEmail('');
-       setPassword('')
+      //  setEmail('');
+      //  setPassword('')
        Session.set('loginAsAdmin', false);
     })
   }

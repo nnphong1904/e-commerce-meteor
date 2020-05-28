@@ -1,11 +1,14 @@
-import React, { useState, createRef } from 'react';
+import React, { useState, createRef, useEffect } from 'react';
 import './QuantityInput.css';
 import CircleCancel from '../../assets/image/circle-cancel.svg';
 
-const QuantityInput = ({updateQuantityList = ()=>{}})=>{
-  const [listQuantity, setListQuantity] = useState([])
+const QuantityInput = ({updateQuantityList = ()=>{}, isDisabled = false, quantityValue=[]})=>{
+  const [listQuantity, setListQuantity] = useState([]);
   const [inputtingValue, setInputtingValue] = useState('');
-
+  useEffect(()=>{
+    //  console.log(quantityValue)
+    setListQuantity([...quantityValue]);
+  },[quantityValue]);
   const quantityListRef = createRef();
   const inputQuantityRef = createRef();
 
@@ -18,6 +21,7 @@ const QuantityInput = ({updateQuantityList = ()=>{}})=>{
     updateQuantityList([...newListQuantity]);
                           
   }
+
 
   const onChangeHandler = (e)=>{
     setInputtingValue(e.target.value);
@@ -39,6 +43,7 @@ const QuantityInput = ({updateQuantityList = ()=>{}})=>{
   const content = (
     <label className="quantity-input-holder">
       <input 
+        disabled={isDisabled}
         ref={inputQuantityRef}
         onKeyUp={e=>{
           onKeyUpHandler(e);

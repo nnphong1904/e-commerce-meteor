@@ -38,9 +38,9 @@ export const fetchProduct = async (condition, currentPage, numberItemPerPage = 2
         }
         
 
-        if (condition.branch !== undefined && condition.branch.length > 0  )
+        if (condition.brand !== undefined && condition.brand.length > 0  )
         {
-          matchingFilterCondition.branch = {$in: condition.branch};
+          matchingFilterCondition.brand = {$in: condition.brand};
         }
         
         
@@ -71,7 +71,7 @@ export const fetchProduct = async (condition, currentPage, numberItemPerPage = 2
             avt:1, 
             decId:1, 
             sizes:1, 
-            branch:1, 
+            brand:1, 
             color: 1,
             numberOfItem: {$sum:'$sizes.noItems'},
             category:1
