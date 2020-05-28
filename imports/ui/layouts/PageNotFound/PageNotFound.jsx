@@ -1,6 +1,6 @@
 import React from 'react';
 import './PageNotFound.css';
-import PageNotFoundBackground from '../../assets/image/Ảnh chụp Màn hình 2020-05-28 lúc 16.31.56.png';
+import PageNotFoundBackground from '../../assets/image/404.png';
 const PageNotFound = ()=>{
   const goBackward = ()=>{
     history.back();
