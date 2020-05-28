@@ -63,7 +63,7 @@ const ProductsTableAdmin = ({turnOnEditProductForm, productsList=[]})=>{
   const updateCurrentPage = (newPage)=>{
     if (newPage >=1 && newPage <=numberOfPage){
       setCurrentPage(newPage);
-      setCurrentProductsList([...productsList.slice((newPage - 1)*6, (newPage - 1)*6+6)]);
+      setCurrentProductsList([...currentPage.slice((newPage - 1)*6, (newPage - 1)*6+6)]);
     }
   }
   useEffect(()=>{
