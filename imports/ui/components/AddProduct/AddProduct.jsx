@@ -81,6 +81,16 @@ const AddProduct = ({updateProductList=()=>{}, turnOffForm = ()=>{}, productsLis
           clearTimeout(timeoutId);
         }, 1200)
       })
+      .catch(err=>{
+        setNotifyMessage('Add product failed');
+        setHasError(true);
+        const timeoutId = setTimeout(()=>{
+          setNotifyMessage('');
+          setHasError(false);
+          setIsLoading(false);
+          clearTimeout(timeoutId);
+        },1200); 
+      })
     });
    
 
