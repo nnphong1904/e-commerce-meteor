@@ -88,7 +88,7 @@ const Navbar = (props)=>{
           className="search-box" 
           type="text" 
           placeholder="Search"/>
-        <img onClick={goProductsPage} src={Logo} className="Logo clickable"/>
+        <img onClick={goProductsPage} src={Logo} className="Logo-navbar clickable"/>
         <div className="auth">
             { props.currentUser===null &&
               <>
