@@ -6,7 +6,7 @@ import Footer from './components/Footer/Footer.jsx';
 export const App = ({component}) => {
   const [displayLoginForm, setDisplayLoginForm] = useState(false);
   const [displayRegisterForm, setDisplayRegisterForm] = useState(false);
-  console.log('App rendering...');
+  // console.log('App rendering...');
   const content = (
   <>
      <Navbar setDisplayLoginForm={setDisplayLoginForm} setDisplayRegisterForm={setDisplayRegisterForm} />

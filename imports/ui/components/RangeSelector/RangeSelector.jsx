@@ -45,7 +45,7 @@ const RangeSelector = (
           resetRangeSelector.setDidResetPriceFilter(false);
         }
       },[resetRangeSelector.didResetPriceFilter]);
-      console.log({value1, value2})
+      // console.log({value1, value2})
 
       const [value, setValue] = useState([value1, value2]);
 

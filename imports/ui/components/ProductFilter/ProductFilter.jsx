@@ -32,7 +32,7 @@ const ProductFilter = ({changeCurrentPage, fetchProduct, resetCurrentPageValue})
   const [priceValue1, setPriceValue1] = useState(39);
   const [priceValue2, setPriceValue2] = useState(300);
   const [didResetPriceFilter, setDidResetPriceFilter] = useState(false);
-  console.log({priceValue1,priceValue2});
+  // console.log({priceValue1,priceValue2});
 
   const [filterCondition, setFilterCondition] = useState({
     category:'',
@@ -96,7 +96,7 @@ const ProductFilter = ({changeCurrentPage, fetchProduct, resetCurrentPageValue})
   }
 
   const toggleFilter = (ref)=>{
-    console.log(ref.current);
+    // console.log(ref.current);
     ref.current.style.display=ref.current.style.display===''?'block':'';
   }
   
@@ -113,7 +113,7 @@ const ProductFilter = ({changeCurrentPage, fetchProduct, resetCurrentPageValue})
   const filterByAvailableItem = (e)=>{
     // changeCurrentPage(1);
     const filterByNumberOfItemCondition = e.target.value;
-    console.log(e.target.value);
+    // console.log(e.target.value);
     let currentFilterCondition = {...filterCondition};
     if (filterByNumberOfItemCondition === 'in stored'){
       currentFilterCondition.outStockOrInStored.inStored = !currentFilterCondition.outStockOrInStored.inStored;
