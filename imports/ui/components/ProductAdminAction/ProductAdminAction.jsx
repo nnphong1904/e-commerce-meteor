@@ -10,23 +10,20 @@ const ProductAdminAction = ({updateProductsList=()=>{} ,turnOnEditForm = ()=>{} 
                             ];
     const originIndex = index + (currentPage -1)*6;
     const newProductsList = [...oldList.slice(0,originIndex), ...oldList.slice(originIndex+1)];
-    if (newProductsList.length/6 < 1){
-      updateNumberOfPage(1);
-      // updateCurrentPage(1);
+    if (newDisplayingProductsList.length === 0){
+      updateNumberOfPage(old => old -1);
+      updateProductsList.setCurrentProductsList([...oldList.slice((currentPage-2)*6,(currentPage-2)*6+6 )]);
+      updateCurrentPage(currentPage-1);
     }
-    if (newProductsList.length%6 === 0){
-      updateNumberOfPage(newProductsList.length/6);
-      // updateCurrentPage(newProductsList.length/6);
+    else{
+      updateProductsList.setCurrentProductsList([...newDisplayingProductsList]);
     }
-    else {
-      updateNumberOfPage(parseInt(newProductsList.length/6)+1);
-      // updateCurrentPage(parseInt(newProductsList.length/6)+1);
-    }
-    updateProductsList.setCurrentProductsList([...newDisplayingProductsList]);
+    
     updateProductsList.setOldProductsList([...newProductsList]);
     const URL = `http://localhost:4000/api/v1/product/${id}`;
     Meteor.call('getHashedToken', (err, result)=>{
       // console.log(result);
+      
       axios.delete(URL, {
         headers: {
           'Authorization': result
