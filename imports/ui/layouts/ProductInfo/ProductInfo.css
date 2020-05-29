@@ -191,6 +191,7 @@
 
 .image-view.same-branch-product {
 	flex: 0 0 18%;
+	height: 110px;
 }
 
 .product-view.same-brand-list {
