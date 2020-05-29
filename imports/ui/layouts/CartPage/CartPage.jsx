@@ -131,65 +131,66 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
     {showNotificationForConfirmCancelledOrder && <Notification onClickFunction={confirmToCancelledOrderFunction}/>}
     <div className="cart-page-container">
       <div className="cart-page-header">MY BAG</div>
-      <div className="table-container">
-        <ProductsTable onClickFunction={{removeItemFromCart, increaseQuantityInCart, decreaseQuantityInCart}} onChangeFunction={{changeQuantityInCartByTyping}} productList={myCart} />
-      </div>
-      <div className="bill-holder">
-        <div className="bill-holder-header">Total</div>
-        <div className="bill-info">
-          <div className="bill-info-details">
-            <div className="ship-handling">Shipping & Handling: <span className="ship-handling-price">Free</span></div>
-            <div className="total-product">Total product: <span className="total-product-value">{cartSize}</span></div>
-            <div className="subtotal">Subtotal: <span className="subtotal-value">{`$${subtotal}`}</span></div>
-          </div>
-          <button 
-              onClick={(e)=>{
-                checkoutOrder({})
-                }} 
-              className="check-out-btn">Check out</button>
-          <div className="add-to-cart-message">
-            {addToCartMessageError !== '' && <div className="add-to-cart-message-error">{addToCartMessageError}</div>}
-            {addToCartMessageSuccess !== '' && <div className="add-to-cart-message-success">{addToCartMessageSuccess}</div>}
-          </div>   
-         
-           </div>
+      <div className="cart-page-content-container">
+        <div className="table-container">
+          <ProductsTable onClickFunction={{removeItemFromCart, increaseQuantityInCart, decreaseQuantityInCart}} onChangeFunction={{changeQuantityInCartByTyping}} productList={myCart} />
         </div>
-        {currentUser && 
-         
-            <div className="my-orders-list">
-                <div className="my-orders-list-header">
-                  <div className="orders-list-header-id">Order ID</div>
-                  <div className="orders-list-header-status">Status</div>
-                  <div className="orders-list-header-status">Cancel</div>
-                </div>
-                <div className="my-orders-list-body">
-                  {myOldOrders.map((order, orderIndex)=>{
-                    const content = (
-                      <div key={orderIndex} className="order-item-holder">
-                          <div className='my-order-id'>{order.orderId}</div>
-                          <div className='my-order-status'>
-                            <div className="order-status-wrapper">
-                              <OrderStatus status={order.status} />
+        <div className="bill-holder">
+          <div className="bill-holder-header">Total</div>
+          <div className="bill-info">
+            <div className="bill-info-details">
+              <div className="ship-handling">Shipping & Handling: <span className="ship-handling-price">Free</span></div>
+              <div className="total-product">Total product: <span className="total-product-value">{cartSize}</span></div>
+              <div className="subtotal">Subtotal: <span className="subtotal-value">{`$${subtotal}`}</span></div>
+            </div>
+            <button 
+                onClick={(e)=>{
+                  checkoutOrder({})
+                  }} 
+                className="check-out-btn">Check out</button>
+            <div className="add-to-cart-message">
+              {addToCartMessageError !== '' && <div className="add-to-cart-message-error">{addToCartMessageError}</div>}
+              {addToCartMessageSuccess !== '' && <div className="add-to-cart-message-success">{addToCartMessageSuccess}</div>}
+            </div>   
+           
+             </div>
+          </div>
+          {currentUser && 
+              <div className="my-orders-list">
+                  <div className="my-orders-list-header">
+                    <div className="orders-list-header-id">Order ID</div>
+                    <div className="orders-list-header-status">Status</div>
+                    <div className="orders-list-header-status">Cancel</div>
+                  </div>
+                  <div className="my-orders-list-body">
+                    {myOldOrders.map((order, orderIndex)=>{
+                      const content = (
+                        <div key={orderIndex} className="order-item-holder">
+                            <div className='my-order-id'>{order.orderId}</div>
+                            <div className='my-order-status'>
+                              <div className="order-status-wrapper">
+                                <OrderStatus status={order.status} />
+                              </div>
                             </div>
-                          </div>
-                          {
-                            order.status === 0 && 
-                              <div >
-                                 <img onClick={(e)=>onClickCanceledOrderButton(e)} id={order.orderId} className='cancel-order-button' src={Cancel}/>
-                              </div>
-                          }
-                          {
-                            order.status !== 0 && 
-                              <div >
-                                 
-                              </div>
-                          }
-                      </div>
-                    );
-                    return content;
-                  })}
-                </div>
-         </div>  } 
+                            {
+                              order.status === 0 && 
+                                <div >
+                                   <img onClick={(e)=>onClickCanceledOrderButton(e)} id={order.orderId} className='cancel-order-button' src={Cancel}/>
+                                </div>
+                            }
+                            {
+                              order.status !== 0 && 
+                                <div >
+                                   
+                                </div>
+                            }
+                        </div>
+                      );
+                      return content;
+                    })}
+                  </div>
+           </div>  } 
+      </div>
       </div>
   </>
   );

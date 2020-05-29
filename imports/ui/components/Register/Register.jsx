@@ -23,7 +23,7 @@ const RegisterForm = (props)=>{
     props.setDisplayRegisterForm(false)
   }
   const onSubmit = (e)=>{
-    console.log({email, name, password});
+    // console.log({email, name, password});
     let currentErrorName = '';
     let currentErrorEmail = '';
     let currentErrorPassword = '';
@@ -49,7 +49,7 @@ const RegisterForm = (props)=>{
     else{
       currentErrorPassword='';
     }
-    console.log({currentErrorEmail, currentErrorName, currentErrorPassword});
+    // console.log({currentErrorEmail, currentErrorName, currentErrorPassword});
     const newUser = {email,password, profile: {name,role:0}};
     try{
       // if (name==='' || email ==='' ||password.length<6){
@@ -57,9 +57,9 @@ const RegisterForm = (props)=>{
       // }
       if (currentErrorPassword==='' && currentErrorEmail==='' && currentErrorName==='')
       {
-        console.log('start register');
+        // console.log('start register');
             Meteor.call('addUser',newUser,(err,result)=>{
-              console.log(result);
+              // console.log(result);
               
           if (!err){
             if (result.success === true) 
@@ -70,8 +70,8 @@ const RegisterForm = (props)=>{
               })
             }
             else{
-              console.log('email existed');
-              console.log(result.status);
+              // console.log('email existed');
+              // console.log(result.status);
               if (result.status === 403)
               {
              //    currentErrorEmail='Your email is already exist';

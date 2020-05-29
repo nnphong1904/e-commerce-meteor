@@ -89,8 +89,8 @@
 	/* padding: 3% 5% 3% 5%; */
 	margin-top: 10%;
 	padding: 10px 10px 10px 10px;
-	margin-top: 20%;
-	margin-left: 67%;
+	margin-top: 25%;
+	margin-left: 5.2%;
 }
 .order-item-holder {
 	display: flex;
@@ -126,4 +126,7 @@
 	width: 20px;
 	cursor: pointer;
 	margin-right: 10px;
+}
+.cart-page-content-container {
+	display: flex;
 }
