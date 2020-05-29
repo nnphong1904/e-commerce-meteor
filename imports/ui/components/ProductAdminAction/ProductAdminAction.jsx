@@ -9,24 +9,16 @@ const ProductAdminAction = ({updateProductsList=()=>{} ,turnOnEditForm = ()=>{} 
                              ...currentList.slice(index+1)  
                             ];
     const originIndex = index + (currentPage -1)*6;
-    console.log(currentPage);
     const newProductsList = [...oldList.slice(0,originIndex), ...oldList.slice(originIndex+1)];
-    if (newProductsList.length/6 < 1){
-      // updateCurrentPage(1);
-      updateNumberOfPage(1);
-     
+    if (newDisplayingProductsList.length === 0){
+      updateNumberOfPage(old => old -1);
+      updateProductsList.setCurrentProductsList([...oldList.slice((currentPage-2)*6,(currentPage-2)*6+6 )]);
+      updateCurrentPage(currentPage-1);
     }
-    if (newProductsList.length%6 === 0){
-      // updateCurrentPage(newProductsList.length/6);
-      updateNumberOfPage(newProductsList.length/6);
-     
+    else{
+      updateProductsList.setCurrentProductsList([...newDisplayingProductsList]);
     }
-    else {
-      // updateCurrentPage(parseInt(newProductsList.length/6)+1);
-      updateNumberOfPage(parseInt(newProductsList.length/6)+1);
-  
-    }
-    updateProductsList.setCurrentProductsList([...newDisplayingProductsList]);
+    
     updateProductsList.setOldProductsList([...newProductsList]);
     const URL = `http://localhost:4000/api/v1/product/${id}`;
     Meteor.call('getHashedToken', (err, result)=>{

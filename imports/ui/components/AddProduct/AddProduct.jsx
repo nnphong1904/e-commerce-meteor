@@ -79,7 +79,7 @@ const AddProduct = ({updateProductList=()=>{}, turnOffForm = ()=>{}, productsLis
           setNotifyMessage('');
           setHasError(false);
           clearTimeout(timeoutId);
-        }, 2000)
+        }, 1200)
       })
     });
    

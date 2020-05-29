@@ -24,7 +24,7 @@ const EditProduct = ({turnOffForm=()=>{}, editedProductId})=>{
         setHasError(false);
         setIsLoading(false);
         clearTimeout(timeoutId);
-      },2000);
+      },1000);
       return ;
     }
     if (sizesName.map(size=>size.value).length !== sizesQuantity.length){
@@ -34,7 +34,7 @@ const EditProduct = ({turnOffForm=()=>{}, editedProductId})=>{
         setNotifyMessage('');
         setHasError(false);
         clearTimeout(timeoutId);
-      },2000);
+      },1000);
       return;
     }
       setIsLoading(true);
@@ -73,7 +73,7 @@ const EditProduct = ({turnOffForm=()=>{}, editedProductId})=>{
               setHasError(false);
               setIsLoading(false);
               clearTimeout(timeoutId);
-            },2000); 
+            },1200); 
           })
       });
     
