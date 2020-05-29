@@ -131,7 +131,7 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
     {showNotificationForConfirmCancelledOrder && <Notification onClickFunction={confirmToCancelledOrderFunction}/>}
     <div className="cart-page-container">
       <div className="cart-page-header">MY BAG</div>
-      <div className="demo">
+      <div className="cart-page-content-container">
         <div className="table-container">
           <ProductsTable onClickFunction={{removeItemFromCart, increaseQuantityInCart, decreaseQuantityInCart}} onChangeFunction={{changeQuantityInCartByTyping}} productList={myCart} />
         </div>
