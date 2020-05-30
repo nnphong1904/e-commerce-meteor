@@ -33,6 +33,10 @@ const LoginForm = (props)=>{
        });
       //  setEmail('');
       //  setPassword('')
+      const timeoutId = setTimeout(()=>{
+        setErrorMsg('');
+        clearTimeout(timeoutId);
+      },2000)
        Session.set('loginAsAdmin', false);
     })
   }
@@ -42,7 +46,7 @@ const LoginForm = (props)=>{
      <div id="overlay" className="container">
         <form onSubmit={(e)=>onSubmit(e)} className="form">
           <div>Log In</div>
-          {errorMsg && <div className="err-msg">{errorMsg}</div>}
+          <div className="err-msg">{errorMsg}</div>
           <label className="label-email" >
             <div>Email</div>
             <input 
