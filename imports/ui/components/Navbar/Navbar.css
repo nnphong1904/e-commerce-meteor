@@ -14,7 +14,7 @@
 }
 
 .upper-part > .auth {
-	width: 273px;
+	/* width: 273px; */
 	display: flex;
 	align-items: center;
 	margin-right: 134px;
@@ -135,6 +135,7 @@
 	height: 20px;
 	-o-object-fit: contain;
 	object-fit: contain;
+	margin-left: 5%;
 	/* margin-right: 11%; */
 }
 .Cart {
@@ -230,7 +231,7 @@
 	position: absolute;
 	top: 90%;
 	/* right: 70%; */
-	right: 42%;
+	right: 25%;
 	box-shadow: 0 14px 30px 0 rgba(0, 0, 0, 0.14);
 	border: solid 0.5px #eaeaea;
 	background-color: #fbfbfb;
@@ -278,7 +279,7 @@
 	text-align: center;
 	color: white;
 	padding-bottom: 2px;
-	right: 24%;
+	right: 18px;
 	top: 0;
 }
 .cart-btn {
@@ -286,4 +287,15 @@
 }
 #avatar {
 	margin-left: 130px;
+}
+.auth-btn {
+	display: flex;
+	align-items: center;
+}
+.user-avatar-holder:hover + .logout-btn {
+	transform: scaleY(1);
+}
+.user-avatar-holder {
+	width: 203px;
+	text-align: right;
 }
