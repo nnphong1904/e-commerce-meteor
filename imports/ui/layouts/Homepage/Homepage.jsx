@@ -13,20 +13,20 @@ const Homepage = ()=>{
         <button onClick={goProductsPage}  className="shop-now-btn">Shop Now</button>
       </div>
       <div className="filter-container">
-        <div className="filter-card">
+        <div className="filter-card men">
           <div className="card-title">Men</div>
           <button onClick={goProductsPage} className="shop-now-btn">Shop Now</button>
         </div>
-        <div className="filter-card">
-          <div className="card-title">Men</div>
+        <div className="filter-card ladies">
+          <div className="card-title ">Ladies</div>
           <button onClick={goProductsPage} className="shop-now-btn">Shop Now</button>
         </div>
-        <div className="filter-card">
-          <div className="card-title">Men</div>
+        <div className="filter-card girls">
+          <div className="card-title">Girls</div>
           <button onClick={goProductsPage} className="shop-now-btn">Shop Now</button>
         </div>
-        <div className="filter-card">
-          <div className="card-title">Men</div>
+        <div className="filter-card boys">
+          <div className="card-title">Boys</div>
           <button onClick={goProductsPage} className="shop-now-btn">Shop Now</button>
         </div>
       </div>

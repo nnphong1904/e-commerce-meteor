@@ -1,11 +1,12 @@
 .thumbnail-container {
 	margin: 2.8% 0 0 13%;
 	width: 72vw;
-	height: 48vh;
+	height: 60vh;
 	background: url('static/imports/ui/assets/image/thumbnail_background.jpg')
 		no-repeat;
-	background-size: fixed;
-	background-position: -150px -150px;
+	background-size: cover;
+	/* background-position: -150px -150px; */
+	background-position: center;
 	position: relative;
 	z-index: 0;
 }
@@ -52,7 +53,7 @@
 
 .filter-container {
 	width: 72vw;
-	height: 32vh;
+	height: 45vh;
 	margin: 0.5% 0 0 13%;
 	display: flex;
 	justify-content: space-between;
@@ -61,8 +62,9 @@
 .filter-container .filter-card {
 	z-index: 0;
 	width: 24%;
-	background-image: url('static/imports/ui/assets/image/filter_card_background.jpg');
-	background-position: 0px -50px;
+	/* background-image: url('static/imports/ui/assets/image/filter_card_background.jpg'); */
+	/* background-position: 0px -50px; */
+	background-position: center;
 	background-size: cover;
 	position: relative;
 }
@@ -91,4 +93,17 @@
 	left: 50%;
 	bottom: 5.9%;
 	transform: translateX(-50%);
+}
+
+.men {
+	background-image: url('https://i.pinimg.com/564x/d9/e9/01/d9e9017802b4bc05918bcb702a676c3e.jpg');
+}
+.ladies {
+	background-image: url('https://i.pinimg.com/564x/d3/9a/6f/d39a6f512e64c106f819dc5861fba2ca.jpg');
+}
+.girls {
+	background-image: url('https://i.pinimg.com/564x/d3/9f/b3/d39fb3aa4feeaa5e99c69af008f7e403.jpg');
+}
+.boys {
+	background-image: url('https://i.pinimg.com/564x/f3/0a/c4/f30ac4507346c08f8ff21540d5e51325.jpg');
 }

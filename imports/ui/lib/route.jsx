@@ -36,6 +36,9 @@ FlowRouter.route('/products/:productId',{
       if (docs){
         mount(({component})=><App component={component}/>,{component: <ProductInfo  product={docs.data[0]}/>});
       }
+      else {
+        mount(()=><PageNotFound/>);
+      }
     })
   }
 })
@@ -75,6 +78,12 @@ FlowRouter.route('/admin/*',{
   }
 })
 FlowRouter.route('/*',{
+  name: 'page not found',
+  action(){
+    mount(()=><PageNotFound/>);
+  }
+})
+FlowRouter.route('/products/*',{
   name: 'page not found',
   action(){
     mount(()=><PageNotFound/>);

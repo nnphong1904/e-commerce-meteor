@@ -55,3 +55,6 @@
 .disabled-color:hover {
 	border-color: white;
 }
+.no-item-notify {
+	margin-top: 10px;
+}

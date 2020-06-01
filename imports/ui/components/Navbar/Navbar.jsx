@@ -88,21 +88,23 @@ const Navbar = (props)=>{
           className="search-box" 
           type="text" 
           placeholder="Search"/>
-        <img onClick={goProductsPage} src={Logo} className="Logo clickable"/>
+        <img onClick={goProductsPage} src={Logo} className="Logo-navbar clickable"/>
         <div className="auth">
             { props.currentUser===null &&
-              <>
+              <div className="auth-btn">
                 <button onClick={registerBtnClick} className="register-btn">Register</button>
                   <button 
                   onClick={loginBtnClick}
                   className="login-btn">
                  Log In
                 </button>
-              </>
+              </div>
             }
             {
               props.currentUser !== null &&
-              <span id="avatar"><Avatar name={userProfile.name} size={25} round={true}/></span>
+              <div className="user-avatar-holder">
+                <span id="avatar"><Avatar name={userProfile.name} size={25} round={true}/></span>
+              </div>
             }
             { props.currentUser !== null &&
               <button onClick={logoutBtnClick} className="logout-btn">Log Out</button>

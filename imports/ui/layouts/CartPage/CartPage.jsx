@@ -28,7 +28,7 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
    
     Meteor.call('fetchOrder', currentUser.emails[0].address, (err, docs)=>{
       setMyOldOrders([...docs.data]);
-      console.log(docs.data);
+      // console.log(docs.data);
     })
     // return () => clearInterval(interval);
   }, [currentUser])
@@ -58,11 +58,11 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
   const checkoutOrder = (order)=>{
     let newOrderObj = {};
     if (!currentUser){
-      console.log('must login');
+      // console.log('must login');
       setAddToCartMessageError('You must login to check out order');
       setAddToCartMessageSuccess('');
       const timeout = setTimeout(() => {
-        console.log('interval');
+        // console.log('interval');
           setAddToCartMessageError('');
           setAddToCartMessageSuccess('');
           clearTimeout(timeout);
@@ -70,11 +70,11 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
       return ;
     }
     if (myCart.length === 0){
-      console.log('now item in cart');
+      // console.log('now item in cart');
       setAddToCartMessageError('There is no items in cart');
       setAddToCartMessageSuccess('');
       const timeout = setTimeout(() => {
-        console.log('interval');
+        // console.log('interval');
           setAddToCartMessageError('');
           setAddToCartMessageSuccess('');
           clearTimeout(timeout);
@@ -85,7 +85,7 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
     myCart.forEach(
       item =>{
         Meteor.call('updateSoldValue', item.productId, item.quantity, (err, result)=>{
-          console.log(result);
+          // console.log(result);
         })
       }
     );
@@ -98,8 +98,8 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
    
     Meteor.call('addOrder', newOrderObj,(err, docs)=>{
       if (!err){
-        console.log('add order success');
-        console.log(docs);
+        // console.log('add order success');
+        // console.log(docs);
       }
     })
     const orderDetailsForEmail = myCart.map((item)=>`
@@ -119,7 +119,7 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
     setAddToCartMessageError('');
     clearCart();
     const timeout = setTimeout(() => {
-        console.log('interval');
+        // console.log('interval');
           setAddToCartMessageError('');
           setAddToCartMessageSuccess('');
           clearTimeout(timeout);
@@ -163,6 +163,7 @@ const CartPage = ({currentUser, myCart, cartSize, subtotal})=>{
                     <div className="orders-list-header-status">Cancel</div>
                   </div>
                   <div className="my-orders-list-body">
+                    
                     {myOldOrders.map((order, orderIndex)=>{
                       const content = (
                         <div key={orderIndex} className="order-item-holder">

@@ -24,6 +24,9 @@ const useStyles = makeStyles({
   tableItem: {
     paddingLeft:0,
 
+  },
+  noBorder: {
+    border: 'none'
   }
 });
 
@@ -43,6 +46,10 @@ const ProductsTable = ({onClickFunction=()=>{}, onChangeFunction=()=>{} ,product
           </TableRow>
         </TableHead>
         <TableBody> 
+          {productList.length === 0 && 
+            <TableRow>
+              <TableCell className={classes.noBorder}><div className="no-item-notify">No items in cart</div></TableCell>
+            </TableRow>}
           {productList.map((product, productIndex)=>{
             const content = (
               <TableRow id={productIndex} key={productIndex}>

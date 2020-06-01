@@ -104,6 +104,12 @@ const RegisterForm = (props)=>{
       setName('');
     }
     setPassword('');
+    const timeoutId = setTimeout(()=>{
+      setErrorEmail('');
+      setErrorName('');
+      setErrorPassword('');
+      clearTimeout(timeoutId);
+    },2000);
   }
   const content = (
     <div onClick={e=>exitRegisterForm(e)}  id="overlay"  className="overlay">

@@ -9,13 +9,7 @@ const AdminLogin = ()=>{
   const refOverlay = createRef();
   useEffect(() => {
     refOverlay.current.style['background-image'] = `url('static/imports/ui/assets/image/background-admin-login.jpg')`;
-    const interval = setInterval(() => {
-      console.log('interval');
-     
-        setErrMessage('');
-      
-    }, 3000);
-    return () => clearInterval(interval);
+    
   }, []);
 
   const loginHandler = (email, password)=>{
@@ -37,6 +31,10 @@ const AdminLogin = ()=>{
         setErrMessage('Your email/password is invalid')
       }
     })
+    const timeoutId = setTimeout(()=>{
+      setErrMessage('');
+      clearTimeout(timeoutId);
+    },2000)
   }
 
   const onKeyUpHandler = (e)=>{
