@@ -42,7 +42,7 @@ const useStyles = makeStyles({
   },
   tableContainer: {
     boxShadow: 'none',
-    minHeight: '180px',
+    height: '80vh',
     paddingBottom: 10
   }
 });

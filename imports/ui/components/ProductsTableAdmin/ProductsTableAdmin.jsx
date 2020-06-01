@@ -64,7 +64,7 @@ const ProductsTableAdmin = ({turnOnEditProductForm, productsList=[]})=>{
  
   const updateCurrentPage = (newPage)=>{
     if (newPage >=1 && newPage <=numberOfPage){  
-      console.log(newPage);
+      // console.log(newPage);
       // console.log([...oldProductsList.slice((newPage - 1)*6, (newPage - 1)*6+6)]);
       setCurrentPage(newPage);
       setCurrentProductsList([...oldProductsList.slice((newPage - 1)*6, (newPage - 1)*6+6)]);

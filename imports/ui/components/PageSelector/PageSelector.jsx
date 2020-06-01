@@ -3,36 +3,43 @@ import Arrow from '../../assets/image/arrow.svg'
 import './PageSelector.css';
 const PageSelector = ({currentPage=1, textDisplay='', minValue=1, maxValue=100, onClickFunction = ()=>{}, onChangeHandler=()=>{}})=>{
   
-  const [innerCurrentPage, setInnerCurrentPage] = useState(1);
+  // const [innerCurrentPage, setInnerCurrentPage] = useState(1);
   
-  const onClickLeftButton = ()=>{
-    if (innerCurrentPage > minValue)
-    {
-      setInnerCurrentPage(oldValue => oldValue-1);
-    }
-  }
-  const onClickRightValue = ()=>{
-    if (innerCurrentPage < maxValue)
-    {
-      setInnerCurrentPage(oldValue => oldValue+1);
-    }
-  }
+  // const onClickLeftButton = ()=>{
+  //   if (innerCurrentPage > minValue)
+  //   {
+  //     setInnerCurrentPage(oldValue => oldValue-1);
+  //   }
+  // }
+  // const onClickRightValue = ()=>{
+  //   if (innerCurrentPage < maxValue)
+  //   {
+  //     setInnerCurrentPage(oldValue => oldValue+1);
+  //   }
+  // }
   const onChangeFunction = (e)=>{
+  
     if ((e.target.value<minValue || e.target.value >maxValue) && (e.target.value !== '')){
       return;
     }
-    // console.log(e.target.value === NaN)
-    onChangeHandler(e.target.value);
-    onClickFunction(e.target.value);
+    if (e.target.value !== ''){
+      onChangeHandler(parseInt(e.target.value));
+      onClickFunction(parseInt(e.target.value));
+      return;
+    }
+    else {
+      onChangeHandler((e.target.value));
+    }
+    
+   
+    
   }
   const content = (
     <div className="page-selector-holder">
       <img 
         onClick = {
           (e)=>{
-            //onClickLeftButton();
               onClickFunction(parseInt(currentPage-1));
-            
           }
         }
         id="increase-btn" 
@@ -41,7 +48,6 @@ const PageSelector = ({currentPage=1, textDisplay='', minValue=1, maxValue=100, 
         <input 
           onChange={
             (e)=>{
-           
               onChangeFunction(e)
             }
           }
@@ -53,10 +59,8 @@ const PageSelector = ({currentPage=1, textDisplay='', minValue=1, maxValue=100, 
       <img 
         onClick={
           (e)=>{
-         //  onClickRightValue();
-          
-           onClickFunction(parseInt(currentPage+1));
-            
+         //  onClickRightValue()
+              onClickFunction(parseInt(currentPage+1));
           }
         }
         id="decrease-btn" 
